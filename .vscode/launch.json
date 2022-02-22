@@ -1,0 +1,69 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug",
+      "program": "${workspaceFolder}/src/index.ts",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "runtimeArgs": [
+        "--max-old-space-size=8192",
+        "--experimental-specifier-resolution=node",
+        "--loader=ts-node/esm"
+      ],
+      "envFile": "${workspaceFolder}/.env",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/src/**",
+        "!**/node_modules/**"
+      ],
+      "pauseForSourceMap": true,
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build & Debug",
+      "program": "${workspaceFolder}/src/index.ts",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "runtimeArgs": [
+        "--max-old-space-size=8192",
+        "--experimental-specifier-resolution=node",
+        "--loader=ts-node/esm"
+      ],
+      "envFile": "${workspaceFolder}/.env",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/src/**",
+        "!**/node_modules/**"
+      ],
+      "pauseForSourceMap": true,
+      "preLaunchTask": "build"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "linux": {
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "--runInBand"
+        ]
+      },
+      "windows": {
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/jest/bin/jest.js",
+          "--runInBand"
+        ]
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env",
+      // "preLaunchTask": "build"
+    }
+  ]
+}
