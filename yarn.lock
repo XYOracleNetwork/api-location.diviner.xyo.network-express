@@ -3676,9 +3676,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-xyo-client-js@npm:^2.10.14":
-  version: 2.10.14
-  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.10.14"
+"@xyo-network/sdk-xyo-client-js@npm:^2.11.10":
+  version: 2.11.10
+  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.11.10"
   dependencies:
     "@ethersproject/providers": ^5.5.3
     "@xylabs/sdk-js": ^2.4.2
@@ -3688,17 +3688,16 @@ __metadata:
     bowser: ^2.11.0
     buffer: ^6.0.3
     elliptic: ^6.5.4
-    is-ip: ^4.0.0
     keccak256: ^1.0.6
     lodash: ^4.17.21
     mongodb: ^4.4.0
     neo4j-driver: ^4.4.2
     neo4j-driver-core: ^4.4.2
     sha.js: ^2.4.11
-    systeminformation: ^5.11.3
+    systeminformation: ^5.11.4
     ua-parser-js: ^1.0.2
     uuid: ^8.3.2
-  checksum: 746525960d0d92b4499600e6359d286212a83495283c935476af46d500fa4f1edc9dd458a129965309d916bec19c91bae0861fdf9cc9eebb573254e1ab57ce38
+  checksum: c97377e0d5de75df6ec64ac511439ebd86681608a211bb14341948d60752b9a12536043b4da14d89ab1ce5de423d19c93e420dfbc32b8f2ac75bf11d465e8d25
   languageName: node
   linkType: hard
 
@@ -3948,7 +3947,7 @@ __metadata:
     "@xylabs/sdk-js": ^2.4.2
     "@xylabs/ts-scripts": ^1.0.44
     "@xylabs/tsconfig": ^1.0.12
-    "@xyo-network/sdk-xyo-client-js": ^2.10.14
+    "@xyo-network/sdk-xyo-client-js": ^2.11.10
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
     axios: ^0.26.0
     babel-jest: ^27.5.1
@@ -7102,13 +7101,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ip-regex@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "ip-regex@npm:5.0.0"
-  checksum: 4098b2df89c015f1484a5946e733ec126af8c1828719d90e09f04af23ce487e1a852670e4d3f51b0dc6dfbaf7d8bfab23fd7893ca60e69833da99b7b1ee3623b
-  languageName: node
-  linkType: hard
-
 "ip@npm:^1.1.5":
   version: 1.1.5
   resolution: "ip@npm:1.1.5"
@@ -7297,15 +7289,6 @@ __metadata:
     global-dirs: ^3.0.0
     is-path-inside: ^3.0.2
   checksum: 3359840d5982d22e9b350034237b2cda2a12bac1b48a721912e1ab8e0631dd07d45a2797a120b7b87552759a65ba03e819f1bd63f2d7ab8657ec0b44ee0bf399
-  languageName: node
-  linkType: hard
-
-"is-ip@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "is-ip@npm:4.0.0"
-  dependencies:
-    ip-regex: ^5.0.0
-  checksum: 6bbf3b83b18b02e6cf6b26d16c0d2de38bf5b2f5597de2b902894a83764ae6879f9acd1baec653b47b18a67a975c0cade779f3485e96a6b2cd09a26407d82991
   languageName: node
   linkType: hard
 
@@ -13021,12 +13004,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.11.3":
-  version: 5.11.3
-  resolution: "systeminformation@npm:5.11.3"
+"systeminformation@npm:^5.11.4":
+  version: 5.11.4
+  resolution: "systeminformation@npm:5.11.4"
   bin:
     systeminformation: lib/cli.js
-  checksum: 9d27028dd43b233173519ee03a228df6d2cdbf2c8723ad54b60553092c528e1b9756cd88973d69968afa48b664e7c68a35d3cc8b5cc22af51a823f0712b54dbf
+  checksum: fcb71b933c6d77072f2ad86b7688f0fa6feb975829eeddd1fc877e0e99dff0ff50cc11c978b97b1662c9d935a3b19c6e01a110d7e6481d7232fd6e2c23fcf10c
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
