@@ -1,4 +1,3 @@
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
@@ -24,12 +23,6 @@ const queryDeQueuingError = {
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
 }
 
-const queryStillRunning = {
-  message: 'Query still processing',
-  name: ReasonPhrases.CONTINUE,
-  statusCode: StatusCodes.CONTINUE,
-}
-
 const handler: RequestHandler<GetLocationQueryRequestParams, GetLocationQueryResponse> = (req, res, next) => {
   const hash = req.params?.hash
   if (!hash) {
@@ -43,11 +36,14 @@ const handler: RequestHandler<GetLocationQueryRequestParams, GetLocationQueryRes
   }
   const answerHash = queue.get(hash)
   if (!answerHash) {
-    next(queryStillRunning)
+    res.status(StatusCodes.CONTINUE)
+    next()
     return
   }
   res.json({ answerHash, queryHash: hash })
   next()
 }
 
-export const getLocationQuery = asyncHandler(handler)
+// TODO: Wrap in handler once async
+// export const getLocationQuery = asyncHandler(handler)
+export const getLocationQuery = handler

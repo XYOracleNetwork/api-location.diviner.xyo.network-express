@@ -35,7 +35,7 @@ const server = async (port = 80) => {
   addLocationRoutes(app)
   addInMemoryQueue(app)
 
-  const host = process.env.PUBLIC_ORIGIN || `http://localhost:${port}`
+  const host = process.env.PUBLIC_ORIGIN || `localhost:${port}`
   await configureDoc(app, { host })
 
   addErrorHandlers(app)

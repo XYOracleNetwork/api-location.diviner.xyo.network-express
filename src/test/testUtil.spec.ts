@@ -1,7 +1,11 @@
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 
-import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from '../location'
+import {
+  GetLocationQueryResponse,
+  LocationDivinerQueryCreationRequest,
+  LocationDivinerQueryCreationResponse,
+} from '../location'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -39,5 +43,13 @@ export const createQuery = async (
   expectedStatus: StatusCodes = StatusCodes.OK
 ): Promise<LocationDivinerQueryCreationResponse> => {
   const response = await getDiviner().post('/location/query').send(data).expect(expectedStatus)
+  return response.body.data
+}
+
+export const getQuery = async (
+  hash: string,
+  expectedStatus: StatusCodes = StatusCodes.OK
+): Promise<GetLocationQueryResponse> => {
+  const response = await getDiviner().get(`/location/query/${hash}`).expect(expectedStatus)
   return response.body.data
 }

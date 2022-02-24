@@ -13,6 +13,6 @@ export const addLocationRoutes = (app: Express) => {
     '/location/query/:hash',
     getLocationQuery
     /* #swagger.tags = ['Location'] */
-    /* #swagger.summary = 'Retrieve a previously issues location query' */
+    /* #swagger.summary = 'Retrieve a previously issued location query' */
   )
 }
