@@ -2,7 +2,7 @@ import { Express } from 'express'
 
 import { getLocationQuery, postLocationQuery } from '../location'
 
-export const addHealthChecks = (app: Express) => {
+export const addLocationRoutes = (app: Express) => {
   app.post(
     '/location/query',
     postLocationQuery

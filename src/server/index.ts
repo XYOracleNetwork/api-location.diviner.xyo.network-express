@@ -5,6 +5,7 @@ import express from 'express'
 import { configureDoc } from '../middleware'
 import { addErrorHandlers } from './addErrorHandlers'
 import { addHealthChecks } from './addHealthChecks'
+import { addLocationRoutes } from './addLocationRoutes'
 import { addMiddleware } from './addMiddleware'
 
 const server = async (port = 80) => {
@@ -30,6 +31,7 @@ const server = async (port = 80) => {
 
   addMiddleware(app)
   addHealthChecks(app)
+  addLocationRoutes(app)
 
   const host = process.env.PUBLIC_ORIGIN || `http://localhost:${port}`
   await configureDoc(app, { host })
