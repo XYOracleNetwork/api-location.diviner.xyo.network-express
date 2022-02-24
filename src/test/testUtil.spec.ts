@@ -6,6 +6,7 @@ import { LocationDivinerQueryRequest, LocationDivinerQueryResult } from '../loca
 test.skip('Must have API_KEY ENV VAR defined', () => {
   expect(process.env.API_KEY).toBeTruthy()
 })
+
 test('Must have APP_PORT ENV VAR defined', () => {
   expect(process.env.APP_PORT).toBeTruthy()
 })

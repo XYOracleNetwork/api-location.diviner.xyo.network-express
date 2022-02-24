@@ -2,11 +2,8 @@ import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
-import { ArchiveConfig, LocationDivinerQueryRequest } from './postLocationQuerySchema'
-
-const validateArchiveConfig = (config: ArchiveConfig) => {
-  return false
-}
+import { LocationDivinerQueryRequest } from './postLocationQuerySchema'
+import { validateArchiveConfig } from './validateArchiveConfig'
 
 const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, LocationDivinerQueryRequest> = (
   req,
