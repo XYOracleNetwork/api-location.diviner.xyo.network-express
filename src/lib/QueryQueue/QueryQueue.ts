@@ -6,7 +6,7 @@ import {
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationDivinerQueryCreationResponse } from '../../location'
+import { LocationDivinerQueryCreationResponse } from '../../model'
 import { sampleGeoJson } from './sampleGeoJson'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }

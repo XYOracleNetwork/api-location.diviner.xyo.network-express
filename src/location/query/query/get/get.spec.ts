@@ -1,5 +1,5 @@
+import { LocationDivinerQueryCreationResponse } from '../../../../model'
 import { createQuery, getQuery } from '../../../../test'
-import { LocationDivinerQueryCreationResponse } from '../../post'
 
 // TODO: Remove hardcoded delay as they always result in intermittent
 // test failures

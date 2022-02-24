@@ -7,7 +7,7 @@ import {
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationDivinerQueryCreationRequest } from './postLocationQuerySchema'
+import { LocationDivinerQueryCreationRequest } from '../../../model'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
