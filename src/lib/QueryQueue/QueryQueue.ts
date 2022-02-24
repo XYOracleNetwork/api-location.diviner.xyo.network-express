@@ -18,7 +18,7 @@ const getAnswer = async (response: LocationDivinerQueryCreationResponse): Promis
     const { schema } = response.query
     // TODO: Actually iterate over the data
     // TODO: Answer schema
-    const payload = new XyoPayloadBuilder({ schema }).fields({ ...sampleGeoJson }).build()
+    const payload = new XyoPayloadBuilder({ schema }).fields({ result: sampleGeoJson }).build()
     // TODO: Same address as when accepted
     const address = XyoAddress.random()
     const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig)
