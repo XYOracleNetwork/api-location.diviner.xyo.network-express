@@ -8,7 +8,7 @@ export interface GetLocationQueryRequestParams {
 }
 export interface GetLocationQueryResponse {
   queryHash: string
-  answerHash: string
+  answerHash?: string
 }
 
 const invalidHashError = {
@@ -36,7 +36,7 @@ const handler: RequestHandler<GetLocationQueryRequestParams, GetLocationQueryRes
   }
   const answerHash = queue.get(hash)
   if (!answerHash) {
-    res.status(StatusCodes.CONTINUE)
+    res.json({ queryHash: hash })
     next()
     return
   }
