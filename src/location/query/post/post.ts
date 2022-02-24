@@ -1,7 +1,10 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { create } from 'lodash'
 
+import { LocationDivinerQueryResult } from '.'
+import { createLocationQuery } from './createLocationQuery'
 import { LocationDivinerQueryRequest } from './postLocationQuerySchema'
 import { validateArchiveConfig } from './validateArchiveConfig'
 import { validateQuery } from './validateQuery'
@@ -24,7 +27,13 @@ const queryValidationError = {
   statusCode: StatusCodes.BAD_REQUEST,
 }
 
-const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, LocationDivinerQueryRequest> = (
+const queryCreationError = {
+  message: 'Error creating query',
+  name: ReasonPhrases.INTERNAL_SERVER_ERROR,
+  statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+}
+
+const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, LocationDivinerQueryRequest> = async (
   req,
   res,
   next
@@ -33,7 +42,14 @@ const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, Location
   if (!validateArchiveConfig(sourceArchive)) next(sourceArchiveConfigError)
   if (!validateArchiveConfig(resultArchive)) next(resultArchiveConfigError)
   if (!validateQuery(query)) next(queryValidationError)
-  next({ message: ReasonPhrases.NOT_IMPLEMENTED, statusCode: StatusCodes.NOT_IMPLEMENTED })
+  const hash = await createLocationQuery(req.body)
+  if (hash) {
+    const response: LocationDivinerQueryResult = { hash, status: 'pending', ...req.body }
+    res.json(response)
+    next()
+  } else {
+    next(queryCreationError)
+  }
 }
 
 export const postLocationQuery = asyncHandler(handler)
