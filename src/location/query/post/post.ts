@@ -4,6 +4,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import { LocationDivinerQueryRequest } from './postLocationQuerySchema'
 import { validateArchiveConfig } from './validateArchiveConfig'
+import { validateQuery } from './validateQuery'
 
 const sourceArchiveConfigError = {
   message: 'Invalid source archive config',
@@ -17,6 +18,12 @@ const resultArchiveConfigError = {
   statusCode: StatusCodes.BAD_REQUEST,
 }
 
+const queryValidationError = {
+  message: 'Invalid query',
+  name: ReasonPhrases.BAD_REQUEST,
+  statusCode: StatusCodes.BAD_REQUEST,
+}
+
 const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, LocationDivinerQueryRequest> = (
   req,
   res,
@@ -25,6 +32,7 @@ const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, Location
   const { sourceArchive, resultArchive, query } = req.body
   if (!validateArchiveConfig(sourceArchive)) next(sourceArchiveConfigError)
   if (!validateArchiveConfig(resultArchive)) next(resultArchiveConfigError)
+  if (!validateQuery(query)) next(queryValidationError)
   next({ message: ReasonPhrases.NOT_IMPLEMENTED, statusCode: StatusCodes.NOT_IMPLEMENTED })
 }
 
