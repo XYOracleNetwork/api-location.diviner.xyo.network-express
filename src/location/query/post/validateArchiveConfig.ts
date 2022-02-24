@@ -1,6 +1,6 @@
-import { ArchiveConfig } from './postLocationQuerySchema'
+import { XyoArchivistApiConfig } from '@xyo-network/sdk-xyo-client-js'
 
-export const validateArchiveConfig = (config?: ArchiveConfig) => {
+export const validateArchiveConfig = (config?: XyoArchivistApiConfig) => {
   if (!config) {
     return false
   }

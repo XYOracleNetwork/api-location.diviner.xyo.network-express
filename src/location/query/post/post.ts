@@ -1,11 +1,9 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { create } from 'lodash'
 
-import { LocationDivinerQueryResult } from '.'
 import { createLocationQuery } from './createLocationQuery'
-import { LocationDivinerQueryRequest } from './postLocationQuerySchema'
+import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from './postLocationQuerySchema'
 import { validateArchiveConfig } from './validateArchiveConfig'
 import { validateQuery } from './validateQuery'
 
@@ -33,18 +31,18 @@ const queryCreationError = {
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
 }
 
-const handler: RequestHandler<NoReqParams, LocationDivinerQueryRequest, LocationDivinerQueryRequest> = async (
-  req,
-  res,
-  next
-) => {
+const handler: RequestHandler<
+  NoReqParams,
+  LocationDivinerQueryCreationResponse,
+  LocationDivinerQueryCreationRequest
+> = async (req, res, next) => {
   const { sourceArchive, resultArchive, query } = req.body
   if (!validateArchiveConfig(sourceArchive)) next(sourceArchiveConfigError)
   if (!validateArchiveConfig(resultArchive)) next(resultArchiveConfigError)
   if (!validateQuery(query)) next(queryValidationError)
   const hash = await createLocationQuery(req.body)
   if (hash) {
-    const response: LocationDivinerQueryResult = { hash, status: 'pending', ...req.body }
+    const response: LocationDivinerQueryCreationResponse = { hash, status: 'pending', ...req.body }
     res.json(response)
     next()
   } else {

@@ -1,20 +1,21 @@
 import {
   XyoAddress,
   XyoArchivistApi,
+  XyoArchivistApiConfig,
   XyoBoundWitnessBuilder,
   XyoBoundWitnessBuilderConfig,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { ArchiveConfig, LocationDivinerQueryRequest } from './postLocationQuerySchema'
+import { LocationDivinerQueryCreationRequest } from './postLocationQuerySchema'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
-const getArchivistApiSdk = (config: ArchiveConfig) => {
+const getArchivistApiSdk = (config: XyoArchivistApiConfig) => {
   return new XyoArchivistApi(config)
 }
 
-export const createLocationQuery = async (request: LocationDivinerQueryRequest) => {
+export const createLocationQuery = async (request: LocationDivinerQueryCreationRequest) => {
   const api = getArchivistApiSdk(request.resultArchive)
   const { schema } = request.query
   const payload = new XyoPayloadBuilder({ schema }).fields({ ...request }).build()
