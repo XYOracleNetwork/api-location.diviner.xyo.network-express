@@ -32,4 +32,10 @@ describe('POST /location/query', () => {
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
   })
+  describe('valid query', () => {
+    it('returns the hash of the bound witness block', async () => {
+      const response = await createQuery()
+      expect(response.hash).toBeTruthy()
+    })
+  })
 })

@@ -35,10 +35,9 @@ export const getValidRequest = (): LocationDivinerQueryCreationRequest => {
 }
 
 export const createQuery = async (
-  config: LocationDivinerQueryCreationRequest,
+  data: LocationDivinerQueryCreationRequest = getValidRequest(),
   expectedStatus: StatusCodes = StatusCodes.OK
 ): Promise<LocationDivinerQueryCreationResponse> => {
-  // TODO: .set('x-api-key', apiKey)
-  const response = await getDiviner().post('/location/query').expect(expectedStatus)
+  const response = await getDiviner().post('/location/query').send(data).expect(expectedStatus)
   return response.body.data
 }

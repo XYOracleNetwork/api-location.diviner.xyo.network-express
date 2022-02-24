@@ -7,8 +7,5 @@ export const validateArchiveConfig = (config?: XyoArchivistApiConfig) => {
   if (!config.apiDomain) {
     return false
   }
-  if (!config.apiKey) {
-    return false
-  }
   return true
 }
