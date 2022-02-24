@@ -43,7 +43,7 @@
     "@rollup/plugin-strip": "^2.1.0",
     "@xylabs/sdk-api-express-ecs": "^1.1.2",
     "@xylabs/sdk-js": "^2.4.2",
-    "@xyo-network/sdk-xyo-client-js": "^2.10.14",
+    "@xyo-network/sdk-xyo-client-js": "^2.11.10",
     "@xyo-network/sdk-xyo-mongo-js": "^2.2.7",
     "axios": "^0.26.0",
     "bn.js": "^5.2.0",
