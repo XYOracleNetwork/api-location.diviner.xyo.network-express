@@ -1,4 +1,4 @@
-import { LocationDivinerQuery } from './postLocationQuerySchema'
+import { LocationDivinerQuery } from '../../../model'
 
 const validateDate = (date: Date) => {
   return date instanceof Date && !isNaN(date.valueOf())

@@ -3,8 +3,8 @@ import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import { QueryQueue } from '../../../lib'
+import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from '../../../model'
 import { createLocationQuery } from './createLocationQuery'
-import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from './postLocationQuerySchema'
 import { validateArchiveConfig } from './validateArchiveConfig'
 import { validateQuery } from './validateQuery'
 

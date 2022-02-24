@@ -1,11 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 
-import {
-  GetLocationQueryResponse,
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
-} from '../location'
+import { GetLocationQueryResponse } from '../location'
+import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
