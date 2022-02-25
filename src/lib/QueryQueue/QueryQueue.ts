@@ -3,48 +3,49 @@ import {
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
   XyoBoundWitnessBuilderConfig,
+  XyoPayload,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { LocationDivinerQueryCreationResponse } from '../../model'
+import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
+import { getLocationsInTimeRange } from './getLocationsInTimeRange'
 import { sampleGeoJson } from './sampleGeoJson'
+
+export const querySchema = 'network.xyo.location.range.query'
+export const answerSchema = 'network.xyo.location.range.answer'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
-const getAnswer = async (response: LocationDivinerQueryCreationResponse): Promise<string> => {
-  // const source = new XyoArchivistApi(response.sourceArchive)
-  const result = new XyoArchivistApi(response.resultArchive)
+const storeAnswer = async (api: XyoArchivistApi, answer: Partial<XyoPayload>, address: XyoAddress) => {
+  const payload = new XyoPayloadBuilder({ schema: answerSchema }).fields({ result: answer }).build()
+  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
+  await api.postBoundWitness(resultWitness)
+  if (!resultWitness._hash) throw new Error('Error storing answer')
+  return resultWitness._hash
+}
+
+const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
+  const payload = new XyoPayloadBuilder({ schema: answerSchema }).fields({ error }).build()
+  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
+  await api.postBoundWitness(resultWitness)
+  if (!resultWitness._hash) throw new Error('Error storing answer')
+  return resultWitness._hash
+}
+
+const generateAnswer = async (response: LocationDivinerQueryCreationResponse): Promise<string> => {
+  // TODO: Use same address as when accepted
+  // Generate a random address for the transaction
+  const address = XyoAddress.random()
+  const sourceArchive = new XyoArchivistApi(response.sourceArchive)
+  const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
-    const { schema } = response.query
-    // TODO: Actually iterate over the data
-    // TODO: Answer schema
-    const payload = new XyoPayloadBuilder({ schema }).fields({ result: sampleGeoJson }).build()
-    // TODO: Same address as when accepted
-    const address = XyoAddress.random()
-    const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig)
-      .witness(address)
-      .payload(payload)
-      .build()
-    await result.postBoundWitness(resultWitness)
-    if (resultWitness._hash) {
-      return resultWitness._hash
-    } else {
-      throw 'Hash error'
-    }
+    const locations = await getLocationsInTimeRange(sourceArchive)
+    const points = locations.map(convertLocationSchemaToGeoJson)
+    const answer = sampleGeoJson
+    return await storeAnswer(resultArchive, answer, address)
   } catch (error) {
-    console.log(error)
-    // TODO: Skip single bad data points, possibly fail hard in some cases
-    const { schema } = response.query
-    const payload = new XyoPayloadBuilder({ schema }).fields({ ...response }).build()
-    // TODO: Same address as when accepted
-    const address = XyoAddress.random()
-    const errorWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-    await result.postBoundWitness(errorWitness)
-    if (errorWitness._hash) {
-      return errorWitness._hash
-    } else {
-      throw 'Hash error'
-    }
+    return await storeError(resultArchive, 'Error calculating answer', address)
   }
 }
 
@@ -64,7 +65,7 @@ export class QueryQueue {
     this.queue[hash] = { response }
 
     // Fire off task in background
-    void getAnswer(response)
+    void generateAnswer(response)
       .then((result) => {
         this.queue[hash].result = result
       })
