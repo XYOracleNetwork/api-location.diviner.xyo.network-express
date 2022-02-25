@@ -6,8 +6,12 @@ import { LocationWitnessPayload } from './LocationWitnessPayload'
 export const convertLocationSchemaToGeoJson = (
   payload: LocationWitnessPayload
 ): Feature<Point, GeoJsonPointProperties> => {
+  const { schema, _archive, _client, _timestamp } = payload as GeoJsonPointProperties
   const properties: GeoJsonPointProperties = {
-    ...payload,
+    _archive,
+    _client,
+    _timestamp,
+    schema,
   }
   // https://www.rfc-editor.org/rfc/rfc7946#section-3.1.1
   // A position is an array of numbers.  There MUST be two or more
