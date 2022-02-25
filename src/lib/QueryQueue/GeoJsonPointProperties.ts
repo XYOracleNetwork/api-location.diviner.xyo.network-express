@@ -1,5 +1,7 @@
+import { LocationWitnessPayloadSchema } from './LocationWitnessPayload'
+
 export interface GeoJsonPointProperties {
-  schema: 'network.xyo.location'
+  schema: LocationWitnessPayloadSchema
   // _archive: string
   // _id: string
   // _client: string

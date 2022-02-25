@@ -1,5 +1,8 @@
 import { WithXyoPayloadMeta, XyoPayloadBody } from '@xyo-network/sdk-xyo-client-js'
 
+export type LocationWitnessPayloadSchema = 'network.xyo.location'
+export const locationWitnessPayloadSchema = 'network.xyo.location'
+
 export interface Coordinates {
   accuracy: number | null
   altitude: number | null
@@ -16,7 +19,7 @@ export interface CurrentLocation {
 
 export interface LocationWitnessPayloadBody extends XyoPayloadBody {
   currentLocation: CurrentLocation
-  schema: 'network.xyo.location'
+  schema: LocationWitnessPayloadSchema
 }
 
 export type LocationWitnessPayload = WithXyoPayloadMeta<LocationWitnessPayloadBody>
