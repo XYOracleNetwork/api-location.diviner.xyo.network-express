@@ -14,6 +14,7 @@ import {
   LocationDivinerQueryCreationRequest,
   LocationDivinerQueryCreationResponse,
   LocationWitnessPayloadBody,
+  locationWitnessPayloadSchema,
 } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
