@@ -15,10 +15,11 @@ describe('Round trip tests', () => {
     for (let location = 0; location < locationsToWitness; location++) {
       await witnessNewLocation(api)
     }
-    await delay(5000)
+    await delay(1000)
     const stopTime = new Date().toISOString()
     const request = getValidRequest(archive, startTime, stopTime)
     const queryResponse = await createQuery(request)
+    await delay(5000)
     const result = await getQuery(queryResponse.hash)
     expect(result).toBeTruthy()
     expect(result.queryHash).toBe(queryResponse.hash)

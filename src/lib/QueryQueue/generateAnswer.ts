@@ -42,7 +42,7 @@ export const generateAnswer = async (
   try {
     const start = response.query.startTime ? new Date(response.query.startTime) : new Date(0)
     const stop = response.query.stopTime ? new Date(response.query.stopTime) : new Date()
-    const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getDate(), stop.getDate())
+    const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const points = locations.map(convertLocationSchemaToGeoJson)
     const answer = getFeatureCollectionFromPoints(points)
     return await storeAnswer(resultArchive, answer, address)
