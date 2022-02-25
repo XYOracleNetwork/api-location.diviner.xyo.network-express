@@ -6,12 +6,32 @@ import { createQuery, getQuery } from '../../../../test'
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('GET /location/query/:hash', () => {
-  let queryResponse: LocationDivinerQueryCreationResponse
-  beforeEach(async () => {
-    queryResponse = await createQuery()
-  })
-  it('Gets successful results', async () => {
-    // Wait for query to process
+  it('returns answerHash', async () => {
+    const queryResponse: LocationDivinerQueryCreationResponse = await createQuery()
+    await delay(5000)
+    const result = await getQuery(queryResponse.hash)
+    expect(result).toBeTruthy()
+    expect(result.queryHash).toBe(queryResponse.hash)
+    expect(result.answerHash).toBeTruthy()
+  }, 10000)
+  it.skip('Generates answer if data was found', async () => {
+    const queryResponse: LocationDivinerQueryCreationResponse = await createQuery()
+    await delay(5000)
+    const result = await getQuery(queryResponse.hash)
+    expect(result).toBeTruthy()
+    expect(result.queryHash).toBe(queryResponse.hash)
+    expect(result.answerHash).toBeTruthy()
+  }, 10000)
+  it.skip('Generates an empty answer if no data was found', async () => {
+    const queryResponse: LocationDivinerQueryCreationResponse = await createQuery()
+    await delay(5000)
+    const result = await getQuery(queryResponse.hash)
+    expect(result).toBeTruthy()
+    expect(result.queryHash).toBe(queryResponse.hash)
+    expect(result.answerHash).toBeTruthy()
+  }, 10000)
+  it.skip('Handles bad/misshapen data', async () => {
+    const queryResponse: LocationDivinerQueryCreationResponse = await createQuery()
     await delay(5000)
     const result = await getQuery(queryResponse.hash)
     expect(result).toBeTruthy()
