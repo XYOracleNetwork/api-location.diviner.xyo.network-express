@@ -1,6 +1,6 @@
+import { LocationWitnessPayload } from '../../model'
 import { sample } from '../../test'
 import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
-import { LocationWitnessPayload } from './LocationWitnessPayload'
 describe('convertLocationSchemaToGeoJson', () => {
   it('converts data formatted according to the schema into a GeoJson Feature', () => {
     const payload = sample as LocationWitnessPayload

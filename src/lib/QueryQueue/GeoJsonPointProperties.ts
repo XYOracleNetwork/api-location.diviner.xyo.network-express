@@ -1,4 +1,4 @@
-import { LocationWitnessPayloadSchema } from './LocationWitnessPayload'
+import { LocationWitnessPayloadSchema } from '../../model'
 
 export interface GeoJsonPointProperties {
   schema: LocationWitnessPayloadSchema

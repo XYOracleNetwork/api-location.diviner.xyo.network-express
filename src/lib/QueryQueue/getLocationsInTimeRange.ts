@@ -1,6 +1,6 @@
 import { XyoArchivistApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationWitnessPayload, locationWitnessPayloadSchema } from './LocationWitnessPayload'
+import { LocationWitnessPayload, locationWitnessPayloadSchema } from '../../model'
 
 interface WithTimestamp {
   _timestamp: number
@@ -32,17 +32,19 @@ export const getMostRecentLocationsInTimeRange = async (
   stopTime = Date.now()
 ): Promise<LocationWitnessPayload[]> => {
   const allPayloads: LocationWitnessPayload[] = []
-  let fromTimestamp = stopTime > startTime ? stopTime : startTime
+  const highestTime = Math.max(startTime, stopTime)
+  const lowestTime = Math.min(startTime, stopTime)
+  let fromTimestamp = highestTime
   for (let i = 0; i < maxLoops; i++) {
     // Search backward from last timestamp
-    const boundWitnesses: XyoBoundWitness[] = await api.getBoundWitnessesAfter(fromTimestamp, 100)
+    const boundWitnesses: XyoBoundWitness[] = await api.getBoundWitnessesBefore(fromTimestamp, limit)
     // If there's no results, stop searching
     if (!boundWitnesses.length) break
     const locations =
       // All location witness payloads
       (await getLocationWitnessPayloadsForBoundWitnesses(api, boundWitnesses))
         // Within the range specified
-        .filter((p) => p._timestamp < stopTime && p._timestamp > startTime)
+        .filter((p) => p._timestamp < highestTime && p._timestamp > lowestTime)
     // TODO: Only take the last N elements if we're past the max
     allPayloads.push(...locations)
     fromTimestamp = Math.min(...locations.map((p) => p._timestamp))

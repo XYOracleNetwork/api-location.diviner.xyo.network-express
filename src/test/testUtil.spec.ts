@@ -9,9 +9,12 @@ import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
-import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../lib/QueryQueue/LocationWitnessPayload'
 import { GetLocationQueryResponse } from '../location'
-import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from '../model'
+import {
+  LocationDivinerQueryCreationRequest,
+  LocationDivinerQueryCreationResponse,
+  LocationWitnessPayloadBody,
+} from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -25,12 +28,10 @@ test('Must have APP_PORT ENV VAR defined', () => {
   expect(process.env.APP_PORT).toBeTruthy()
 })
 
-const startTime = new Date(0).toISOString()
 const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
 const testArchive = process.env.ARCHIVE || 'temp'
 const schema = 'location.diviner.xyo.network'
 const request = supertest(`http://localhost:${process.env.APP_PORT}`)
-const address = XyoAddress.fromPhrase('diviner')
 
 const randBetween = (min: number, max: number) => {
   return Math.random() * (max - min) + min
@@ -48,8 +49,11 @@ export const getArchivist = (archive = testArchive): XyoArchivistApi => {
   return new XyoArchivistApi({ apiDomain, archive })
 }
 
-export const getValidRequest = (archive = testArchive): LocationDivinerQueryCreationRequest => {
-  const stopTime = new Date().toISOString()
+export const getValidRequest = (
+  archive = testArchive,
+  startTime = new Date(0).toISOString(),
+  stopTime = new Date().toISOString()
+): LocationDivinerQueryCreationRequest => {
   return {
     query: { schema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
@@ -79,6 +83,7 @@ export const getNewLocation = (): LocationWitnessPayloadBody => {
 }
 
 export const getNewLocationWitness = (): XyoBoundWitness => {
+  const address = XyoAddress.random()
   const payload = getNewLocation()
   return new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
 }
