@@ -9,6 +9,7 @@ import {
 
 import { LocationDivinerQueryCreationResponse } from '../../model'
 import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
+import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getLocationsInTimeRange } from './getLocationsInTimeRange'
 import { sampleGeoJson } from './sampleGeoJson'
 
@@ -33,15 +34,16 @@ const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddre
   return resultWitness._hash
 }
 
-const generateAnswer = async (response: LocationDivinerQueryCreationResponse): Promise<string> => {
-  // TODO: Use same address as when accepted
-  // Generate a random address for the transaction
-  const address = XyoAddress.random()
+const generateAnswer = async (
+  response: LocationDivinerQueryCreationResponse,
+  address: XyoAddress = XyoAddress.random()
+): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
     const locations = await getLocationsInTimeRange(sourceArchive)
     const points = locations.map(convertLocationSchemaToGeoJson)
+    const feature = getFeatureCollectionFromPoints(points)
     const answer = sampleGeoJson
     return await storeAnswer(resultArchive, answer, address)
   } catch (error) {

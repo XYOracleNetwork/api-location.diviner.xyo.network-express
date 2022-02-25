@@ -1,27 +1,8 @@
-import { XyoArchivistApi, XyoPayload, XyoPayloadBody } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
 
-export interface Coordinates {
-  accuracy: number | null
-  altitude: number | null
-  altitudeAccuracy: number | null
-  heading: number | null
-  latitude: number
-  longitude: number
-  speed: number | null
-}
-export interface CurrentLocation {
-  coords: Coordinates
-  timestamp: number
-}
+import { LocationWitnessPayload } from './LocationWitnessPayload'
 
-export interface LocationWitnessPayloadBody extends XyoPayloadBody {
-  currentLocation: CurrentLocation
-  schema: 'network.xyo.location'
-}
-
-export type Foo = XyoPayload
-
-export const getLocationsInTimeRange = async (api: XyoArchivistApi): Promise<LocationWitnessPayloadBody[]> => {
+export const getLocationsInTimeRange = async (api: XyoArchivistApi): Promise<LocationWitnessPayload[]> => {
   await Promise.resolve('TODO')
   // TODO: Skip single bad data points, possibly fail hard in some cases
 
