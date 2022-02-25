@@ -1,7 +1,6 @@
 import {
   XyoAddress,
   XyoArchivistApi,
-  XyoArchivistApiConfig,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
   XyoPayloadBuilder,
@@ -31,6 +30,7 @@ const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
 const testArchive = process.env.ARCHIVE || 'temp'
 const schema = 'location.diviner.xyo.network'
 const request = supertest(`http://localhost:${process.env.APP_PORT}`)
+const address = XyoAddress.fromPhrase('diviner')
 
 const randBetween = (min: number, max: number) => {
   return Math.random() * (max - min) + min
@@ -80,7 +80,7 @@ export const getNewLocation = (): LocationWitnessPayloadBody => {
 
 export const getNewLocationWitness = (): XyoBoundWitness => {
   const payload = getNewLocation()
-  return new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(XyoAddress.random()).payload(payload).build()
+  return new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi) => {
