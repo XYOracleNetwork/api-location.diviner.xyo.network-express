@@ -2702,9 +2702,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^21.0.1":
-  version: 21.0.1
-  resolution: "@rollup/plugin-commonjs@npm:21.0.1"
+"@rollup/plugin-commonjs@npm:^21.0.2":
+  version: 21.0.2
+  resolution: "@rollup/plugin-commonjs@npm:21.0.2"
   dependencies:
     "@rollup/pluginutils": ^3.1.0
     commondir: ^1.0.1
@@ -2715,7 +2715,7 @@ __metadata:
     resolve: ^1.17.0
   peerDependencies:
     rollup: ^2.38.3
-  checksum: 3e56be58c72d655face6f361f85923ddcc3cc07760b5a3a91cfc728115dfed358fc595781148c512d53a03be8c703133379f228e78fd2aed8655fae9d83800b6
+  checksum: 5fd4c7b75d7881070f4395d7ba5f9035934f53b25e92d136583cc794461a456efc1e2a2204f946ec567dfea58073c38cb48f24d27155b89af0df0447c2cd0758
   languageName: node
   linkType: hard
 
@@ -3068,6 +3068,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:^7946.0.8":
+  version: 7946.0.8
+  resolution: "@types/geojson@npm:7946.0.8"
+  checksum: 6049a39b025cfe323d5cf87333d87c133ec963cdbd349c49295bee779827ee4b46a3041fd8bd2e7a4b02d6d1e26f3002968875928941bbed08477bfd5f6f9284
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.2":
   version: 4.1.5
   resolution: "@types/graceful-fs@npm:4.1.5"
@@ -3111,13 +3118,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^27.4.0":
-  version: 27.4.0
-  resolution: "@types/jest@npm:27.4.0"
+"@types/jest@npm:^27.4.1":
+  version: 27.4.1
+  resolution: "@types/jest@npm:27.4.1"
   dependencies:
-    jest-diff: ^27.0.0
+    jest-matcher-utils: ^27.0.0
     pretty-format: ^27.0.0
-  checksum: d2350267f954f9a2e4a15e5f02fbf19a77abfb9fd9e57a954de1fb0e9a0d3d5f8d3646ac7d9c42aeb4b4d828d2e70624ec149c85bb50a48634a54eed8429e1f8
+  checksum: 5184f3eef4832d01ee8f59bed15eec45ccc8e29c724a5e6ce37bf74396b37bdf04f557000f45ba4fc38ae6075cf9cfcce3d7a75abc981023c61ceb27230a93e4
   languageName: node
   linkType: hard
 
@@ -3188,10 +3195,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^17.0.18":
+"@types/node@npm:*":
   version: 17.0.18
   resolution: "@types/node@npm:17.0.18"
   checksum: 6c4edfc2b3ba2342a9c3d56e934c5245948ab752f4dc04bd6790b9603e6ebc53bc4f5befc3662e207f7dba2ddd17ccf657f915e319ea7cdd4f77b851079d1611
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^17.0.21":
+  version: 17.0.21
+  resolution: "@types/node@npm:17.0.21"
+  checksum: 89dcd2fe82f21d3634266f8384e9c865cf8af49685639fbdbd799bdd1040480fb1e8eeda2d3b9fce41edbe704d2a4be9f427118c4ae872e8d9bb7cbeb3c41a94
   languageName: node
   linkType: hard
 
@@ -3305,6 +3319,13 @@ __metadata:
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
   checksum: 25cb860ff10dde48b54622d58b23e66214211a61c84c0f15f88d38b61aa1b53d4d46e42b557924a93178c501c166aa37e28d7f6d994aba13d24685326272d5db
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
   languageName: node
   linkType: hard
 
@@ -3676,9 +3697,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-xyo-client-js@npm:^2.11.10":
-  version: 2.11.10
-  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.11.10"
+"@xyo-network/sdk-xyo-client-js@npm:^2.11.12":
+  version: 2.11.12
+  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.11.12"
   dependencies:
     "@ethersproject/providers": ^5.5.3
     "@xylabs/sdk-js": ^2.4.2
@@ -3691,13 +3712,13 @@ __metadata:
     keccak256: ^1.0.6
     lodash: ^4.17.21
     mongodb: ^4.4.0
-    neo4j-driver: ^4.4.2
-    neo4j-driver-core: ^4.4.2
+    neo4j-driver: ^4.4.3
+    neo4j-driver-core: ^4.4.3
     sha.js: ^2.4.11
     systeminformation: ^5.11.4
     ua-parser-js: ^1.0.2
     uuid: ^8.3.2
-  checksum: c97377e0d5de75df6ec64ac511439ebd86681608a211bb14341948d60752b9a12536043b4da14d89ab1ce5de423d19c93e420dfbc32b8f2ac75bf11d465e8d25
+  checksum: 7641e78a9e3627f052ca31af5311d8e2fa00338076c023b46495e68302b58e34d459525d428c54cd4aeaaeea648ef1041856f85d9a30fcbd6999eb414f3a9d02
   languageName: node
   linkType: hard
 
@@ -3926,7 +3947,7 @@ __metadata:
     "@aws-sdk/client-secrets-manager": ^3.52.0
     "@babel/core": ^7.17.5
     "@babel/preset-env": ^7.16.11
-    "@rollup/plugin-commonjs": ^21.0.1
+    "@rollup/plugin-commonjs": ^21.0.2
     "@rollup/plugin-json": ^4.1.0
     "@rollup/plugin-replace": ^3.1.0
     "@rollup/plugin-strip": ^2.1.0
@@ -3935,19 +3956,21 @@ __metadata:
     "@types/cors": ^2.8.12
     "@types/express": 4.17.13
     "@types/express-mung": ^0.5.2
-    "@types/jest": ^27.4.0
+    "@types/geojson": ^7946.0.8
+    "@types/jest": ^27.4.1
     "@types/lodash": ^4.14.178
-    "@types/node": ^17.0.18
+    "@types/node": ^17.0.21
     "@types/source-map-support": 0.5.4
     "@types/supertest": ^2.0.11
     "@types/swagger-ui-express": ^4.1.3
+    "@types/uuid": ^8.3.4
     "@xylabs/eslint-config": ^2.3.17
     "@xylabs/rollup-config": ^1.1.7
     "@xylabs/sdk-api-express-ecs": ^1.1.2
     "@xylabs/sdk-js": ^2.4.2
     "@xylabs/ts-scripts": ^1.0.44
     "@xylabs/tsconfig": ^1.0.12
-    "@xyo-network/sdk-xyo-client-js": ^2.11.10
+    "@xyo-network/sdk-xyo-client-js": ^2.11.12
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
     axios: ^0.26.0
     babel-jest: ^27.5.1
@@ -3959,6 +3982,7 @@ __metadata:
     eslint: ^8.9.0
     express: ^4.17.3
     express-mung: ^0.5.1
+    geojson: ^0.5.0
     http-status-codes: ^2.2.0
     jest: ^27.5.1
     license-checker: ^25.0.1
@@ -3975,13 +3999,14 @@ __metadata:
     sha.js: ^2.4.11
     source-map-support: ^0.5.21
     supertest: ^6.2.2
-    swagger-autogen: ^2.18.8
+    swagger-autogen: ^2.19.0
     swagger-ui-express: ^4.3.0
     ts-jest: ^27.1.3
     ts-node: ^10.5.0
     ts-toolbelt: ^9.6.0
     tslib: ^2.3.1
     typescript: ^4.5.5
+    uuid: ^8.3.2
   languageName: unknown
   linkType: soft
 
@@ -6542,6 +6567,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"geojson@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "geojson@npm:0.5.0"
+  checksum: 44fbf916dc66d17f1561fb56fd2741f21e26da5dd7daf842a794119c841c7f6d611ccc21d9797c9c62a78c41a0f841c0648042989a5a5a05045835c6ada8612f
+  languageName: node
+  linkType: hard
+
 "get-caller-file@npm:^2.0.5":
   version: 2.0.5
   resolution: "get-caller-file@npm:2.0.5"
@@ -7655,7 +7687,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:^27.0.0, jest-diff@npm:^27.5.1":
+"jest-diff@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-diff@npm:27.5.1"
   dependencies:
@@ -7784,7 +7816,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-matcher-utils@npm:^27.5.1":
+"jest-matcher-utils@npm:^27.0.0, jest-matcher-utils@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-matcher-utils@npm:27.5.1"
   dependencies:
@@ -9350,33 +9382,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"neo4j-driver-bolt-connection@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "neo4j-driver-bolt-connection@npm:4.4.2"
+"neo4j-driver-bolt-connection@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "neo4j-driver-bolt-connection@npm:4.4.3"
   dependencies:
     buffer: ^6.0.3
-    neo4j-driver-core: ^4.4.2
+    neo4j-driver-core: ^4.4.3
     string_decoder: ^1.3.0
-  checksum: 8d37e404f8a357c70569f2b312e4d20701dde991aee8f43da97e29ec2aec6c4ba700aa411a8fc7ca6f332ffc1e7e4ee074624d0397d6ac5eae95037c72cf4add
+  checksum: 6ef6e15d796d00b2d1f1ba68d429b6908b58c8e81a259bf74f39283bd753954e38327dd6550596e9f38f25776f366b4baeb0b903377c48776f5a346322d61213
   languageName: node
   linkType: hard
 
-"neo4j-driver-core@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "neo4j-driver-core@npm:4.4.2"
-  checksum: ac612e33ae9733f5c9433d9186c55bbaa221542bc18d1ab9e9d7eda3c92151571410fc25a9f64c54c09eaf66c7f2e6a06f3f8de410ce1e3536e4943ca1ac24ab
+"neo4j-driver-core@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "neo4j-driver-core@npm:4.4.3"
+  checksum: 954cc3f94a8662c90f6025e60955b60cd5ed1840897568394893ec80ed9fd8e7ecc6cf30a7cb39dfa3c61c60589ccad486897d5fdd1716da08e69dafb4df8e5b
   languageName: node
   linkType: hard
 
-"neo4j-driver@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "neo4j-driver@npm:4.4.2"
+"neo4j-driver@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "neo4j-driver@npm:4.4.3"
   dependencies:
     "@babel/runtime": ^7.5.5
-    neo4j-driver-bolt-connection: ^4.4.2
-    neo4j-driver-core: ^4.4.2
+    neo4j-driver-bolt-connection: ^4.4.3
+    neo4j-driver-core: ^4.4.3
     rxjs: ^6.6.3
-  checksum: b252de02634ba62cade71396b4db17f8d76c07448b4ed6afc60ef85d95b23d6350791104db2a0275b25d78e89b4c2c58a310a66ee3d4576131d2255c9f6f594c
+  checksum: 933167fe0726fefec58ebf92542779cba93f7d46755a41f854e5e581c2cdcf32373437f6c10910d2082e2b75380915e21661dcf99de03b814c6dbc4157cd5b61
   languageName: node
   linkType: hard
 
@@ -12967,15 +12999,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-autogen@npm:^2.18.8":
-  version: 2.18.8
-  resolution: "swagger-autogen@npm:2.18.8"
+"swagger-autogen@npm:^2.19.0":
+  version: 2.19.0
+  resolution: "swagger-autogen@npm:2.19.0"
   dependencies:
     acorn: ^7.4.1
     deepmerge: ^4.2.2
     glob: ^7.1.7
     json5: ^2.2.0
-  checksum: a69de51c8518bf19d16a4fa003a066899a34e8832cd1c6bc991d15aab5a42df5d8116fd17013519fed641cf1fab9b354390642283d65d540f1d73bf708b6567d
+  checksum: e263e2f0ebe8f4209dfb218a13f602c8b8d5fe0a63a94e494d4a4e6e71a13d25076a2563039d728ce83880e2cd17c3b6a7778ac16b2c1a75bd645cd3bdd38368
   languageName: node
   linkType: hard
 
