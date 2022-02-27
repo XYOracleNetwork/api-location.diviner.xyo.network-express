@@ -9,7 +9,6 @@
 [![codeclimate-badge][]][codeclimate-link]
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Description](#description)
 - [Deploy](#deploy)
 - [Maintainers](#maintainers)
