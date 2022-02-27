@@ -21,7 +21,8 @@ Api/implementation of Location Diviner
 
 ## Deploy
 
-Pushing to the ecs_live branch deploys to ECS
+Pushing to the `prod` branch deploys to Production
+Pushing to the `beta` branch deploys to Beta
 
 ## Maintainers
 
