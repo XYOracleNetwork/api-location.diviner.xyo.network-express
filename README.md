@@ -3,17 +3,18 @@
 # @XYOracleNetwork/api-location.diviner.xyo.network-express
 
 [![main-build][]][main-build-link]
-[![ecs-deploy][]][ecs-deploy-link]
+[![prod-deploy][]][prod-deploy-link]
+[![beta-deploy][]][beta-deploy-link]
 [![codacy-badge][]][codacy-link]
 [![codeclimate-badge][]][codeclimate-link]
 
 ## Table of Contents
 
-- [Description](#description)
-- [Deploy](#deploy)
-- [Maintainers](#maintainers)
-- [License](#license)
-- [Credits](#credits)
+  - [Description](#description)
+  - [Deploy](#deploy)
+  - [Maintainers](#maintainers)
+  - [License](#license)
+  - [Credits](#credits)
 
 ## Description
 
@@ -38,8 +39,8 @@ See the [LICENSE](LICENSE) file for license details
 [logo]: https://cdn.xy.company/img/brand/XYO_full_colored.png
 [main-build]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/build-main.yml/badge.svg
 [main-build-link]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/build-main.yml
-[ecs-deploy]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/deploy-to-aws-ecs.yml/badge.svg
-[ecs-deploy-link]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/deploy-to-aws-ecs.yml
+[prod-deploy-link]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/deploy-prod.yml
+[beta-deploy-link]: https://github.com/XYOracleNetwork/api-location.diviner.xyo.network-express/actions/workflows/deploy-beta.yml
 [codacy-badge]: https://app.codacy.com/project/badge/Grade/14640dade84b44a69e7b9daafd07be46
 [codacy-link]: https://www.codacy.com/gh/XYOracleNetwork/api-location.diviner.xyo.network-express/dashboard?utm_source=github.com&utm_medium=referral&utm_content=xylabs/api-xylabs-import-nodejs&utm_campaign=Badge_Grade
 [codeclimate-badge]: https://api.codeclimate.com/v1/badges/dc0bb5770f231f22f826/maintainability
