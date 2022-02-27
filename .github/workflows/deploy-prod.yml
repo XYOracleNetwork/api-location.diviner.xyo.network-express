@@ -1,7 +1,6 @@
 name: Deploy Prod
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - prod
