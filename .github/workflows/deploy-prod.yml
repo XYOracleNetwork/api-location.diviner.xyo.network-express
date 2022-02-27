@@ -14,7 +14,9 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: prod
+    environment:
+      name: prod
+      url: https://api.location.diviner.xyo.network/
 
     steps:
       - name: Checkout
