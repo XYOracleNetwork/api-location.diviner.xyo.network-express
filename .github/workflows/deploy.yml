@@ -1,10 +1,42 @@
-name: Deploy Prod
+name: Deploy
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - prod
+  workflow_call:
+    inputs:
+      task-definition:
+        description: "The task definition file to use as a template for deploying."
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: "Specifies an AWS access key associated with an IAM user or role."
+        required: true
+        type: string
+      AWS_SECRET_ACCESS_KEY:
+        description: "Specifies the secret key associated with the access key."
+        required: true
+        type: string
+      ECR_REPOSITORY:
+        description: "The ECR Repository to use for storing/retrieving the build image."
+        required: true
+        type: string
+      ECS_SERVICE:
+        description: "The ECR Service to deploy to."
+        required: true
+        type: string
+      ECS_CLUSTER:
+        description: "The ECR Cluster to deploy to."
+        required: true
+        type: string
+      AWS_ENV_SECRET_ARN:
+        description: "The ARN of the AWS Secret to use for bootstrapping the deployed container environment."
+        required: true
+        type: string
+    # environment:
+    #   description: "Environment to deploy to"
+    #   type: environment
+    #   required: true
 
 env:
   AWS_REGION: us-east-1
@@ -14,10 +46,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment:
-      name: prod
-      url: https://api.location.diviner.xyo.network/
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,7 +55,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ECS_DEPLOY_ACCESS_KEY_SELECT }}
           aws-secret-access-key: ${{ secrets.AWS_ECS_DEPLOY_SECRET_KEY_SELECT }}
-          aws-region: us-east-1
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -50,7 +78,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@374ee96751fffe528c09b5f427848da60469bb55
         with:
-          task-definition: .aws/task-definition-prod.json
+          task-definition: ${{ inputs.task-definition }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
