@@ -13,7 +13,7 @@ env:
 jobs:
   deploy:
     uses: ./.github/workflows/deploy.yml
-    inputs:
+    with:
       task-definition: .aws/task-definition-prod.json
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ECS_DEPLOY_ACCESS_KEY_SELECT }}
