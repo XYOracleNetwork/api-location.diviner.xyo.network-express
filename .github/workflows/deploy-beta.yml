@@ -12,7 +12,7 @@ env:
 
 jobs:
   deploy:
-    uses: .github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     inputs:
       task-definition: .aws/task-definition-prod.json
     secrets:
