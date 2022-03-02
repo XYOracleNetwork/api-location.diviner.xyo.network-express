@@ -26,9 +26,9 @@ test('Must have APP_PORT ENV VAR defined', () => {
   expect(process.env.APP_PORT).toBeTruthy()
 })
 
-const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
-const testArchive = process.env.ARCHIVE || 'temp'
-const schema = 'location.diviner.xyo.network'
+export const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
+export const testArchive = process.env.ARCHIVE || 'temp'
+
 const request = supertest(`http://localhost:${process.env.APP_PORT}`)
 
 const randBetween = (min: number, max: number) => {
@@ -53,7 +53,7 @@ export const getValidRequest = (
   stopTime = new Date().toISOString()
 ): LocationDivinerQueryCreationRequest => {
   return {
-    query: { schema, startTime, stopTime },
+    query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
     sourceArchive: { apiDomain, archive },
   }
