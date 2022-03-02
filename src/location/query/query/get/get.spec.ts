@@ -1,4 +1,5 @@
-import { LocationDivinerQueryCreationResponse } from '../../../../model'
+import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
+
 import { createQuery, getQuery } from '../../../../test'
 
 // TODO: Remove hardcoded delay as they always result in intermittent
