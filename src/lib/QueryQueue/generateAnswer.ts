@@ -11,6 +11,7 @@ import { FeatureCollection } from 'geojson'
 import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
 import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
+import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
 
 export const querySchema = 'network.xyo.location.range.query'
 export const answerSchema = 'network.xyo.location.range.answer'
@@ -43,10 +44,11 @@ export const generateAnswer = async (
     const start = response.query.startTime ? new Date(response.query.startTime) : new Date(0)
     const stop = response.query.stopTime ? new Date(response.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const points = locations.map(convertLocationSchemaToGeoJson)
+    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationSchemaToGeoJson)
     const answer = getFeatureCollectionFromPoints(points)
     return await storeAnswer(resultArchive, answer, address)
   } catch (error) {
+    console.log(error)
     return await storeError(resultArchive, 'Error calculating answer', address)
   }
 }
