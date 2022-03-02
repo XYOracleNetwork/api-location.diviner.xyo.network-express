@@ -3697,9 +3697,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-xyo-client-js@npm:^2.11.12":
-  version: 2.11.12
-  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.11.12"
+"@xyo-network/sdk-xyo-client-js@npm:^2.11.13":
+  version: 2.11.13
+  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.11.13"
   dependencies:
     "@ethersproject/providers": ^5.5.3
     "@xylabs/sdk-js": ^2.4.2
@@ -3715,10 +3715,10 @@ __metadata:
     neo4j-driver: ^4.4.3
     neo4j-driver-core: ^4.4.3
     sha.js: ^2.4.11
-    systeminformation: ^5.11.4
+    systeminformation: ^5.11.5
     ua-parser-js: ^1.0.2
     uuid: ^8.3.2
-  checksum: 7641e78a9e3627f052ca31af5311d8e2fa00338076c023b46495e68302b58e34d459525d428c54cd4aeaaeea648ef1041856f85d9a30fcbd6999eb414f3a9d02
+  checksum: 4ec0ac70592b599d65d7c0e9c79e2bfeedc4fd56a3fdc8ad5052caad619965a5dab7f8de153b270c9ccd7b105fa9ffb2903771cd1b2c6d9d9d5aec75ebeaf2f9
   languageName: node
   linkType: hard
 
@@ -3970,7 +3970,7 @@ __metadata:
     "@xylabs/sdk-js": ^2.4.2
     "@xylabs/ts-scripts": ^1.0.44
     "@xylabs/tsconfig": ^1.0.12
-    "@xyo-network/sdk-xyo-client-js": ^2.11.12
+    "@xyo-network/sdk-xyo-client-js": ^2.11.13
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
     axios: ^0.26.0
     babel-jest: ^27.5.1
@@ -13036,12 +13036,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.11.4":
-  version: 5.11.4
-  resolution: "systeminformation@npm:5.11.4"
+"systeminformation@npm:^5.11.5":
+  version: 5.11.6
+  resolution: "systeminformation@npm:5.11.6"
   bin:
     systeminformation: lib/cli.js
-  checksum: fcb71b933c6d77072f2ad86b7688f0fa6feb975829eeddd1fc877e0e99dff0ff50cc11c978b97b1662c9d935a3b19c6e01a110d7e6481d7232fd6e2c23fcf10c
+  checksum: 46b0702f333cd3a2104b211265b62bcc3dbd5ddca1f294f6b5b032a2b04297a5e934b9c1e4eaf010fc496cd4e207a5496a09d425e3efdbc3b9539226f3493484
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
