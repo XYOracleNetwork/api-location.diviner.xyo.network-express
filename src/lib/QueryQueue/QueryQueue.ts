@@ -1,4 +1,5 @@
-import { LocationDivinerQueryCreationResponse } from '../../model'
+import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
+
 import { generateAnswer } from './generateAnswer'
 
 interface QueueData {

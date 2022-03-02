@@ -1,4 +1,4 @@
-import { LocationDivinerQuery } from '../../../model'
+import { LocationDivinerQuery } from '@xyo-network/sdk-xyo-client-js'
 
 const validateDate = (date: Date) => {
   return date instanceof Date && !isNaN(date.valueOf())

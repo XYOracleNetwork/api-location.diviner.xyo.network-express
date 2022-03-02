@@ -1,4 +1,6 @@
 import {
+  LocationDivinerQueryCreationRequest,
+  LocationDivinerQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitness,
@@ -10,12 +12,7 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import {
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
-  LocationWitnessPayloadBody,
-  locationWitnessPayloadSchema,
-} from '../model'
+import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
