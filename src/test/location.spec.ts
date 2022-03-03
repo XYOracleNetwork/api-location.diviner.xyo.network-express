@@ -97,7 +97,13 @@ describe('Round trip tests', () => {
   it.skip('Handles missing source archivist', async () => {
     // TODO: test
   }, 10000)
+  it.skip('Handles missing source archive', async () => {
+    // TODO: test
+  }, 10000)
   it.skip('Handles missing target archivist', async () => {
+    // TODO: test
+  }, 10000)
+  it.skip('Handles missing target archive', async () => {
     // TODO: test
   }, 10000)
 })
