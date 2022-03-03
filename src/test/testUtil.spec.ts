@@ -35,6 +35,8 @@ const randBetween = (min: number, max: number) => {
   return Math.random() * (max - min) + min
 }
 
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const getDiviner = (): SuperTest<Test> => {
   return request
 }

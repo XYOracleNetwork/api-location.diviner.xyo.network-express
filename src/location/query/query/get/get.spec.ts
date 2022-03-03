@@ -1,10 +1,6 @@
 import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
 
-import { createQuery, getQuery } from '../../../../test'
-
-// TODO: Remove hardcoded delay as they always result in intermittent
-// test failures
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+import { createQuery, delay, getQuery } from '../../../../test'
 
 describe('GET /location/query/:hash', () => {
   it('returns answerHash', async () => {

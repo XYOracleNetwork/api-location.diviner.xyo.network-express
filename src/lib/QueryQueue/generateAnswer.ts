@@ -9,7 +9,7 @@ import {
 import { FeatureCollection } from 'geojson'
 
 import { answerSchema } from '../../model'
-import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
+import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
@@ -42,7 +42,7 @@ export const generateAnswer = async (
     const start = response.query.startTime ? new Date(response.query.startTime) : new Date(0)
     const stop = response.query.stopTime ? new Date(response.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationSchemaToGeoJson)
+    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
     const answer = getFeatureCollectionFromPoints(points)
     return await storeAnswer(resultArchive, answer, address)
   } catch (error) {

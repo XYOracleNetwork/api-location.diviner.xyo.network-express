@@ -3,7 +3,7 @@ import { Feature, Point } from 'geojson'
 import { LocationWitnessPayload } from '../../model'
 import { GeoJsonPointProperties } from './GeoJsonPointProperties'
 
-export const convertLocationSchemaToGeoJson = (
+export const convertLocationWitnessPayloadToGeoJson = (
   payload: LocationWitnessPayload
 ): Feature<Point, GeoJsonPointProperties> => {
   const { schema, _archive, _client, _timestamp } = payload as GeoJsonPointProperties

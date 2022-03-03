@@ -9,11 +9,15 @@ import { FeatureCollection, Point } from 'geojson'
 
 import { GeoJsonPointProperties } from '../lib'
 import { answerSchema } from '../model'
-import { createQuery, getArchivist, getQuery, getValidRequest, testArchive, witnessNewLocation } from './testUtil.spec'
-
-// TODO: Remove hardcoded delay as they always result in intermittent
-// test failures
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+import {
+  createQuery,
+  delay,
+  getArchivist,
+  getQuery,
+  getValidRequest,
+  testArchive,
+  witnessNewLocation,
+} from './testUtil.spec'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()
