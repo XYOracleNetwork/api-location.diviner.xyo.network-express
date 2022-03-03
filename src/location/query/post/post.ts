@@ -1,9 +1,12 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
+import {
+  LocationDivinerQueryCreationRequest,
+  LocationDivinerQueryCreationResponse,
+} from '@xyo-network/sdk-xyo-client-js'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import { QueryQueue } from '../../../lib'
-import { LocationDivinerQueryCreationRequest, LocationDivinerQueryCreationResponse } from '../../../model'
 import { createLocationQuery } from './createLocationQuery'
 import { validateArchiveConfig } from './validateArchiveConfig'
 import { validateQuery } from './validateQuery'

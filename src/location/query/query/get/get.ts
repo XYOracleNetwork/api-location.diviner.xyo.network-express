@@ -44,6 +44,6 @@ const handler: RequestHandler<GetLocationQueryRequestParams, GetLocationQueryRes
   next()
 }
 
-// TODO: Wrap in handler once async
+// NOTE: Wrap in handler if ever async
 // export const getLocationQuery = asyncHandler(handler)
 export const getLocationQuery = handler

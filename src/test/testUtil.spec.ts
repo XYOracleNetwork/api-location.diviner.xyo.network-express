@@ -1,4 +1,6 @@
 import {
+  LocationDivinerQueryCreationRequest,
+  LocationDivinerQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitness,
@@ -10,12 +12,7 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import {
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
-  LocationWitnessPayloadBody,
-  locationWitnessPayloadSchema,
-} from '../model'
+import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -29,14 +26,16 @@ test('Must have APP_PORT ENV VAR defined', () => {
   expect(process.env.APP_PORT).toBeTruthy()
 })
 
-const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
-const testArchive = process.env.ARCHIVE || 'temp'
-const schema = 'location.diviner.xyo.network'
+export const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
+export const testArchive = process.env.ARCHIVE || 'temp'
+
 const request = supertest(`http://localhost:${process.env.APP_PORT}`)
 
 const randBetween = (min: number, max: number) => {
   return Math.random() * (max - min) + min
 }
+
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const getDiviner = (): SuperTest<Test> => {
   return request
@@ -56,7 +55,7 @@ export const getValidRequest = (
   stopTime = new Date().toISOString()
 ): LocationDivinerQueryCreationRequest => {
   return {
-    query: { schema, startTime, stopTime },
+    query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
     sourceArchive: { apiDomain, archive },
   }

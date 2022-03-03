@@ -1,10 +1,10 @@
 import { LocationWitnessPayload } from '../../model'
 import { sample } from '../../test'
-import { convertLocationSchemaToGeoJson } from './convertLocationSchemaToGeoJson'
-describe('convertLocationSchemaToGeoJson', () => {
+import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
+describe('convertLocationWitnessPayloadToGeoJson', () => {
   it('converts data formatted according to the schema into a GeoJson Feature', () => {
     const payload = sample as LocationWitnessPayload
-    const actual = convertLocationSchemaToGeoJson(payload)
+    const actual = convertLocationWitnessPayloadToGeoJson(payload)
     expect(actual?.id).toBe(payload._hash)
     expect(actual?.type).toBe('Feature')
     expect(actual?.geometry).toBeTruthy()

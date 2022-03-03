@@ -31,6 +31,26 @@ describe('POST /location/query', () => {
       request.query.stopTime = ''
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archivist`, async () => {
+      const request = getValidRequest()
+      delete (request.sourceArchive as { apiDomain?: string })?.apiDomain
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archive`, async () => {
+      const request = getValidRequest()
+      delete (request.sourceArchive as { archive?: string })?.archive
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archivist`, async () => {
+      const request = getValidRequest()
+      delete (request.resultArchive as { apiDomain?: string })?.apiDomain
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archive`, async () => {
+      const request = getValidRequest()
+      delete (request.resultArchive as { archive?: string })?.archive
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
   })
   describe('valid query', () => {
     it('returns the hash of the bound witness block', async () => {
