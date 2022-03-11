@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
+import { locationHeatmapQuerySchema } from '../lib'
 import { GetLocationQueryResponse } from '../location'
 import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
@@ -49,13 +50,24 @@ export const getArchivist = (archive = testArchive): XyoArchivistApi => {
   return new XyoArchivistApi({ apiDomain, archive })
 }
 
-export const getValidRequest = (
+export const getValidLocationRangeRequest = (
   archive = testArchive,
   startTime = new Date(0).toISOString(),
   stopTime = new Date().toISOString()
 ): LocationDivinerQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
+    resultArchive: { apiDomain, archive },
+    sourceArchive: { apiDomain, archive },
+  }
+}
+export const getValidLocationHeatmapRequest = (
+  archive = testArchive,
+  startTime = new Date(0).toISOString(),
+  stopTime = new Date().toISOString()
+): LocationDivinerQueryCreationRequest => {
+  return {
+    query: { schema: locationHeatmapQuerySchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
     sourceArchive: { apiDomain, archive },
   }
@@ -93,7 +105,7 @@ export const witnessNewLocation = async (api: XyoArchivistApi) => {
 }
 
 export const createQuery = async (
-  data: LocationDivinerQueryCreationRequest = getValidRequest(),
+  data: LocationDivinerQueryCreationRequest = getValidLocationRangeRequest(),
   expectedStatus: StatusCodes = StatusCodes.OK
 ): Promise<LocationDivinerQueryCreationResponse> => {
   const response = await getDiviner().post('/location/query').send(data).expect(expectedStatus)

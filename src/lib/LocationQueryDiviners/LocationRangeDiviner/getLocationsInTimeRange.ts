@@ -1,6 +1,6 @@
 import { XyoArchivistApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationWitnessPayload, locationWitnessPayloadSchema } from '../../model'
+import { LocationWitnessPayload, locationWitnessPayloadSchema } from '../../../model'
 
 interface WithTimestamp {
   _timestamp: number

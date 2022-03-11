@@ -7,17 +7,17 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
-import { GeoJsonPointProperties } from '../lib'
-import { answerSchema } from '../model'
 import {
   createQuery,
   delay,
   getArchivist,
   getQuery,
-  getValidRequest,
+  getValidLocationRangeRequest,
   testArchive,
   witnessNewLocation,
-} from './testUtil.spec'
+} from '../../../test'
+import { LocationRangePointProperties } from './LocationRangePointProperties'
+import { locationRangeAnswerSchema } from './LocationRangeQuerySchema'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()
@@ -37,7 +37,7 @@ const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
 
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, GeoJsonPointProperties>) => {
+const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationRangePointProperties>) => {
   expect(queryResult).toBeTruthy()
   expect(queryResult?.type).toBe('FeatureCollection')
   expect(queryResult?.features).toBeTruthy()
@@ -47,7 +47,7 @@ const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationDivinerQueryCreationRequest
-): Promise<FeatureCollection<Point, GeoJsonPointProperties>> => {
+): Promise<FeatureCollection<Point, LocationRangePointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
   await delay(5000)
@@ -57,8 +57,8 @@ const getQueryAnswer = async (
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()
   expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(answerSchema)
-  const answer = payload?.result as FeatureCollection<Point, GeoJsonPointProperties>
+  expect(payload?.schema).toBe(locationRangeAnswerSchema)
+  const answer = payload?.result as FeatureCollection<Point, LocationRangePointProperties>
   validateGeoJsonFeatureCollection(answer)
   return answer
 }
@@ -77,7 +77,7 @@ describe('Round trip tests', () => {
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
-    const queryCreationRequest = getValidRequest(testArchive, startTime, stopTime)
+    const queryCreationRequest = getValidLocationRangeRequest(testArchive, startTime, stopTime)
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(locationsToWitness)
   }, 10000)
@@ -87,7 +87,7 @@ describe('Round trip tests', () => {
     futureStartTime.setDate(now.getDate() + 1)
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
-    const queryCreationRequest = getValidRequest(
+    const queryCreationRequest = getValidLocationRangeRequest(
       testArchive,
       futureStartTime.toISOString(),
       futureStopTime.toISOString()

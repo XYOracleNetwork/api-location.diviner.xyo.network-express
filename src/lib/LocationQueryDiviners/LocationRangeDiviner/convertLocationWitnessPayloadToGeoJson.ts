@@ -1,13 +1,13 @@
 import { Feature, Point } from 'geojson'
 
-import { LocationWitnessPayload } from '../../model'
-import { GeoJsonPointProperties } from './GeoJsonPointProperties'
+import { LocationWitnessPayload } from '../../../model'
+import { LocationRangePointProperties } from './LocationRangePointProperties'
 
 export const convertLocationWitnessPayloadToGeoJson = (
   payload: LocationWitnessPayload
-): Feature<Point, GeoJsonPointProperties> => {
-  const { schema, _archive, _client, _timestamp } = payload as GeoJsonPointProperties
-  const properties: GeoJsonPointProperties = {
+): Feature<Point, LocationRangePointProperties> => {
+  const { schema, _archive, _client, _timestamp } = payload as LocationRangePointProperties
+  const properties: LocationRangePointProperties = {
     _archive,
     _client,
     _timestamp,
@@ -20,7 +20,7 @@ export const convertLocationWitnessPayloadToGeoJson = (
     coordinates: [payload.currentLocation.coords.longitude, payload.currentLocation.coords.latitude],
     type: 'Point',
   }
-  const feature: Feature<Point, GeoJsonPointProperties> = {
+  const feature: Feature<Point, LocationRangePointProperties> = {
     geometry,
     properties,
     type: 'Feature',

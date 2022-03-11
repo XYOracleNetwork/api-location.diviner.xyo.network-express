@@ -1,16 +1,36 @@
 import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
 
-import { generateAnswer } from './generateAnswer'
+import {
+  divineLocationHeatmapAnswer,
+  divineLocationRangeAnswer,
+  LocationQuerySchema,
+  QueryProcessor,
+} from '../LocationQueryDiviners'
 
 interface QueueData {
   response: LocationDivinerQueryCreationResponse
   result?: string
 }
 
+const locationQueryDivinersBySchema: Record<
+  LocationQuerySchema,
+  QueryProcessor<LocationDivinerQueryCreationResponse>
+> = {
+  'network.xyo.location': divineLocationRangeAnswer,
+  'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
+  'network.xyo.location.range.query': divineLocationRangeAnswer,
+}
+
 export class QueryQueue {
   protected queue: Record<string, QueueData> = {}
 
   public enqueue(hash: string, response: LocationDivinerQueryCreationResponse) {
+    const schema = response.query.schema as LocationQuerySchema
+    const queryProcessor = locationQueryDivinersBySchema[schema]
+    if (!queryProcessor) {
+      throw new Error(`Diviner not configured to answer queries for schemas of type: ${schema}`)
+    }
+
     // NOTE: Since we're using the archivist for a state store (we don't have a
     // cache) we're storing the queries in memory. This is fine for now as:
     // • queries are processed immediately anyway
@@ -19,7 +39,7 @@ export class QueryQueue {
     this.queue[hash] = { response }
 
     // Fire off task in background
-    void generateAnswer(response)
+    void queryProcessor(response)
       .then((result) => {
         this.queue[hash].result = result
       })

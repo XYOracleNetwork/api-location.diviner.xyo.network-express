@@ -8,7 +8,7 @@ import {
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { querySchema } from '../../../model'
+import { locationHeatmapQuerySchema, locationRangeQuerySchema } from '../../../lib'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
@@ -18,7 +18,11 @@ const getArchivistApiSdk = (config: XyoArchivistApiConfig) => {
 
 export const createLocationQuery = async (request: LocationDivinerQueryCreationRequest) => {
   const api = getArchivistApiSdk(request.resultArchive)
-  const payload = new XyoPayloadBuilder({ schema: querySchema }).fields({ ...request }).build()
+  // TODO: Strongly-typed support here
+  const schema =
+    // Default query to Location Range Query until strongly typed support
+    request.query.schema === locationHeatmapQuerySchema ? locationHeatmapQuerySchema : locationRangeQuerySchema
+  const payload = new XyoPayloadBuilder({ schema }).fields({ ...request }).build()
   const address = XyoAddress.random()
   const bw = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
   const { boundWitnesses, payloads } = await api.postBoundWitness(bw)
