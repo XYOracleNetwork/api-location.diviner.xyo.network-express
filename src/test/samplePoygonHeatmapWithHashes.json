@@ -1,10 +1,7 @@
 {
-  "type": "FeatureCollection",
   "features": [
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -28,17 +25,17 @@
               31.952162238024975
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "2fb6744caf9a5531224d61a07b98e9363e87acb1b0b83c4949bedd8878e5c462",
         "value": 93.77797514958787
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -62,17 +59,17 @@
               42.032974332441405
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "81799839fea922fe2191884cb2a19cc381311c5b77478589fdfe4f952e82b3d3",
         "value": 84.72204574930271
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -96,17 +93,17 @@
               32.84267363195431
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "0b5cb2acd361b93f7d0d4617a5d5fa9fa30df514a8e75e86bd6f085a4dd12e48",
         "value": 6.9008579118354785
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -130,17 +127,17 @@
               38.54816542304656
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "3b69d39119c544c7df2e1073031b51b1dbd4b6c913e7d4825f1eff951b0a5ce1",
         "value": 1.5049353932317766
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -164,17 +161,17 @@
               0
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "fd377cfcb9a233bb7d86766f408da324e61fe05f47e70bed1777b76e22449540",
         "value": 64.52227104833082
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -198,17 +195,17 @@
               -13.923403897723334
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "cf0c01ee3e2d4665fc300cf254447d50122be6155bfb3c4c2fb5779c3f4dbabc",
         "value": 16.4601906334221
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -232,17 +229,17 @@
               -30.145127183376115
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "efd7d544c3d2f38dd4594643c69254ca1cec985ca22a5b5bab56bc7927e3553d",
         "value": 28.09282945922227
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -266,17 +263,17 @@
               -50.28933925329178
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "c4fa55b51728beff3e96c4a7619d6eba9f7b64ff3656a0c7a44402303937fd00",
         "value": 61.51325862330612
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -300,17 +297,17 @@
               20.632784250388028
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "0dbff1e3c3a43c5392c1d6fc1032a9027bd7364f68bd483c6ca86873b8b9a5ee",
         "value": 92.59659402859006
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -334,17 +331,17 @@
               10.487811882056695
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "e03346df79261ece3df419216fca1ec0cf325b5e097dc3083d2218f3704c6914",
         "value": 90.43119845829966
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -368,17 +365,17 @@
               -3.162455530237848
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "d293dc9be3ae849e74201747dbc1b1405e955769eb17f76d025f166aa74f32b6",
         "value": 17.70916923916428
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -402,17 +399,17 @@
               -14.77488250651626
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "b6a260d1d3a0411480407a166db71bf8a419d4fc81de906ffba61d1610b9cfd3",
         "value": 41.44758590065338
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -436,17 +433,17 @@
               -26.273714024406416
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "cfc144d87cc24112f44e543fb2877244379d1f490eb2d4fda496cc0599f76084",
         "value": 53.74309773309456
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -470,17 +467,17 @@
               19.31114335506464
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "cad6bd6010803d16c153f7cb67a7cd8e41d943450a27a49ac16fdc1e300e3db0",
         "value": 1.358979125667048
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -504,17 +501,17 @@
               21.12549763660628
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "701b00556bbf752526e0097c0e3420d13c37e24cb091a5a1624fc055b8831ea7",
         "value": 82.50605272902081
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -538,17 +535,17 @@
               47.040182144806664
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "3702906211f82a6a0c6ff8e2c9cacb898db5a7e788d998c95b0b105b64d7705b",
         "value": 30.88930918441639
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -572,17 +569,17 @@
               45.089035564831036
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "2ad8c245c624c023206d8966d0dcc7b554af3a4f61961e54beb399ecab2dff21",
         "value": 8.487638732841418
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -606,17 +603,17 @@
               47.517200697839414
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "e8b71a8ed06c9f171c4bb6e17038e6777fe74909d97ed6b18e0a5dd993d0dad5",
         "value": 67.45919405485326
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -640,17 +637,17 @@
               45.82879925192134
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "9585be8f5ac7a3970a7da183cea6bcf41e1ba63fe4326889cb8e92a472b65219",
         "value": 23.751827807254422
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -674,17 +671,17 @@
               20.96143961409684
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "7518d30b7928489a4baf635d18a9604ce7bbc42d5e57f1f4c0498d37135296bb",
         "value": 44.19119645079632
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -708,17 +705,17 @@
               27.059125784374068
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "4798e85a53c56fe69221e87e1f12b8eff57e9589552fe3fc18ccdd601dad7096",
         "value": 93.51470048357862
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -742,17 +739,17 @@
               62.431074232920906
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "911fee08325287af45d717d09804ace6a0ba2407e1bd72c4788e40d7de483e1d",
         "value": 11.195211869120246
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -776,17 +773,17 @@
               57.51582286553883
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "03bc173fe5cf8a42e7ed36726733ebe7c9492c6dd2431b7ea23d78c60f3d33e6",
         "value": 7.351112165195617
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -810,17 +807,17 @@
               75.14077784070429
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "052f5b33eb60cb550adcb81e8688c004e1bd014e82d4494933aeb2c9547ea757",
         "value": 53.46375265240475
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -844,17 +841,17 @@
               62.2679226294176
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "d221519cef87e1f1b48dcbe0957b925de0b0542e34b7d94ce3ecd3f0e89de341",
         "value": 28.39171338543649
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -878,17 +875,17 @@
               68.52823492039876
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "1394d804362e9473e8e0b5746fc5660176b56560683fca16f0412f278de3b571",
         "value": 1.8969538536162345
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -912,17 +909,17 @@
               71.07405646336098
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "eabb9902bee6e27762c0f249f358536119ed95cdb108bb3eac254fc32fd38ea2",
         "value": 7.114281594487681
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -946,17 +943,17 @@
               14.944784875088372
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "3a377a3f8d6881be6cd9d6e159ba9b842f69d954143b5ee4ba441780751c74ba",
         "value": 46.70812044158035
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -980,17 +977,17 @@
               62.103882522897855
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "7a4b564f8d917ab4e5a61a66c77ab1108f1621d7569d97d58fa6af171b93a48f",
         "value": 24.98291021521908
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1014,17 +1011,17 @@
               44.08758502824516
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "1da452d047d6f4c3c36ac9fdfc33ecd9252328ecacd0cde2156dbe2844b82f45",
         "value": 63.87047561375698
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1048,17 +1045,17 @@
               24.206889622398023
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "7a667f00afcc38b078afd94121d487e634393bf198cd5bf7925080d5e61e7c31",
         "value": 48.42623781022384
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1082,17 +1079,17 @@
               -32.54681317351514
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "4dad7c71727e731b11130d40f208bab0c8feea698d0bbc211f00b97354b2457c",
         "value": 68.1087855454676
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1116,17 +1113,17 @@
               -21.289374355860424
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "ae782ac8fd78c51b7522ae1b87f4bf979d747db5fc4571810eae89b8a20e6b41",
         "value": 48.47964631834274
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1150,17 +1147,17 @@
               29.954934549656144
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "4870de15f5893cbc72b002299f36e48dd099a035d3ce08393d85ee6422cfc6c1",
         "value": 1.3952047070660667
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1184,17 +1181,17 @@
               37.61423141542417
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "c2b9eabaf16ea65bc976857789ac5e902177776a4066ef3dc7fd385559c3f738",
         "value": 82.91750804360171
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1218,17 +1215,17 @@
               32.69486597787505
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "8ff1d5de755f909b45d95d0b931d52d9acc95cb8c0a5e7c53fb7838047e6999a",
         "value": 91.04461319913406
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1252,17 +1249,17 @@
               39.36827914916014
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "d5aa084ca13dd252f0dbfb0c4c04ca9ae3fb46609c207226265bd365e5f2c01a",
         "value": 80.23721729007391
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1286,17 +1283,17 @@
               28.265682390146477
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "c92bdc624d4b7a716e5dcf6fb4d5d4dbb3a4c8661b371e50c7e7df547711ec98",
         "value": 53.37244361819593
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1320,17 +1317,17 @@
               57.70414723434193
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "82b9dc23d3421b68dc54223cca8ff190a047af2aa68a7dfb7854f8a3cd2ba186",
         "value": 60.10866784520055
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1354,17 +1351,17 @@
               50.736455137010665
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "e7352405c5c7cf93c690c2fcb8651211869967b2cccccbc38dfd11baefe2bd4e",
         "value": 81.94006553080546
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1388,17 +1385,17 @@
               43.389081939117496
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "97efed9bb8427430223c3533381cecd9b29b1dde52eb469ae94c75c0c0bcf7d2",
         "value": 95.04550724761454
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1422,17 +1419,17 @@
               46.37725420510028
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "0b1c6fd05a3b57b2d7572736816a9714a26c64b5d50e6b085644f0cc4cf30866",
         "value": 69.15437004792287
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1456,17 +1453,17 @@
               42.35854391749705
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "bb4c006b97d882f12801871ec7d03c5bdba5f8accb31683384370ccbf4294d7f",
         "value": 92.50591216104291
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1490,17 +1487,17 @@
               46.37725420510028
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "ede170241c3af5ca78ead97a0a2c907b5d8b07f8963fdf9e3937d5f647e34032",
         "value": 57.963999450501106
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1524,17 +1521,17 @@
               46.437856895024204
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "a673af287d6674f7efa634da8d78a5433be8a3c1d0f903eb14b056ab35f6bfc3",
         "value": 55.608897532910674
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1558,17 +1555,17 @@
               44.902577996288876
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "0acdb9e2083d471c35a63b72613211e6b8d65398b8455fb2c97d21e7d089aacd",
         "value": 62.94847396101184
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1592,17 +1589,17 @@
               50.958426723359935
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "39082d13cc9ffb5c031be3a3421a9a632a943699152648e35872d0cd4c81ac23",
         "value": 56.445048015525416
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1626,17 +1623,17 @@
               30.29701788337205
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "df2a2ca23be946ef95bead0c86e75817de8491337476788147b59cd57dfced43",
         "value": 26.542165343725376
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1660,17 +1657,17 @@
               21.69826549685252
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "d5bf479e60bdb801f7eaad7c9fc4be5cb292c013624c1bc19be306fe9e64127a",
         "value": 41.65503559898909
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1694,17 +1691,17 @@
               17.727758609852284
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "4cb9337bf52a10e7ae53b050729aaace674f6b97e2af79bc9e9bc092efd506ad",
         "value": 56.434232970379924
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1728,17 +1725,17 @@
               27.137368359795584
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "f1f333c52d01ef670db3721b1197e985ba2487e467d6b993481bee6579c457b4",
         "value": 35.11353131134458
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1762,17 +1759,17 @@
               -21.125497636606266
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "b9afdca132ba5c28cbf1f9c2e0c85ae1b86cfbad140b885f9c6fb5497cb9f9b0",
         "value": 7.386952536237001
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1796,17 +1793,17 @@
               -4.477856485570586
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "496b9fa34e09b9be0ce1ca5ab606d855d77e778851da9bddd63bd9b476c13d6d",
         "value": 48.58008768249091
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1830,17 +1827,17 @@
               -18.22935133838667
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "3a04bf87f03e0f9039b2159d2b5adf6f0d44fe30ac4aec218165d12438132ea3",
         "value": 85.45020600873453
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1864,17 +1861,17 @@
               -31.95216223802496
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "1fb7a22e7f6359ba2ce7e19253788935de3c682733e24a36f3f572429195d249",
         "value": 97.53481603285135
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1898,17 +1895,17 @@
               -39.0277188402116
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "02b1bcca7ab369a920348e20255f4ec1da0167aaa04e65326c419d486781eaf6",
         "value": 35.91198265635616
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1932,17 +1929,17 @@
               -49.667627822621924
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "db1b8f2b7a68a72872f4ad083d740d82183f72d06cd4c3b1091ec46498e9e385",
         "value": 37.05065001592936
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -1966,17 +1963,17 @@
               -30.06909396443886
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "7184e01c75374512a087e1601302361dcf5ccff590979f8fc5b4fb92a03c023a",
         "value": 11.685916916965455
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -2000,17 +1997,17 @@
               -29.075375179558346
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "14b7b8b885d3c3f609dafb1cd4d89a913b31791ebbb5c8e186074b0c0db18b2a",
         "value": 31.958279145682056
-      }
+      },
+      "type": "Feature"
     },
     {
-      "type": "Feature",
       "geometry": {
-        "type": "Polygon",
         "coordinates": [
           [
             [
@@ -2034,12 +2031,15 @@
               4.214943141390651
             ]
           ]
-        ]
+        ],
+        "type": "Polygon"
       },
       "properties": {
         "hash": "3e35670f54f043e40f2f0cb3a6403aa3ef8e400a12acc78bde283c1cc823a010",
         "value": 20.23890059537361
-      }
+      },
+      "type": "Feature"
     }
-  ]
+  ],
+  "type": "FeatureCollection"
 }

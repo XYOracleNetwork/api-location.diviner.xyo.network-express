@@ -8,7 +8,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection } from 'geojson'
 
-import { locationRangeAnswerSchema } from '../../model'
+import { locationRangeAnswerSchema } from '../../../model'
 import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
@@ -32,7 +32,7 @@ const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddre
   return resultWitness._hash
 }
 
-export const generateAnswer = async (
+export const divineLocationRangeAnswer = async (
   response: LocationDivinerQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
