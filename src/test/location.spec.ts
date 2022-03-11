@@ -8,7 +8,7 @@ import {
 import { FeatureCollection, Point } from 'geojson'
 
 import { GeoJsonPointProperties } from '../lib'
-import { answerSchema } from '../model'
+import { locationRangeAnswerSchema } from '../model'
 import {
   createQuery,
   delay,
@@ -57,7 +57,7 @@ const getQueryAnswer = async (
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()
   expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(answerSchema)
+  expect(payload?.schema).toBe(locationRangeAnswerSchema)
   const answer = payload?.result as FeatureCollection<Point, GeoJsonPointProperties>
   validateGeoJsonFeatureCollection(answer)
   return answer

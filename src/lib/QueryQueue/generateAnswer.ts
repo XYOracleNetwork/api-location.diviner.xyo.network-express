@@ -8,7 +8,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection } from 'geojson'
 
-import { answerSchema } from '../../model'
+import { locationRangeAnswerSchema } from '../../model'
 import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
@@ -17,7 +17,7 @@ import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
 const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: answerSchema }).fields({ result: answer }).build()
+  const payload = new XyoPayloadBuilder({ schema: locationRangeAnswerSchema }).fields({ result: answer }).build()
   const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
   await api.postBoundWitness(resultWitness)
   if (!resultWitness._hash) throw new Error('Error storing answer')
@@ -25,7 +25,7 @@ const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, addr
 }
 
 const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: answerSchema }).fields({ error }).build()
+  const payload = new XyoPayloadBuilder({ schema: locationRangeAnswerSchema }).fields({ error }).build()
   const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
   await api.postBoundWitness(resultWitness)
   if (!resultWitness._hash) throw new Error('Error storing answer')

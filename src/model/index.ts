@@ -1,3 +1,4 @@
 export * from './LocationWitnessPayload'
-export * from './postLocationQuerySchema'
+export * from './postLocationHeatmapQuerySchema'
+export * from './postLocationRangeQuerySchema'
 export * from './sortDirection'
