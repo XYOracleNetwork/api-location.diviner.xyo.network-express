@@ -7,8 +7,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
-import { GeoJsonPointProperties } from '../lib'
-import { locationRangeAnswerSchema } from '../model'
+import { locationRangeAnswerSchema, LocationRangePointProperties } from '../lib'
 import {
   createQuery,
   delay,
@@ -37,7 +36,7 @@ const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
 
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, GeoJsonPointProperties>) => {
+const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationRangePointProperties>) => {
   expect(queryResult).toBeTruthy()
   expect(queryResult?.type).toBe('FeatureCollection')
   expect(queryResult?.features).toBeTruthy()
@@ -47,7 +46,7 @@ const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationDivinerQueryCreationRequest
-): Promise<FeatureCollection<Point, GeoJsonPointProperties>> => {
+): Promise<FeatureCollection<Point, LocationRangePointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
   await delay(5000)
@@ -58,7 +57,7 @@ const getQueryAnswer = async (
   const payload = answerPayloads.pop()
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(locationRangeAnswerSchema)
-  const answer = payload?.result as FeatureCollection<Point, GeoJsonPointProperties>
+  const answer = payload?.result as FeatureCollection<Point, LocationRangePointProperties>
   validateGeoJsonFeatureCollection(answer)
   return answer
 }

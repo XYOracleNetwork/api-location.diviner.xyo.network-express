@@ -1,6 +1,6 @@
 import { LocationDivinerQuery } from '@xyo-network/sdk-xyo-client-js'
 
-import { isSupportedLocationQuerySchema } from '../../../model'
+import { isSupportedLocationQuerySchema } from '../../../lib'
 
 const validateDate = (date: Date) => {
   return date instanceof Date && !isNaN(date.valueOf())

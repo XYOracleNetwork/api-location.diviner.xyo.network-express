@@ -1,7 +1,11 @@
 import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
 
-import { QueryProcessor } from '../../model'
-import { divineLocationRangeAnswer, LocationQuerySchema } from '../LocationQueryDiviners'
+import {
+  divineLocationHeatmapAnswer,
+  divineLocationRangeAnswer,
+  LocationQuerySchema,
+  QueryProcessor,
+} from '../LocationQueryDiviners'
 
 interface QueueData {
   response: LocationDivinerQueryCreationResponse
@@ -13,7 +17,7 @@ const locationQueryDivinersBySchema: Record<
   QueryProcessor<LocationDivinerQueryCreationResponse>
 > = {
   'network.xyo.location': divineLocationRangeAnswer,
-  'network.xyo.location.heatmap.query': divineLocationRangeAnswer,
+  'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
   'network.xyo.location.range.query': divineLocationRangeAnswer,
 }
 
