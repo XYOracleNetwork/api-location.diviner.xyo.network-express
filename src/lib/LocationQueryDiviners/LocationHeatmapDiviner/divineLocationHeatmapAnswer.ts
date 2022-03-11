@@ -6,12 +6,14 @@ import {
   XyoBoundWitnessBuilderConfig,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
-import { promises as fs } from 'fs'
+import { readFile } from 'fs/promises'
 import { FeatureCollection } from 'geojson'
 
 import { locationHeatmapAnswerSchema } from './LocationHeatmapQuerySchema'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
+const sampleResponseFilePath =
+  'src/lib/LocationQueryDiviners/LocationHeatmapDiviner/samplePolygonHeatmapWithHashes.json'
 
 const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
   const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ result: answer }).build()
@@ -36,7 +38,7 @@ export const divineLocationHeatmapAnswer = async (
   // const sourceArchive = new XyoArchivistApi(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
-    const answer = JSON.parse((await fs.readFile('samplePolygonHeatmapWithHashes.json')).toString())
+    const answer = JSON.parse((await readFile(sampleResponseFilePath)).toString())
     return await storeAnswer(resultArchive, answer, address)
   } catch (error) {
     console.log(error)

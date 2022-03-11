@@ -7,16 +7,17 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
-import { locationRangeAnswerSchema, LocationRangePointProperties } from '../lib'
 import {
   createQuery,
   delay,
   getArchivist,
   getQuery,
-  getValidRequest,
+  getValidLocationRangeRequest,
   testArchive,
   witnessNewLocation,
-} from './testUtil.spec'
+} from '../../../test'
+import { LocationRangePointProperties } from './LocationRangePointProperties'
+import { locationRangeAnswerSchema } from './LocationRangeQuerySchema'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()
@@ -76,7 +77,7 @@ describe('Round trip tests', () => {
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
-    const queryCreationRequest = getValidRequest(testArchive, startTime, stopTime)
+    const queryCreationRequest = getValidLocationRangeRequest(testArchive, startTime, stopTime)
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(locationsToWitness)
   }, 10000)
@@ -86,7 +87,7 @@ describe('Round trip tests', () => {
     futureStartTime.setDate(now.getDate() + 1)
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
-    const queryCreationRequest = getValidRequest(
+    const queryCreationRequest = getValidLocationRangeRequest(
       testArchive,
       futureStartTime.toISOString(),
       futureStopTime.toISOString()
