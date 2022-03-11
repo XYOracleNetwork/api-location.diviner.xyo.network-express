@@ -1,6 +1,2 @@
-export * from './LocationHeatmapQuerySchema'
-export * from './LocationQuerySchema'
-export * from './LocationRangeQuerySchema'
 export * from './LocationWitnessPayload'
-export * from './QueryDiviner'
 export * from './sortDirection'

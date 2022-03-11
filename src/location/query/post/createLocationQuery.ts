@@ -8,7 +8,7 @@ import {
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { locationRangeQuerySchema } from '../../../model'
+import { locationRangeQuerySchema } from '../../../lib'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 

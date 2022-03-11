@@ -1,7 +1,7 @@
 import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationQuerySchema, QueryProcessor } from '../../model'
-import { divineLocationRangeAnswer } from '../LocationQueryDiviners'
+import { QueryProcessor } from '../../model'
+import { divineLocationRangeAnswer, LocationQuerySchema } from '../LocationQueryDiviners'
 
 interface QueueData {
   response: LocationDivinerQueryCreationResponse

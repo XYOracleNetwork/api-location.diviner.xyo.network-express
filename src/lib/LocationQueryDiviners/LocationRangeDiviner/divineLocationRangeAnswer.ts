@@ -8,11 +8,11 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection } from 'geojson'
 
-import { locationRangeAnswerSchema } from '../../../model'
 import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
 import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
+import { locationRangeAnswerSchema } from './LocationRangeQuerySchema'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 

@@ -1,6 +1,6 @@
-import { LocationHeatmapQuerySchema } from './LocationHeatmapQuerySchema'
-import { LocationRangeQuerySchema } from './LocationRangeQuerySchema'
-import { LocationWitnessPayloadSchema } from './LocationWitnessPayload'
+import { LocationWitnessPayloadSchema } from '../../model'
+import { LocationHeatmapQuerySchema } from './LocationHeatmapDiviner'
+import { LocationRangeQuerySchema } from './LocationRangeDiviner'
 
 export type LocationQuerySchema =
   | LocationHeatmapQuerySchema
