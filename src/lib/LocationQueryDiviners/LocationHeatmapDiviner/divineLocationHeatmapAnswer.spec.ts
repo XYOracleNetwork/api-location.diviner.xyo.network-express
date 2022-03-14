@@ -1,7 +1,7 @@
 import {
   GetLocationQueryResponse,
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
+  LocationQueryCreationRequest,
+  LocationQueryCreationResponse,
   XyoArchivistApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -16,13 +16,13 @@ const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads.length).toBeGreaterThan(0)
 }
 
-const validateQueryCreationResponse = (queryCreationResponse: LocationDivinerQueryCreationResponse) => {
+const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
   expect(queryCreationResponse?.hash).not.toBeNull()
 }
 
 const validateQueryAnswerResponse = (
   queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationDivinerQueryCreationResponse
+  queryCreationResponse: LocationQueryCreationResponse
 ) => {
   expect(queryAnswerResponse).toBeTruthy()
   expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
@@ -38,7 +38,7 @@ const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, 
 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
-  queryCreationRequest: LocationDivinerQueryCreationRequest
+  queryCreationRequest: LocationQueryCreationRequest
 ): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)

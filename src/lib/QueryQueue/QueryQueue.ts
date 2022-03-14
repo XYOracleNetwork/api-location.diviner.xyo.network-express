@@ -1,4 +1,4 @@
-import { LocationDivinerQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
 
 import {
   divineLocationHeatmapAnswer,
@@ -8,14 +8,11 @@ import {
 } from '../LocationQueryDiviners'
 
 interface QueueData {
-  response: LocationDivinerQueryCreationResponse
+  response: LocationQueryCreationResponse
   result?: string
 }
 
-const locationQueryDivinersBySchema: Record<
-  LocationQuerySchema,
-  QueryProcessor<LocationDivinerQueryCreationResponse>
-> = {
+const locationQueryDivinersBySchema: Record<LocationQuerySchema, QueryProcessor<LocationQueryCreationResponse>> = {
   'network.xyo.location': divineLocationRangeAnswer,
   'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
   'network.xyo.location.range.query': divineLocationRangeAnswer,
@@ -24,7 +21,7 @@ const locationQueryDivinersBySchema: Record<
 export class QueryQueue {
   protected queue: Record<string, QueueData> = {}
 
-  public enqueue(hash: string, response: LocationDivinerQueryCreationResponse) {
+  public enqueue(hash: string, response: LocationQueryCreationResponse) {
     const schema = response.query.schema as LocationQuerySchema
     const queryProcessor = locationQueryDivinersBySchema[schema]
     if (!queryProcessor) {

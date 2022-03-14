@@ -1,5 +1,6 @@
 import {
-  LocationDivinerQueryCreationResponse,
+  LocationHeatmapQueryCreationRequest,
+  LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
@@ -33,14 +34,16 @@ const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddre
 }
 
 export const divineLocationRangeAnswer = async (
-  response: LocationDivinerQueryCreationResponse,
+  response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
-    const start = response.query.startTime ? new Date(response.query.startTime) : new Date(0)
-    const stop = response.query.stopTime ? new Date(response.query.stopTime) : new Date()
+    // TODO: Remove cast once SDK supports generic responses as well
+    const request = response as unknown as LocationHeatmapQueryCreationRequest
+    const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
+    const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
     const answer = getFeatureCollectionFromPoints(points)

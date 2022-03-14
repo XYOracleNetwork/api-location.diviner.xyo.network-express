@@ -1,5 +1,5 @@
 import {
-  LocationDivinerQueryCreationResponse,
+  LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
@@ -32,7 +32,7 @@ const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddre
 }
 
 export const divineLocationHeatmapAnswer = async (
-  response: LocationDivinerQueryCreationResponse,
+  response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   // const sourceArchive = new XyoArchivistApi(response.sourceArchive)

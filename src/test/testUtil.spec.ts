@@ -1,6 +1,6 @@
 import {
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
+  LocationQueryCreationRequest,
+  LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitness,
@@ -11,7 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
-import { locationHeatmapQuerySchema } from '../lib'
+import { locationHeatmapQuerySchema, locationRangeQuerySchema } from '../lib'
 import { GetLocationQueryResponse } from '../location'
 import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
@@ -54,10 +54,11 @@ export const getValidLocationRangeRequest = (
   archive = testArchive,
   startTime = new Date(0).toISOString(),
   stopTime = new Date().toISOString()
-): LocationDivinerQueryCreationRequest => {
+): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
+    schema: locationRangeQuerySchema,
     sourceArchive: { apiDomain, archive },
   }
 }
@@ -65,10 +66,11 @@ export const getValidLocationHeatmapRequest = (
   archive = testArchive,
   startTime = new Date(0).toISOString(),
   stopTime = new Date().toISOString()
-): LocationDivinerQueryCreationRequest => {
+): LocationQueryCreationRequest => {
   return {
-    query: { schema: locationHeatmapQuerySchema, startTime, stopTime },
+    query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
+    schema: locationHeatmapQuerySchema,
     sourceArchive: { apiDomain, archive },
   }
 }
@@ -105,9 +107,9 @@ export const witnessNewLocation = async (api: XyoArchivistApi) => {
 }
 
 export const createQuery = async (
-  data: LocationDivinerQueryCreationRequest = getValidLocationRangeRequest(),
+  data: LocationQueryCreationRequest = getValidLocationRangeRequest(),
   expectedStatus: StatusCodes = StatusCodes.OK
-): Promise<LocationDivinerQueryCreationResponse> => {
+): Promise<LocationQueryCreationResponse> => {
   const response = await getDiviner().post('/location/query').send(data).expect(expectedStatus)
   return response.body.data
 }
