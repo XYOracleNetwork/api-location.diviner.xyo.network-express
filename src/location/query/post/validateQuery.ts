@@ -1,14 +1,16 @@
-import { LocationDivinerQuery } from '@xyo-network/sdk-xyo-client-js'
-
-import { isSupportedLocationQuerySchema } from '../../../lib'
+import {
+  LocationHeatmapQuery,
+  LocationTimeRangeQuery,
+  locationWitnessPayloadSchema,
+} from '@xyo-network/sdk-xyo-client-js'
 
 const validateDate = (date: Date) => {
   return date instanceof Date && !isNaN(date.valueOf())
 }
 
-export const validateQuery = (query: LocationDivinerQuery) => {
+export const validateQuery = (query: LocationTimeRangeQuery | LocationHeatmapQuery) => {
   const schema = query.schema
-  if (!schema || !isSupportedLocationQuerySchema(schema)) {
+  if (!schema || schema != locationWitnessPayloadSchema) {
     return false
   }
   const startTime = new Date(query.startTime || '')

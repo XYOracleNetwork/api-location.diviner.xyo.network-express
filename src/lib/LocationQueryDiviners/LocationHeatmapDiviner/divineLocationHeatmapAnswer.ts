@@ -1,5 +1,6 @@
 import {
-  LocationDivinerQueryCreationResponse,
+  locationHeatmapAnswerSchema,
+  LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
@@ -8,8 +9,6 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { readFile } from 'fs/promises'
 import { FeatureCollection } from 'geojson'
-
-import { locationHeatmapAnswerSchema } from './LocationHeatmapQuerySchema'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 const sampleResponseFilePath =
@@ -32,7 +31,7 @@ const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddre
 }
 
 export const divineLocationHeatmapAnswer = async (
-  response: LocationDivinerQueryCreationResponse,
+  response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   // const sourceArchive = new XyoArchivistApi(response.sourceArchive)

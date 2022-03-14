@@ -1,8 +1,5 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
-import {
-  LocationDivinerQueryCreationRequest,
-  LocationDivinerQueryCreationResponse,
-} from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, SupportedLocationQueryCreationRequest } from '@xyo-network/sdk-xyo-client-js'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
@@ -43,8 +40,8 @@ const queryQueuingError = {
 
 const handler: RequestHandler<
   NoReqParams,
-  LocationDivinerQueryCreationResponse,
-  LocationDivinerQueryCreationRequest
+  LocationQueryCreationResponse,
+  SupportedLocationQueryCreationRequest
 > = async (req, res, next) => {
   const { sourceArchive, resultArchive, query } = req.body
   if (!validateArchiveConfig(sourceArchive)) {
@@ -64,7 +61,7 @@ const handler: RequestHandler<
     next(queryCreationError)
     return
   }
-  const response: LocationDivinerQueryCreationResponse = { hash, status: 'pending', ...req.body }
+  const response: LocationQueryCreationResponse = { hash, ...req.body }
   const queue: QueryQueue = req.app.locals.queue
   if (!queue) {
     next(queryQueuingError)
