@@ -1,4 +1,5 @@
 import {
+  locationHeatmapAnswerSchema,
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
@@ -8,8 +9,6 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { readFile } from 'fs/promises'
 import { FeatureCollection } from 'geojson'
-
-import { locationHeatmapAnswerSchema } from './LocationHeatmapQuerySchema'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 const sampleResponseFilePath =

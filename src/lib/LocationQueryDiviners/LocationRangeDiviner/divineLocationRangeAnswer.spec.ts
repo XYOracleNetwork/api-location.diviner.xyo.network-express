@@ -2,6 +2,8 @@ import {
   GetLocationQueryResponse,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
+  locationTimeRangeAnswerSchema,
+  LocationTimeRangePointProperties,
   XyoArchivistApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -16,8 +18,6 @@ import {
   testArchive,
   witnessNewLocation,
 } from '../../../test'
-import { LocationRangePointProperties } from './LocationRangePointProperties'
-import { locationRangeAnswerSchema } from './LocationRangeQuerySchema'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()
@@ -37,7 +37,7 @@ const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
 
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationRangePointProperties>) => {
+const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationTimeRangePointProperties>) => {
   expect(queryResult).toBeTruthy()
   expect(queryResult?.type).toBe('FeatureCollection')
   expect(queryResult?.features).toBeTruthy()
@@ -47,7 +47,7 @@ const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
-): Promise<FeatureCollection<Point, LocationRangePointProperties>> => {
+): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
   await delay(5000)
@@ -57,8 +57,8 @@ const getQueryAnswer = async (
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()
   expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationRangeAnswerSchema)
-  const answer = payload?.result as FeatureCollection<Point, LocationRangePointProperties>
+  expect(payload?.schema).toBe(locationTimeRangeAnswerSchema)
+  const answer = payload?.result as FeatureCollection<Point, LocationTimeRangePointProperties>
   validateGeoJsonFeatureCollection(answer)
   return answer
 }

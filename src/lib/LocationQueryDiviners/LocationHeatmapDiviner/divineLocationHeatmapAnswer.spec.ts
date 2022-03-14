@@ -1,5 +1,7 @@
 import {
   GetLocationQueryResponse,
+  locationHeatmapAnswerSchema,
+  LocationHeatmapPointProperties,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoArchivistApi,
@@ -8,8 +10,6 @@ import {
 import { FeatureCollection, Point } from 'geojson'
 
 import { createQuery, delay, getArchivist, getQuery, getValidLocationHeatmapRequest, testArchive } from '../../../test'
-import { LocationHeatmapPointProperties } from './LocationHeatmapPointProperties'
-import { locationHeatmapAnswerSchema } from './LocationHeatmapQuerySchema'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()

@@ -1,10 +1,9 @@
+import { LocationTimeRangePointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, FeatureCollection, Point } from 'geojson'
 
-import { LocationRangePointProperties } from './LocationRangePointProperties'
-
 export const getFeatureCollectionFromPoints = (
-  points: Feature<Point, LocationRangePointProperties>[]
-): FeatureCollection<Point, LocationRangePointProperties> => {
+  points: Feature<Point, LocationTimeRangePointProperties>[]
+): FeatureCollection<Point, LocationTimeRangePointProperties> => {
   return {
     features: [...points],
     type: 'FeatureCollection',

@@ -1,6 +1,8 @@
 import {
+  locationHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
+  locationTimeRangeQuerySchema,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitness,
@@ -11,7 +13,6 @@ import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
-import { locationHeatmapQuerySchema, locationRangeQuerySchema } from '../lib'
 import { GetLocationQueryResponse } from '../location'
 import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
@@ -58,7 +59,7 @@ export const getValidLocationRangeRequest = (
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: { apiDomain, archive },
-    schema: locationRangeQuerySchema,
+    schema: locationTimeRangeQuerySchema,
     sourceArchive: { apiDomain, archive },
   }
 }

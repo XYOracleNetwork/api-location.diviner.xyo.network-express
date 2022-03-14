@@ -1,11 +1,6 @@
-import { LocationQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, LocationQuerySchema } from '@xyo-network/sdk-xyo-client-js'
 
-import {
-  divineLocationHeatmapAnswer,
-  divineLocationRangeAnswer,
-  LocationQuerySchema,
-  QueryProcessor,
-} from '../LocationQueryDiviners'
+import { divineLocationHeatmapAnswer, divineLocationRangeAnswer, QueryProcessor } from '../LocationQueryDiviners'
 
 interface QueueData {
   response: LocationQueryCreationResponse
@@ -13,7 +8,6 @@ interface QueueData {
 }
 
 const locationQueryDivinersBySchema: Record<LocationQuerySchema, QueryProcessor<LocationQueryCreationResponse>> = {
-  'network.xyo.location': divineLocationRangeAnswer,
   'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
   'network.xyo.location.range.query': divineLocationRangeAnswer,
 }
@@ -22,7 +16,7 @@ export class QueryQueue {
   protected queue: Record<string, QueueData> = {}
 
   public enqueue(hash: string, response: LocationQueryCreationResponse) {
-    const schema = response.query.schema as LocationQuerySchema
+    const schema = response.schema as LocationQuerySchema
     const queryProcessor = locationQueryDivinersBySchema[schema]
     if (!queryProcessor) {
       throw new Error(`Diviner not configured to answer queries for schemas of type: ${schema}`)
