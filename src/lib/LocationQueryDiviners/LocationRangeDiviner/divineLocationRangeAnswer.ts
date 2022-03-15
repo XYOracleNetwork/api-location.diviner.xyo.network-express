@@ -10,9 +10,9 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection } from 'geojson'
 
+import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
+import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
-import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
-import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
@@ -46,7 +46,7 @@ export const divineLocationRangeAnswer = async (
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
-    const answer = getFeatureCollectionFromPoints(points)
+    const answer = getFeatureCollectionFromGeometries(points)
     return await storeAnswer(resultArchive, answer, address)
   } catch (error) {
     console.log(error)
