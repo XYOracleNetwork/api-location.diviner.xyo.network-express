@@ -9,7 +9,15 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
-import { createQuery, delay, getArchivist, getQuery, getValidLocationHeatmapRequest, testArchive } from '../../../test'
+import {
+  createQuery,
+  delay,
+  getArchivist,
+  getQuery,
+  getValidLocationHeatmapRequest,
+  testArchive,
+  witnessNewLocation,
+} from '../../../test'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
   expect(answerPayloads).toBeTruthy()
@@ -57,15 +65,15 @@ const getQueryAnswer = async (
 
 describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
-  const locationsToWitness = 60
+  const locationsToWitness = 5
   const api = getArchivist(testArchive)
   let stopTime = ''
   beforeAll(async () => {
     await delay(1000)
-    // for (let location = 0; location < locationsToWitness; location++) {
-    //   await witnessNewLocation(api)
-    // }
-    // await delay(1000)
+    for (let location = 0; location < locationsToWitness; location++) {
+      await witnessNewLocation(api)
+    }
+    await delay(1000)
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {

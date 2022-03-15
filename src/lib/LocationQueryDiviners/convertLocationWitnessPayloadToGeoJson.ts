@@ -1,16 +1,17 @@
-import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
+import { LocationTimeRangePointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, Point } from 'geojson'
 
-import { LocationWitnessPayload } from '../../../model'
+import { LocationWitnessPayload } from '../../model'
 
 export const convertLocationWitnessPayloadToGeoJson = (
-  payload: LocationWitnessPayload,
-  value = 0
-): Feature<Point, LocationHeatmapPointProperties> => {
-  const hash = payload._hash || ''
-  const properties: LocationHeatmapPointProperties = {
-    hash,
-    value,
+  payload: LocationWitnessPayload
+): Feature<Point, LocationTimeRangePointProperties> => {
+  const { schema, _archive, _client, _timestamp } = payload as LocationTimeRangePointProperties
+  const properties: LocationTimeRangePointProperties = {
+    _archive,
+    _client,
+    _timestamp,
+    schema,
   }
   // https://www.rfc-editor.org/rfc/rfc7946#section-3.1.1
   // A position is an array of numbers.  There MUST be two or more
@@ -19,7 +20,7 @@ export const convertLocationWitnessPayloadToGeoJson = (
     coordinates: [payload.currentLocation.coords.longitude, payload.currentLocation.coords.latitude],
     type: 'Point',
   }
-  const feature: Feature<Point, LocationHeatmapPointProperties> = {
+  const feature: Feature<Point, LocationTimeRangePointProperties> = {
     geometry,
     properties,
     type: 'Feature',

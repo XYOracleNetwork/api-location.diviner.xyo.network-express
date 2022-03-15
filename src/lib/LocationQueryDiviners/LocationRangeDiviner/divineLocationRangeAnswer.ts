@@ -1,16 +1,16 @@
 import {
-  LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
+  LocationTimeRangeQueryCreationRequest,
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
+import { convertLocationWitnessPayloadToGeoJson } from '../convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
+import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { storeAnswer, storeError } from '../storePayload'
-import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
-import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
 
 export const divineLocationRangeAnswer = async (
   response: LocationQueryCreationResponse,
@@ -20,7 +20,7 @@ export const divineLocationRangeAnswer = async (
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
     // TODO: Remove cast once SDK supports generic responses as well
-    const request = response as unknown as LocationHeatmapQueryCreationRequest
+    const request = response as unknown as LocationTimeRangeQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
