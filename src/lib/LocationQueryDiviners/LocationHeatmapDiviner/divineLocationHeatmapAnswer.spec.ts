@@ -63,7 +63,8 @@ const getQueryAnswer = async (
   return answer
 }
 
-describe('Round trip tests', () => {
+// TODO: Create separate archive so that we don't interfere with other tests
+describe.skip('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const locationsToWitness = 5
   const api = getArchivist(testArchive)

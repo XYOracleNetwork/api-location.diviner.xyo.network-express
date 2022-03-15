@@ -6,11 +6,11 @@ import {
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { convertLocationWitnessPayloadToGeoJson } from '../convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { storeAnswer, storeError } from '../storePayload'
+import { convertLocationWitnessPayloadToFeature } from './convertLocationWitnessPayloadToFeature'
 
 export const divineLocationRangeAnswer = async (
   response: LocationQueryCreationResponse,
@@ -24,8 +24,8 @@ export const divineLocationRangeAnswer = async (
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
-    const answer = getFeatureCollectionFromGeometries(points)
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToFeature)
+    const answer = getFeatureCollectionFromGeometries(geometries)
     return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
     console.log(error)

@@ -6,11 +6,12 @@ import {
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { convertLocationWitnessPayloadToGeoJson } from '../convertLocationWitnessPayloadToGeoJson'
 import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { storeAnswer, storeError } from '../storePayload'
+import { convertLocationWitnessPayloadToPoint } from './convertLocationWitnessPayloadToPoint'
+import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 export const divineLocationHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
@@ -23,8 +24,8 @@ export const divineLocationHeatmapAnswer = async (
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
-    const answer = getFeatureCollectionFromGeometries(points)
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPoint)
+    const answer = getFeatureCollectionFromGeometries(getHeatmapFromPoints(geometries))
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)

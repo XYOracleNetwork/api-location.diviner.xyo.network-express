@@ -1,9 +1,9 @@
 import { LocationTimeRangePointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, Point } from 'geojson'
 
-import { LocationWitnessPayload } from '../../model'
+import { LocationWitnessPayload } from '../../../model'
 
-export const convertLocationWitnessPayloadToGeoJson = (
+export const convertLocationWitnessPayloadToFeature = (
   payload: LocationWitnessPayload
 ): Feature<Point, LocationTimeRangePointProperties> => {
   const { schema, _archive, _client, _timestamp } = payload as LocationTimeRangePointProperties
