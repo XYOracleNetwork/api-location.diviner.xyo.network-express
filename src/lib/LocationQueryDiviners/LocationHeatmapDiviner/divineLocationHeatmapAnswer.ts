@@ -3,32 +3,13 @@ import {
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
-  XyoBoundWitnessBuilder,
-  XyoBoundWitnessBuilderConfig,
-  XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 import { readFile } from 'fs/promises'
-import { FeatureCollection } from 'geojson'
 
-const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
+import { storeAnswer, storeError } from '../storePayload'
+
 const sampleResponseFilePath =
   'src/lib/LocationQueryDiviners/LocationHeatmapDiviner/samplePolygonHeatmapWithHashes.json'
-
-const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ result: answer }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.archive.block.post(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
-
-const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ error }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.archive.block.post(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
 
 export const divineLocationHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
@@ -38,9 +19,9 @@ export const divineLocationHeatmapAnswer = async (
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
     const answer = JSON.parse((await readFile(sampleResponseFilePath)).toString())
-    return await storeAnswer(resultArchive, answer, address)
+    return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
-    return await storeError(resultArchive, 'Error calculating answer', address)
+    return await storeError('Error calculating answer', resultArchive, locationHeatmapAnswerSchema, address)
   }
 }

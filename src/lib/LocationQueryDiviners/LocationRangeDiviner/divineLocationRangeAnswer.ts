@@ -4,34 +4,13 @@ import {
   locationTimeRangeAnswerSchema,
   XyoAddress,
   XyoArchivistApi,
-  XyoBoundWitnessBuilder,
-  XyoBoundWitnessBuilderConfig,
-  XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection } from 'geojson'
 
 import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
+import { storeAnswer, storeError } from '../storePayload'
 import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
 import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
-
-const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
-
-const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationTimeRangeAnswerSchema }).fields({ result: answer }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.archive.block.post(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
-
-const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationTimeRangeAnswerSchema }).fields({ error }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.archive.block.post(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
 
 export const divineLocationRangeAnswer = async (
   response: LocationQueryCreationResponse,
@@ -47,9 +26,9 @@ export const divineLocationRangeAnswer = async (
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
     const answer = getFeatureCollectionFromGeometries(points)
-    return await storeAnswer(resultArchive, answer, address)
+    return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
     console.log(error)
-    return await storeError(resultArchive, 'Error calculating answer', address)
+    return await storeError('Error calculating answer', resultArchive, locationTimeRangeAnswerSchema, address)
   }
 }
