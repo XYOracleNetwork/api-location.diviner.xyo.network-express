@@ -53,7 +53,7 @@ const getQueryAnswer = async (
   await delay(5000)
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api.getBoundWitnessPayloadsByHash(queryAnswerResponse.answerHash || '')
+  const answerPayloads = await api.archive.block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()
   expect(payload).toBeTruthy()

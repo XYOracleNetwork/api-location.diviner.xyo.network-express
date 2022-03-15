@@ -17,7 +17,7 @@ const sampleResponseFilePath =
 const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
   const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ result: answer }).build()
   const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
+  await api.archive.block.post(resultWitness)
   if (!resultWitness._hash) throw new Error('Error storing answer')
   return resultWitness._hash
 }
@@ -25,7 +25,7 @@ const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, addr
 const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
   const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ error }).build()
   const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
+  await api.archive.block.post(resultWitness)
   if (!resultWitness._hash) throw new Error('Error storing answer')
   return resultWitness._hash
 }
