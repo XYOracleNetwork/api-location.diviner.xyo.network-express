@@ -1,19 +1,17 @@
-import { Point } from 'geojson'
+import { points } from '@turf/turf'
 
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
-const getPoint = (longitude: number, latitude: number): Point => {
-  return {
-    coordinates: [longitude, latitude],
-    type: 'Point',
-  }
-}
-
 describe('getHeatmapFromPoints', () => {
   it('calculates with zoom level 1', () => {
-    const points: Point[] = [getPoint(0, 0), getPoint(0, 1), getPoint(1, 0), getPoint(1, 1)]
-    const actual = getHeatmapFromPoints(points, 1)
-    const expected = [1]
-    expect(actual).toBe(expected)
+    const data = points([
+      [-90, -45],
+      [-90, 45],
+      [90, -45],
+      [90, 45],
+      [0, 0],
+    ]).features.map((f) => f.geometry)
+    const actual = getHeatmapFromPoints(data, 1)
+    console.log(actual)
   })
 })
