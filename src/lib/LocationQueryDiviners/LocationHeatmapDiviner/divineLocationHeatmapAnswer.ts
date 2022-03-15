@@ -25,7 +25,7 @@ export const divineLocationHeatmapAnswer = async (
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPoint)
-    const answer = getFeatureCollectionFromGeometries(getHeatmapFromPoints(geometries))
+    const answer = getFeatureCollectionFromGeometries(getHeatmapFromPoints(geometries, 1))
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
