@@ -27,7 +27,14 @@ export const getHeatmapFromPoints = (
   const scaledBoundingBox: BBox = bbox(scaledBoundingBoxPolygon)
   // TODO: Based on zoom here
   const cellSide = 15
-  const grid: FeatureCollection<Polygon> = squareGrid(scaledBoundingBox, cellSide, { units: 'degrees' })
+  let grid: FeatureCollection<Polygon> = squareGrid(scaledBoundingBox, cellSide, { units: 'degrees' })
+  if (!grid.features.length) {
+    grid = squareGrid(
+      [scaledBoundingBox[2], scaledBoundingBox[3], scaledBoundingBox[0], scaledBoundingBox[1]],
+      cellSide,
+      { units: 'degrees' }
+    )
+  }
   const heatmap = grid.features.map((cell) => {
     const searchWithin = cell.geometry
     const hits = pointsWithinPolygon(pointsAsFeatureCollection, searchWithin)
