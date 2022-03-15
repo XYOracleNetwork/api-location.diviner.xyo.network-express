@@ -1,5 +1,4 @@
 import {
-  LocationQuerySchema,
   XyoAddress,
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
