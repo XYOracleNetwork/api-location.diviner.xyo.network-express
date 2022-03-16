@@ -4,6 +4,8 @@ import {
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   locationTimeRangeQuerySchema,
+  LocationWitnessPayloadBody,
+  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
   XyoAuthApi,
@@ -17,7 +19,6 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
