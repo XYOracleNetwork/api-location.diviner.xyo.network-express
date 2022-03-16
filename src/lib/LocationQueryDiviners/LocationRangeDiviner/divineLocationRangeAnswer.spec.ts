@@ -50,7 +50,10 @@ const getQueryAnswer = async (
 ): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
-  await delay(5000)
+  for (let i = 0; i < 10; i++) {
+    await delay(1000)
+    if ((await getQuery(queryCreationResponse.hash)).answerHash) break
+  }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
   const answerPayloads = await api.archive.block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
