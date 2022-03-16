@@ -87,7 +87,7 @@ describe('Round trip tests', () => {
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBeGreaterThan(0)
   }, 20000)
-  it.skip('Generates an empty answer if no data was found', async () => {
+  it('Generates an empty answer if no data was found', async () => {
     const now = new Date()
     const futureStartTime = new Date()
     futureStartTime.setDate(now.getDate() + 1)
@@ -100,7 +100,7 @@ describe('Round trip tests', () => {
     )
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(0)
-  }, 10000)
+  }, 20000)
   it.skip('Handles bad/misshapen data', async () => {
     // TODO: test
   }, 10000)
