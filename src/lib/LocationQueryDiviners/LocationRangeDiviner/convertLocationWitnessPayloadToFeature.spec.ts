@@ -1,4 +1,5 @@
-import { LocationWitnessPayload } from '../../../model'
+import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+
 import { sample } from '../../../test'
 import { convertLocationWitnessPayloadToFeature } from './convertLocationWitnessPayloadToFeature'
 describe('convertLocationWitnessPayloadToGeoJson', () => {
