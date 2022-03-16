@@ -4,6 +4,19 @@ import { FeatureCollection, Polygon } from 'geojson'
 
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
+/**
+ * Check if a number is close to another number, within the specified tolerance. Only here
+ * because the Jest types don't support Jest's version of closeTo
+ * https://jestjs.io/docs/expect#expectclosetonumber-numdigits
+ * @param actual Actual number
+ * @param expected Expected number
+ * @param tolerance Allowed deviation (plus/minus) of the actual from the expected value
+ * @returns True if within the specified tolerance, false otherwise
+ */
+const closeTo = (actual: number, expected: number, tolerance: number): boolean => {
+  return Math.abs(actual - expected) < tolerance
+}
+
 const ensureResultIsValid = (
   actual: FeatureCollection<Polygon, LocationHeatmapPointProperties>,
   expectedTilesWithValue?: number
@@ -16,7 +29,7 @@ const ensureResultIsValid = (
     expect(tilesWithValue.length).toBeGreaterThan(0)
   }
   const totalPercent = tilesWithValue.reduce((sum, a) => sum + a, 0)
-  expect(totalPercent).toBeCloseTo(100.0, 1)
+  expect(closeTo(totalPercent, 100, 1)).toBeTruthy()
 }
 
 describe('getHeatmapFromPoints', () => {
@@ -31,7 +44,7 @@ describe('getHeatmapFromPoints', () => {
     ensureResultIsValid(getHeatmapFromPoints(locations, 1), coordinates.length)
   })
   it('calculates with random points', () => {
-    const locations = randomPoint(100, { bbox: [-179, -85, 179, 85] }).features.map((f) => f.geometry)
+    const locations = randomPoint(1000, { bbox: [-179, -85, 179, 85] }).features.map((f) => f.geometry)
     ensureResultIsValid(getHeatmapFromPoints(locations, 1))
   })
 })
