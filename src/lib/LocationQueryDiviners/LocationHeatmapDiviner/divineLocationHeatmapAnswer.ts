@@ -1,46 +1,35 @@
 import {
   locationHeatmapAnswerSchema,
+  LocationHeatmapPointProperties,
+  LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
-  XyoBoundWitnessBuilder,
-  XyoBoundWitnessBuilderConfig,
-  XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
-import { readFile } from 'fs/promises'
-import { FeatureCollection } from 'geojson'
+import { FeatureCollection, Polygon } from 'geojson'
 
-const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
-const sampleResponseFilePath =
-  'src/lib/LocationQueryDiviners/LocationHeatmapDiviner/samplePolygonHeatmapWithHashes.json'
-
-const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ result: answer }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
-
-const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationHeatmapAnswerSchema }).fields({ error }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
+import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
+import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
+import { storeAnswer, storeError } from '../storePayload'
+import { convertLocationWitnessPayloadToPoint } from './convertLocationWitnessPayloadToPoint'
+import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 export const divineLocationHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
-  // const sourceArchive = new XyoArchivistApi(response.sourceArchive)
+  const sourceArchive = new XyoArchivistApi(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
-    const answer = JSON.parse((await readFile(sampleResponseFilePath)).toString())
-    return await storeAnswer(resultArchive, answer, address)
+    const request = response as unknown as LocationHeatmapQueryCreationRequest
+    const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
+    const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
+    const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPoint)
+    const answer: FeatureCollection<Polygon, LocationHeatmapPointProperties> = getHeatmapFromPoints(geometries, 1)
+    return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
-    return await storeError(resultArchive, 'Error calculating answer', address)
+    return await storeError('Error calculating answer', resultArchive, locationHeatmapAnswerSchema, address)
   }
 }

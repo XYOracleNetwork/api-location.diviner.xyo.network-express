@@ -1,6 +1,9 @@
-import { XyoArchivistApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
-
-import { LocationWitnessPayload, locationWitnessPayloadSchema } from '../../../model'
+import {
+  LocationWitnessPayload,
+  locationWitnessPayloadSchema,
+  XyoArchivistApi,
+  XyoBoundWitness,
+} from '@xyo-network/sdk-xyo-client-js'
 
 interface WithTimestamp {
   _timestamp: number
@@ -27,7 +30,7 @@ const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi,
     const hash = boundWitness._hash
     if (!hash) break
     // Get payloads associated with that bound witness
-    const payloads = await api.getBoundWitnessPayloadsByHash(hash)
+    const payloads = await api.archive.block.getPayloadsByHash(hash)
     const locations = (payloads as (LocationWitnessPayload & WithTimestamp)[]).filter((p) => {
       // Filter those matching the appropriate schema and that have a timestamp
       return p.schema === locationWitnessPayloadSchema && p._timestamp
@@ -49,7 +52,7 @@ export const getMostRecentLocationsInTimeRange = async (
   for (let i = 0; i < maxLoops; i++) {
     // Search backward from last timestamp
     const filterPredicate = (x: WithOptionalTimestamp): boolean => withinTimeRange(x, lowestTime, fromTimestamp)
-    const boundWitnesses = (await api.getBoundWitnessesBefore(fromTimestamp, limit)).filter(
+    const boundWitnesses = (await api.archive.block.getBefore(fromTimestamp, limit)).filter(
       filterPredicate
     ) as (XyoBoundWitness & WithTimestamp)[]
     // If there's no results, stop searching

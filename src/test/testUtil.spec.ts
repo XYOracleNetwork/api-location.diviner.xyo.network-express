@@ -1,20 +1,24 @@
 import {
+  ArchiveResponse,
   locationHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   locationTimeRangeQuerySchema,
+  LocationWitnessPayloadBody,
+  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
+  XyoAuthApi,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
+import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import { LocationWitnessPayloadBody, locationWitnessPayloadSchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -31,6 +35,11 @@ test('Must have APP_PORT ENV VAR defined', () => {
 export const apiDomain = process.env.ARCHIVIST_URL || 'http://localhost:8080'
 export const testArchive = process.env.ARCHIVE || 'temp'
 
+export interface TestWeb3User {
+  address: string
+  privateKey: string
+}
+
 const request = supertest(`http://localhost:${process.env.APP_PORT}`)
 
 const randBetween = (min: number, max: number) => {
@@ -43,12 +52,38 @@ export const getDiviner = (): SuperTest<Test> => {
   return request
 }
 
-export const getNewArchive = (): string => {
-  return v4()
+export const getArchivist = (archive = testArchive, token?: string): XyoArchivistApi => {
+  return token
+    ? new XyoArchivistApi({ apiDomain, archive, jwtToken: token })
+    : new XyoArchivistApi({ apiDomain, archive })
 }
 
-export const getArchivist = (archive = testArchive): XyoArchivistApi => {
-  return new XyoArchivistApi({ apiDomain, archive })
+export const getAuth = (): XyoAuthApi => {
+  return XyoAuthApi.get({ apiDomain })
+}
+
+export const getNewWeb3User = (): TestWeb3User => {
+  const wallet = Wallet.createRandom()
+  const user = { address: wallet.address, privateKey: wallet.privateKey }
+  return user
+}
+
+export const signInWeb3User = async (user: TestWeb3User): Promise<string> => {
+  const authApi = getAuth()
+  const challengeResponse = await authApi.walletChallenge(user.address)
+  const message = challengeResponse.data.state
+  const wallet = new Wallet(user.privateKey)
+  const signature = await wallet.signMessage(message)
+  const tokenResponse = await authApi.walletVerify(user.address, message, signature)
+  return tokenResponse.data.token
+}
+
+export const getTokenForNewUser = async (): Promise<string> => {
+  return signInWeb3User(await getNewWeb3User())
+}
+
+export const claimArchive = (token: string, archive: string = v4()): Promise<ArchiveResponse> => {
+  return getArchivist(archive, token).archive.put(archive)
 }
 
 export const getValidLocationRangeRequest = (
@@ -104,7 +139,7 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi) => {
-  return await api.postBoundWitness(getNewLocationWitness())
+  return await api.archive.block.post(getNewLocationWitness())
 }
 
 export const createQuery = async (

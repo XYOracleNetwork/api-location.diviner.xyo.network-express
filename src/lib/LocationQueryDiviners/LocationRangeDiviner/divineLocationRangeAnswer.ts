@@ -1,37 +1,16 @@
 import {
-  LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
+  LocationTimeRangeQueryCreationRequest,
   XyoAddress,
   XyoArchivistApi,
-  XyoBoundWitnessBuilder,
-  XyoBoundWitnessBuilderConfig,
-  XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection } from 'geojson'
 
-import { convertLocationWitnessPayloadToGeoJson } from './convertLocationWitnessPayloadToGeoJson'
-import { getFeatureCollectionFromPoints } from './getFeatureCollectionFromPoints'
-import { getMostRecentLocationsInTimeRange } from './getLocationsInTimeRange'
-import { isValidLocationWitnessPayload } from './isValidLocationWitnessPayload'
-
-const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
-
-const storeAnswer = async (api: XyoArchivistApi, answer: FeatureCollection, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationTimeRangeAnswerSchema }).fields({ result: answer }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
-
-const storeError = async (api: XyoArchivistApi, error: string, address: XyoAddress) => {
-  const payload = new XyoPayloadBuilder({ schema: locationTimeRangeAnswerSchema }).fields({ error }).build()
-  const resultWitness = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  await api.postBoundWitness(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing answer')
-  return resultWitness._hash
-}
+import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
+import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
+import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
+import { storeAnswer, storeError } from '../storePayload'
+import { convertLocationWitnessPayloadToFeature } from './convertLocationWitnessPayloadToFeature'
 
 export const divineLocationRangeAnswer = async (
   response: LocationQueryCreationResponse,
@@ -41,15 +20,15 @@ export const divineLocationRangeAnswer = async (
   const resultArchive = new XyoArchivistApi(response.resultArchive)
   try {
     // TODO: Remove cast once SDK supports generic responses as well
-    const request = response as unknown as LocationHeatmapQueryCreationRequest
+    const request = response as unknown as LocationTimeRangeQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const points = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToGeoJson)
-    const answer = getFeatureCollectionFromPoints(points)
-    return await storeAnswer(resultArchive, answer, address)
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToFeature)
+    const answer = getFeatureCollectionFromGeometries(geometries)
+    return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
     console.log(error)
-    return await storeError(resultArchive, 'Error calculating answer', address)
+    return await storeError('Error calculating answer', resultArchive, locationTimeRangeAnswerSchema, address)
   }
 }
