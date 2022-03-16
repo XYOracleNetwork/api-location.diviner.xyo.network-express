@@ -1,4 +1,4 @@
-import { bbox, feature, featureCollection, pointsWithinPolygon, polygon, squareGrid } from '@turf/turf'
+import { feature, featureCollection, pointsWithinPolygon, polygon, squareGrid } from '@turf/turf'
 import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { BBox, Feature, FeatureCollection, Point, Polygon } from 'geojson'
 
@@ -60,11 +60,10 @@ const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellS
 export const getHeatmapFromPoints = (
   points: Point[],
   zoom: number
-): Feature<Polygon, LocationHeatmapPointProperties>[] => {
+): FeatureCollection<Polygon, LocationHeatmapPointProperties> => {
   const pointsAsFeatures: Feature<Point>[] = points.map((p) => feature(p))
   const pointsAsFeatureCollection: FeatureCollection<Point> = featureCollection(pointsAsFeatures)
   const heatmap: Feature<Polygon, LocationHeatmapPointProperties>[] = []
-  const foundPoints: Feature<Point>[] = []
   const grids = [northWestQuadrantGrid, northEastQuadrantGrid, southEastQuadrantGrid, southWestQuadrantGrid]
   for (let i = 0; i < grids.length; i++) {
     const grid: FeatureCollection<Polygon> = grids[i]
@@ -72,10 +71,6 @@ export const getHeatmapFromPoints = (
       const searchWithin = cell.geometry
       const hits = pointsWithinPolygon(pointsAsFeatureCollection, searchWithin)
       const value = hits.features.length ? (hits.features.length * 100) / points.length : 0
-      // DEBUG
-      if (hits.features.length) {
-        hits.features.forEach((p) => foundPoints.push(p))
-      }
       const properties: LocationHeatmapPointProperties = {
         hash: '',
         value,
@@ -83,5 +78,5 @@ export const getHeatmapFromPoints = (
       heatmap.push({ ...cell, properties })
     })
   }
-  return heatmap
+  return featureCollection(heatmap)
 }

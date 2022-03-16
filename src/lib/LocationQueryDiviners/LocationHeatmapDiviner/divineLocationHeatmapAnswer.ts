@@ -1,12 +1,13 @@
 import {
   locationHeatmapAnswerSchema,
+  LocationHeatmapPointProperties,
   LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
+import { FeatureCollection, Polygon } from 'geojson'
 
-import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { storeAnswer, storeError } from '../storePayload'
@@ -25,7 +26,7 @@ export const divineLocationHeatmapAnswer = async (
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
     const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPoint)
-    const answer = getFeatureCollectionFromGeometries(getHeatmapFromPoints(geometries, 1))
+    const answer: FeatureCollection<Polygon, LocationHeatmapPointProperties> = getHeatmapFromPoints(geometries, 1)
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
