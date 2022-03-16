@@ -70,12 +70,14 @@ export const getHeatmapFromPoints = (
     grid.features.map((cell) => {
       const searchWithin = cell.geometry
       const hits = pointsWithinPolygon(pointsAsFeatureCollection, searchWithin)
-      const value = hits.features.length ? (hits.features.length * 100) / points.length : 0
-      const properties: LocationHeatmapPointProperties = {
-        hash: '',
-        value,
+      if (hits.features.length) {
+        const value = (hits.features.length * 100) / points.length
+        const properties: LocationHeatmapPointProperties = {
+          hash: '',
+          value,
+        }
+        heatmap.push({ ...cell, properties })
       }
-      heatmap.push({ ...cell, properties })
     })
   }
   return featureCollection(heatmap)
