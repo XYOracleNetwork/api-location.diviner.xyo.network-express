@@ -29,7 +29,7 @@ const ensureResultIsValid = (
     expect(tilesWithValue.length).toBeGreaterThan(0)
   }
   const totalPercent = tilesWithValue.reduce((sum, a) => sum + a, 0)
-  expect(closeTo(totalPercent, 100, 1)).toBeTruthy()
+  expect(closeTo(totalPercent, 100, 5)).toBeTruthy()
 }
 
 describe('getHeatmapFromPoints', () => {

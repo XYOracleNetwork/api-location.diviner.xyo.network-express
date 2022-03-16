@@ -51,7 +51,10 @@ const getQueryAnswer = async (
 ): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
-  await delay(15000)
+  for (let i = 0; i < 10; i++) {
+    await delay(1000)
+    if ((await getQuery(queryCreationResponse.hash)).answerHash) break
+  }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
   const answerPayloads = await api.archive.block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
@@ -86,7 +89,7 @@ describe('Round trip tests', () => {
     const queryCreationRequest = getValidLocationHeatmapRequest(archive, startTime, stopTime)
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBeGreaterThan(0)
-  }, 20000)
+  }, 10000)
   it('Generates an empty answer if no data was found', async () => {
     const now = new Date()
     const futureStartTime = new Date()
@@ -100,7 +103,7 @@ describe('Round trip tests', () => {
     )
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(0)
-  }, 20000)
+  }, 10000)
   it.skip('Handles bad/misshapen data', async () => {
     // TODO: test
   }, 10000)
