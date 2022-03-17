@@ -12,7 +12,7 @@ const maxLatitude = 85.05112878
 const minLongitude = -180
 const maxLongitude = 180
 
-const gridCellSide = 1
+const gridCellSide = 5
 
 const northWestQuadrantBoundingBox: BBox = [0, 0, minLongitude, maxLatitude]
 const northWestQuadrantGrid = squareGrid(northWestQuadrantBoundingBox, gridCellSide, { units: 'degrees' })
