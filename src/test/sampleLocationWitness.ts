@@ -1,8 +1,11 @@
-export const sample = {
+import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+
+import { CurrentLocationWitness } from '../model'
+
+export const locationWitnessSample: LocationWitnessPayload = {
   _archive: 'temp',
   _client: 'js',
   _hash: '319adee8ec88ccb4e8783e8b34776cf6afdd1b7ab6102b9e0f26a21920d84c09',
-  _id: '6217eaa075ecf7e73fa60352',
   _observeDuration: 22,
   _timestamp: 1645734560250,
   currentLocation: {
@@ -18,4 +21,17 @@ export const sample = {
     timestamp: 1645734561467,
   },
   schema: 'network.xyo.location',
+}
+
+export const currentLocationWitnessSample: CurrentLocationWitness = {
+  _archive: 'coin-app',
+  _hash: 'b7438d08c65061953cc42eb37efd596c8be9f90ba9473afe8a287eb0695c69d7',
+  _timestamp: 1630368114646,
+  altitudeMeters: 52.123456,
+  directionDegrees: 123,
+  latitude: 35.123456,
+  longitude: -78.123456,
+  quadkey: '213',
+  schema: 'co.coinapp.currentlocationwitness',
+  speedKph: 12.3456,
 }
