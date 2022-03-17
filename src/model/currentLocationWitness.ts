@@ -1,14 +1,17 @@
-export type CurrentLocationWitnessSchema = 'co.coinapp.currentlocationwitness'
+import { WithXyoPayloadMeta, XyoPayloadBody } from '@xyo-network/sdk-xyo-client-js'
 
-export interface CurrentLocationWitness {
-  _archive: string
-  _hash: string
-  _timestamp: number
+// TODO: Move to SDK
+export const currentLocationWitnessPayloadSchema = 'co.coinapp.currentlocationwitness'
+export type CurrentLocationWitnessPayloadSchema = 'co.coinapp.currentlocationwitness'
+
+export interface CurrentLocationWitnessPayloadBody extends XyoPayloadBody {
   altitudeMeters: number
   directionDegrees: number
   latitude: number
   longitude: number
   quadkey: string
-  schema: CurrentLocationWitnessSchema
+  schema: CurrentLocationWitnessPayloadSchema
   speedKph: number
 }
+
+export declare type CurrentLocationWitnessPayload = WithXyoPayloadMeta<CurrentLocationWitnessPayloadBody>

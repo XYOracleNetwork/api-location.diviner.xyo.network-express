@@ -1,4 +1,4 @@
-import { feature, featureCollection, pointsWithinPolygon, polygon, squareGrid } from '@turf/turf'
+import { feature, featureCollection, pointsWithinPolygon, squareGrid } from '@turf/turf'
 import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { BBox, Feature, FeatureCollection, Point, Polygon } from 'geojson'
 

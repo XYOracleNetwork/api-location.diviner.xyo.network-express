@@ -1,6 +1,6 @@
 import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 
-import { CurrentLocationWitness } from '../model'
+import { CurrentLocationWitnessPayloadBody } from '../model'
 
 export const locationWitnessSample: LocationWitnessPayload = {
   _archive: 'temp',
@@ -23,7 +23,7 @@ export const locationWitnessSample: LocationWitnessPayload = {
   schema: 'network.xyo.location',
 }
 
-export const currentLocationWitnessSample: CurrentLocationWitness = {
+export const currentLocationWitnessSample: CurrentLocationWitnessPayloadBody = {
   _archive: 'coin-app',
   _hash: 'b7438d08c65061953cc42eb37efd596c8be9f90ba9473afe8a287eb0695c69d7',
   _timestamp: 1630368114646,
