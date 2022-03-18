@@ -1,9 +1,7 @@
-import {
-  LocationWitnessPayload,
-  locationWitnessPayloadSchema,
-  XyoArchivistApi,
-  XyoBoundWitness,
-} from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
+
+import { CurrentLocationWitnessPayload, currentLocationWitnessPayloadSchema } from '../../model'
+import { QueryLocationDataInRange } from './QueryLocationDataInRange'
 
 interface WithTimestamp {
   _timestamp: number
@@ -24,28 +22,31 @@ const withinTimeRange = (x: WithOptionalTimestamp, t1: number, t2: number): bool
   return x?._timestamp && x?._timestamp <= highestTime && x?._timestamp >= lowestTime ? true : false
 }
 
-const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi, boundWitnesses: XyoBoundWitness[]) => {
-  const allPayloads: Array<LocationWitnessPayload & WithTimestamp> = []
+const getCurrentLocationWitnessPayloadsForBoundWitnesses = async (
+  api: XyoArchivistApi,
+  boundWitnesses: XyoBoundWitness[]
+) => {
+  const allPayloads: Array<CurrentLocationWitnessPayload & WithTimestamp> = []
   for (const boundWitness of boundWitnesses) {
     const hash = boundWitness._hash
     if (!hash) break
     // Get payloads associated with that bound witness
     const payloads = await api.archive.block.getPayloadsByHash(hash)
-    const locations = (payloads as (LocationWitnessPayload & WithTimestamp)[]).filter((p) => {
+    const locations = (payloads as (CurrentLocationWitnessPayload & WithTimestamp)[]).filter((p) => {
       // Filter those matching the appropriate schema and that have a timestamp
-      return p.schema === locationWitnessPayloadSchema && p._timestamp
+      return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
     })
     allPayloads.push(...locations)
   }
   return allPayloads
 }
 
-export const getMostRecentLocationsInTimeRange = async (
+export const queryCurrentLocationsInRange: QueryLocationDataInRange<CurrentLocationWitnessPayload> = async (
   api: XyoArchivistApi,
   startTime = 0,
   stopTime = Date.now()
-): Promise<LocationWitnessPayload[]> => {
-  const allPayloads: LocationWitnessPayload[] = []
+) => {
+  const allPayloads: CurrentLocationWitnessPayload[] = []
   const highestTime = Math.max(startTime, stopTime)
   const lowestTime = Math.min(startTime, stopTime)
   let fromTimestamp = highestTime
@@ -59,7 +60,7 @@ export const getMostRecentLocationsInTimeRange = async (
     if (!boundWitnesses.length) break
     const locations =
       // All location witness payloads
-      (await getLocationWitnessPayloadsForBoundWitnesses(api, boundWitnesses))
+      (await getCurrentLocationWitnessPayloadsForBoundWitnesses(api, boundWitnesses))
         // Within the range specified
         .filter(filterPredicate)
     // TODO: Only take the last N elements if we're past the max

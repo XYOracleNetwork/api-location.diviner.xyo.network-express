@@ -9,10 +9,10 @@ import {
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
 import { SupportedLocationWitnessPayloadSchemas } from '../../../model'
-import { getMostRecentCurrentLocationsInTimeRange } from '../getCurrentLocationsInTimeRange'
-import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
+import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
+import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
 import { convertCurrentLocationWitnessPayloadToPoint } from './convertCurrentLocationWitnessPayloadToPoint'
 import { convertLocationWitnessPayloadToPoint } from './convertLocationWitnessPayloadToPoint'
@@ -21,13 +21,13 @@ import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 type PointGetter = (api: XyoArchivistApi, startTime: number, stopTime: number) => Promise<Point[]>
 
 const getCurrentLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
-  return (await getMostRecentCurrentLocationsInTimeRange(api, startTime, stopTime))
+  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
     .filter(isValidCurrentLocationWitnessPayload)
     .map(convertCurrentLocationWitnessPayloadToPoint)
 }
 
 const getLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
-  return (await getMostRecentLocationsInTimeRange(api, startTime, stopTime))
+  return (await queryLocationsInRange(api, startTime, stopTime))
     .filter(isValidLocationWitnessPayload)
     .map(convertLocationWitnessPayloadToPoint)
 }
