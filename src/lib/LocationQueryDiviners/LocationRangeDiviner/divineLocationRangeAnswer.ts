@@ -6,7 +6,7 @@ import {
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { convertLocationWitnessPayloadToFeature } from '../Converters'
+import { convertLocationWitnessPayloadToFeature } from '../../Converters'
 import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryLocationsInRange } from '../queryLocationsInRange'

@@ -1,6 +1,6 @@
 import { Feature, GeoJsonProperties, Geometry } from 'geojson'
 
-import { SupportedLocationWitnessPayloads } from '../../../model'
+import { SupportedLocationWitnessPayloads } from '../../model'
 
 export type ConvertLocationDataToGeoJsonGeometry<
   T extends SupportedLocationWitnessPayloads,
