@@ -45,6 +45,7 @@ const getCurrentLocationWitnessPayloadsForBoundWitnesses = async (
   return allPayloads
 }
 
+// TODO: Move to common method in queryGenericLocationsInRange.ts
 export const queryCurrentLocationsInRange: QueryLocationDataInRange<CurrentLocationWitnessPayload> = async (
   api: XyoArchivistApi,
   schema: SupportedLocationWitnessPayloadSchemas,
