@@ -6,9 +6,9 @@ import {
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection, Polygon } from 'geojson'
+import { FeatureCollection, Point, Polygon } from 'geojson'
 
-import { currentLocationWitnessPayloadSchema } from '../../../model'
+import { SupportedLocationWitnessPayloadSchemas } from '../../../model'
 import { getMostRecentCurrentLocationsInTimeRange } from '../getCurrentLocationsInTimeRange'
 import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
@@ -17,6 +17,25 @@ import { storeAnswer, storeError } from '../storePayload'
 import { convertCurrentLocationWitnessPayloadToPoint } from './convertCurrentLocationWitnessPayloadToPoint'
 import { convertLocationWitnessPayloadToPoint } from './convertLocationWitnessPayloadToPoint'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
+
+type PointGetter = (api: XyoArchivistApi, startTime: number, stopTime: number) => Promise<Point[]>
+
+const getCurrentLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
+  return (await getMostRecentCurrentLocationsInTimeRange(api, startTime, stopTime))
+    .filter(isValidCurrentLocationWitnessPayload)
+    .map(convertCurrentLocationWitnessPayloadToPoint)
+}
+
+const getLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
+  return (await getMostRecentLocationsInTimeRange(api, startTime, stopTime))
+    .filter(isValidLocationWitnessPayload)
+    .map(convertLocationWitnessPayloadToPoint)
+}
+
+const locationDataPointsStrategyBySchema: Record<SupportedLocationWitnessPayloadSchemas, PointGetter> = {
+  'co.coinapp.currentlocationwitness': getCurrentLocationWitnesses,
+  'network.xyo.location': getLocationWitnesses,
+}
 
 export const divineLocationHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
@@ -28,14 +47,11 @@ export const divineLocationHeatmapAnswer = async (
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
-    const geometries =
-      response.query.schema === currentLocationWitnessPayloadSchema
-        ? (await getMostRecentCurrentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime()))
-            .filter(isValidCurrentLocationWitnessPayload)
-            .map(convertCurrentLocationWitnessPayloadToPoint)
-        : (await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime()))
-            .filter(isValidLocationWitnessPayload)
-            .map(convertLocationWitnessPayloadToPoint)
+    const geometries = await locationDataPointsStrategyBySchema[request.query.schema](
+      sourceArchive,
+      start.getTime(),
+      stop.getTime()
+    )
     const answer: FeatureCollection<Polygon, LocationHeatmapPointProperties> = getHeatmapFromPoints(geometries, 1)
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
