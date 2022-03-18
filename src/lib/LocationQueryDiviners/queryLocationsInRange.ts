@@ -5,6 +5,9 @@ import {
   XyoBoundWitness,
 } from '@xyo-network/sdk-xyo-client-js'
 
+import { SupportedLocationWitnessPayloadSchemas } from '../../model'
+import { QueryLocationDataInRange } from './QueryLocationDataInRange'
+
 interface WithTimestamp {
   _timestamp: number
 }
@@ -40,11 +43,13 @@ const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi,
   return allPayloads
 }
 
-export const getMostRecentLocationsInTimeRange = async (
+// TODO: Move to common method in queryGenericLocationsInRange.ts
+export const queryLocationsInRange: QueryLocationDataInRange<LocationWitnessPayload> = async (
   api: XyoArchivistApi,
+  schema: SupportedLocationWitnessPayloadSchemas,
   startTime = 0,
   stopTime = Date.now()
-): Promise<LocationWitnessPayload[]> => {
+) => {
   const allPayloads: LocationWitnessPayload[] = []
   const highestTime = Math.max(startTime, stopTime)
   const lowestTime = Math.min(startTime, stopTime)

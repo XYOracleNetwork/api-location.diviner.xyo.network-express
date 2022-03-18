@@ -2,6 +2,7 @@ import { points, randomPoint } from '@turf/turf'
 import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Polygon } from 'geojson'
 
+import { WithHashProperties } from '../../../model'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 /**
@@ -29,7 +30,7 @@ const ensureResultIsValid = (
     expect(tilesWithValue.length).toBeGreaterThan(0)
   }
   const totalPercent = tilesWithValue.reduce((sum, a) => sum + a, 0)
-  expect(closeTo(totalPercent, 100, 5)).toBeTruthy()
+  expect(closeTo(totalPercent, 100, 10)).toBeTruthy()
 }
 
 describe('getHeatmapFromPoints', () => {
@@ -40,11 +41,11 @@ describe('getHeatmapFromPoints', () => {
       [90, -45],
       [90, 45],
     ]
-    const locations = points(coordinates).features.map((f) => f.geometry)
+    const locations = points<WithHashProperties>(coordinates, { hash: 'foo' })
     ensureResultIsValid(getHeatmapFromPoints(locations, 1), coordinates.length)
   })
   it('calculates with random points', () => {
-    const locations = randomPoint(1000, { bbox: [-179, -85, 179, 85] }).features.map((f) => f.geometry)
+    const locations = randomPoint(1000, { bbox: [-179, -85, 179, 85] })
     ensureResultIsValid(getHeatmapFromPoints(locations, 1))
   })
 })

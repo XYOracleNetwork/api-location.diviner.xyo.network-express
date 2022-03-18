@@ -2,15 +2,16 @@ import {
   LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
   LocationTimeRangeQueryCreationRequest,
+  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
-import { getMostRecentLocationsInTimeRange } from '../getLocationsInTimeRange'
+import { convertLocationWitnessPayloadToPointFeature } from '../../Converters'
+import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
+import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
-import { convertLocationWitnessPayloadToFeature } from './convertLocationWitnessPayloadToFeature'
 
 export const divineLocationRangeAnswer = async (
   response: LocationQueryCreationResponse,
@@ -23,9 +24,11 @@ export const divineLocationRangeAnswer = async (
     const request = response as unknown as LocationTimeRangeQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
-    const locations = await getMostRecentLocationsInTimeRange(sourceArchive, start.getTime(), stop.getTime())
-    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToFeature)
-    const answer = getFeatureCollectionFromGeometries(geometries)
+    const startTime = start.getTime()
+    const stopTime = stop.getTime()
+    const locations = await queryLocationsInRange(sourceArchive, locationWitnessPayloadSchema, startTime, stopTime)
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPointFeature)
+    const answer = getFeatureCollection(geometries)
     return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
     console.log(error)
