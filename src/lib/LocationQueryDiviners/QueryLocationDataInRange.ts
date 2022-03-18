@@ -1,3 +1,9 @@
 import { XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
 
-export type QueryLocationDataInRange<T> = (api: XyoArchivistApi, startTime: number, stopTime: number) => Promise<T[]>
+import { SupportedLocationWitnessPayloads } from '../../model'
+
+export type QueryLocationDataInRange<T extends SupportedLocationWitnessPayloads> = (
+  api: XyoArchivistApi,
+  startTime: number,
+  stopTime: number
+) => Promise<T[]>
