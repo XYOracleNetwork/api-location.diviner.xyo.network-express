@@ -1,3 +1,4 @@
+import { Point } from '@turf/turf'
 import {
   locationHeatmapAnswerSchema,
   LocationHeatmapPointProperties,
@@ -6,33 +7,42 @@ import {
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection, Point, Polygon } from 'geojson'
+import { FeatureCollection, Polygon } from 'geojson'
 
-import { SupportedLocationWitnessPayloadSchemas } from '../../../model'
+import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
-import { convertCurrentLocationWitnessPayloadToPoint } from './convertCurrentLocationWitnessPayloadToPoint'
-import { convertLocationWitnessPayloadToPoint } from './convertLocationWitnessPayloadToPoint'
+import { convertCurrentLocationWitnessPayloadToPointFeature } from './convertCurrentLocationWitnessPayloadToPointFeature'
+import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPoint'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
-type PointGetter = (api: XyoArchivistApi, startTime: number, stopTime: number) => Promise<Point[]>
-
-const getCurrentLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
+const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
+  api: XyoArchivistApi,
+  startTime: number,
+  stopTime: number
+) => {
   return (await queryCurrentLocationsInRange(api, startTime, stopTime))
     .filter(isValidCurrentLocationWitnessPayload)
-    .map(convertCurrentLocationWitnessPayloadToPoint)
+    .map(convertCurrentLocationWitnessPayloadToPointFeature)
 }
 
-const getLocationWitnesses: PointGetter = async (api: XyoArchivistApi, startTime: number, stopTime: number) => {
+const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
+  api: XyoArchivistApi,
+  startTime: number,
+  stopTime: number
+) => {
   return (await queryLocationsInRange(api, startTime, stopTime))
     .filter(isValidLocationWitnessPayload)
-    .map(convertLocationWitnessPayloadToPoint)
+    .map(convertLocationWitnessPayloadToPointFeature)
 }
 
-const locationDataPointsStrategyBySchema: Record<SupportedLocationWitnessPayloadSchemas, PointGetter> = {
+const locationDataPointsStrategyBySchema: Record<
+  SupportedLocationWitnessPayloadSchemas,
+  FeaturesInRange<Point, WithHashProperties>
+> = {
   'co.coinapp.currentlocationwitness': getCurrentLocationWitnesses,
   'network.xyo.location': getLocationWitnesses,
 }

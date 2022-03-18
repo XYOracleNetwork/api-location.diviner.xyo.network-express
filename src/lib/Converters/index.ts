@@ -1,2 +1,2 @@
 export * from './ConvertLocationDataToGeoJsonGeometry'
-export * from './convertLocationWitnessPayloadToFeature'
+export * from './convertLocationWitnessPayloadToPointFeature'

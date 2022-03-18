@@ -1,11 +1,11 @@
 import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 
 import { locationWitnessSample } from '../../test'
-import { convertLocationWitnessPayloadToFeature } from './convertLocationWitnessPayloadToFeature'
-describe('convertLocationWitnessPayloadToGeoJson', () => {
+import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPointFeature'
+describe('convertLocationWitnessPayloadToPointFeature', () => {
   it('converts data formatted according to the schema into a GeoJson Feature', () => {
     const payload = locationWitnessSample as LocationWitnessPayload
-    const actual = convertLocationWitnessPayloadToFeature(payload)
+    const actual = convertLocationWitnessPayloadToPointFeature(payload)
     expect(actual?.id).toBe(payload._hash)
     expect(actual?.type).toBe('Feature')
     expect(actual?.geometry).toBeTruthy()

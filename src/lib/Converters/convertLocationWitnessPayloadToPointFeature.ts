@@ -3,7 +3,7 @@ import { Feature, Point } from 'geojson'
 
 import { ConvertLocationDataToGeoJsonGeometry } from './ConvertLocationDataToGeoJsonGeometry'
 
-export const convertLocationWitnessPayloadToFeature: ConvertLocationDataToGeoJsonGeometry<
+export const convertLocationWitnessPayloadToPointFeature: ConvertLocationDataToGeoJsonGeometry<
   LocationWitnessPayload,
   Point,
   LocationTimeRangePointProperties
@@ -22,11 +22,10 @@ export const convertLocationWitnessPayloadToFeature: ConvertLocationDataToGeoJso
     coordinates: [payload.currentLocation.coords.longitude, payload.currentLocation.coords.latitude],
     type: 'Point',
   }
-  const type = 'Feature'
   const feature: Feature<Point, LocationTimeRangePointProperties> = {
     geometry,
     properties,
-    type,
+    type: 'Feature',
   }
   if (payload._hash) feature.id = payload._hash
   return feature

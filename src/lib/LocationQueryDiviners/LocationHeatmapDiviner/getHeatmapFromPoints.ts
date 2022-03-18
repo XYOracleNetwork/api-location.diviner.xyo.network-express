@@ -1,10 +1,13 @@
-import { feature, featureCollection, pointsWithinPolygon, squareGrid } from '@turf/turf'
+import { featureCollection, pointsWithinPolygon, squareGrid } from '@turf/turf'
 import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { BBox, Feature, FeatureCollection, Point, Polygon } from 'geojson'
+
+import { WithHashProperties } from '../../../model'
 
 // TODO: Move to SDK
 export interface LocationHeatmapPolygonProperties extends LocationHeatmapPointProperties {
   count: number
+  hashes: string[]
 }
 
 const minLatitude = -85.05112878
@@ -28,12 +31,15 @@ const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellS
 
 const grids = [northWestQuadrantGrid, northEastQuadrantGrid, southEastQuadrantGrid, southWestQuadrantGrid]
 
+const isString = (value: string | undefined): value is string => {
+  return value !== undefined
+}
+
 export const getHeatmapFromPoints = (
-  points: Point[],
-  zoom: number
+  points: Feature<Point, WithHashProperties>[],
+  _zoom: number
 ): FeatureCollection<Polygon, LocationHeatmapPointProperties> => {
-  const pointsAsFeatures: Feature<Point>[] = points.map((p) => feature(p))
-  const pointsAsFeatureCollection: FeatureCollection<Point> = featureCollection(pointsAsFeatures)
+  const pointsAsFeatureCollection = featureCollection(points)
   const heatmap: Feature<Polygon, LocationHeatmapPointProperties>[] = []
   // TODO: Replace with QuadKey/H3 implementation for faster performance
   for (let i = 0; i < grids.length; i++) {
@@ -47,6 +53,7 @@ export const getHeatmapFromPoints = (
         const properties: LocationHeatmapPolygonProperties = {
           count: hits.features.length,
           hash: '',
+          hashes: hits.features.map((p) => p?.properties?.hash).filter<string>(isString),
           value,
         }
         heatmap.push({ ...cell, properties })
