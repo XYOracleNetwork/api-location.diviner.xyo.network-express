@@ -7,7 +7,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { convertLocationWitnessPayloadToPointFeature } from '../../Converters'
-import { getFeatureCollectionFromGeometries } from '../getFeatureCollectionFromGeometries'
+import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
@@ -25,7 +25,7 @@ export const divineLocationRangeAnswer = async (
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
     const locations = await queryLocationsInRange(sourceArchive, start.getTime(), stop.getTime())
     const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPointFeature)
-    const answer = getFeatureCollectionFromGeometries(geometries)
+    const answer = getFeatureCollection(geometries)
     return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
     console.log(error)

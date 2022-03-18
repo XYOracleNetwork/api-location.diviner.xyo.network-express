@@ -1,4 +1,4 @@
-import { featureCollection, pointsWithinPolygon, squareGrid } from '@turf/turf'
+import { featureCollection, pointsWithinPolygon, squareGrid, Units } from '@turf/turf'
 import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
 import { BBox, Feature, FeatureCollection, Point, Polygon } from 'geojson'
 
@@ -10,24 +10,27 @@ export interface LocationHeatmapPolygonProperties extends LocationHeatmapPointPr
   hashes: string[]
 }
 
-const minLatitude = -85.05112878
-const maxLatitude = 85.05112878
+// const minLatitude = -85.05112878
+// const maxLatitude = 85.05112878
+const minLatitude = -85
+const maxLatitude = 85
 const minLongitude = -180
 const maxLongitude = 180
 
 const gridCellSide = 5
+const gridOptions: { units: Units } = { units: 'degrees' }
 
 const northWestQuadrantBoundingBox: BBox = [0, 0, minLongitude, maxLatitude]
-const northWestQuadrantGrid = squareGrid(northWestQuadrantBoundingBox, gridCellSide, { units: 'degrees' })
+const northWestQuadrantGrid = squareGrid(northWestQuadrantBoundingBox, gridCellSide, gridOptions)
 
 const northEastQuadrantBoundingBox: BBox = [0, 0, maxLongitude, maxLatitude]
-const northEastQuadrantGrid = squareGrid(northEastQuadrantBoundingBox, gridCellSide, { units: 'degrees' })
+const northEastQuadrantGrid = squareGrid(northEastQuadrantBoundingBox, gridCellSide, gridOptions)
 
 const southEastQuadrantBoundingBox: BBox = [0, 0, maxLongitude, minLatitude]
-const southEastQuadrantGrid = squareGrid(southEastQuadrantBoundingBox, gridCellSide, { units: 'degrees' })
+const southEastQuadrantGrid = squareGrid(southEastQuadrantBoundingBox, gridCellSide, gridOptions)
 
 const southWestQuadrantBoundingBox: BBox = [0, 0, minLongitude, minLatitude]
-const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellSide, { units: 'degrees' })
+const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellSide, gridOptions)
 
 const grids = [northWestQuadrantGrid, northEastQuadrantGrid, southEastQuadrantGrid, southWestQuadrantGrid]
 
@@ -36,10 +39,9 @@ const isString = (value: string | undefined): value is string => {
 }
 
 export const getHeatmapFromPoints = (
-  points: Feature<Point, WithHashProperties>[],
+  points: FeatureCollection<Point, WithHashProperties>,
   _zoom: number
 ): FeatureCollection<Polygon, LocationHeatmapPointProperties> => {
-  const pointsAsFeatureCollection = featureCollection(points)
   const heatmap: Feature<Polygon, LocationHeatmapPointProperties>[] = []
   // TODO: Replace with QuadKey/H3 implementation for faster performance
   for (let i = 0; i < grids.length; i++) {
@@ -47,9 +49,9 @@ export const getHeatmapFromPoints = (
     for (let j = 0; j < grid.features.length; j++) {
       const cell = grid.features[j]
       const searchWithin = cell.geometry
-      const hits = pointsWithinPolygon(pointsAsFeatureCollection, searchWithin)
+      const hits = pointsWithinPolygon(points, searchWithin)
       if (hits.features.length) {
-        const value = (hits.features.length * 100) / points.length
+        const value = (hits.features.length * 100) / points.features.length
         const properties: LocationHeatmapPolygonProperties = {
           count: hits.features.length,
           hash: '',

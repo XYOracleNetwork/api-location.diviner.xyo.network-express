@@ -1,4 +1,3 @@
-import { Point } from '@turf/turf'
 import {
   locationHeatmapAnswerSchema,
   LocationHeatmapPointProperties,
@@ -7,9 +6,10 @@ import {
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection, Polygon } from 'geojson'
+import { FeatureCollection, Point, Polygon } from 'geojson'
 
 import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
+import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
@@ -39,7 +39,7 @@ const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
     .map(convertLocationWitnessPayloadToPointFeature)
 }
 
-const locationDataPointsStrategyBySchema: Record<
+const getLocationDataPointsBySchema: Record<
   SupportedLocationWitnessPayloadSchemas,
   FeaturesInRange<Point, WithHashProperties>
 > = {
@@ -57,12 +57,11 @@ export const divineLocationHeatmapAnswer = async (
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
-    const geometries = await locationDataPointsStrategyBySchema[request.query.schema](
-      sourceArchive,
-      start.getTime(),
-      stop.getTime()
-    )
-    const answer: FeatureCollection<Polygon, LocationHeatmapPointProperties> = getHeatmapFromPoints(geometries, 1)
+    const startTime = start.getTime()
+    const stopTime = stop.getTime()
+    const points = await getLocationDataPointsBySchema[request.query.schema](sourceArchive, startTime, stopTime)
+    const collection = getFeatureCollection(points)
+    const answer: FeatureCollection<Polygon, LocationHeatmapPointProperties> = getHeatmapFromPoints(collection, 1)
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
