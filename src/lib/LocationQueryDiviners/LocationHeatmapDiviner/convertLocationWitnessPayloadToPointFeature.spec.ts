@@ -1,5 +1,5 @@
 import { locationWitnessSample } from '../../../test'
-import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPoint'
+import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPointFeature'
 describe('convertLocationWitnessPayloadToPointFeature', () => {
   it('converts data formatted according to the schema into a GeoJson Point', () => {
     const payload = locationWitnessSample

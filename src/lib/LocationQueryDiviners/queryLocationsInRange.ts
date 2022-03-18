@@ -5,6 +5,7 @@ import {
   XyoBoundWitness,
 } from '@xyo-network/sdk-xyo-client-js'
 
+import { SupportedLocationWitnessPayloadSchemas } from '../../model'
 import { QueryLocationDataInRange } from './QueryLocationDataInRange'
 
 interface WithTimestamp {
@@ -44,6 +45,7 @@ const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi,
 
 export const queryLocationsInRange: QueryLocationDataInRange<LocationWitnessPayload> = async (
   api: XyoArchivistApi,
+  schema: SupportedLocationWitnessPayloadSchemas,
   startTime = 0,
   stopTime = Date.now()
 ) => {

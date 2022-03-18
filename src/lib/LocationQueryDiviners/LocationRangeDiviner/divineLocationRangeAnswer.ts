@@ -2,6 +2,7 @@ import {
   LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
   LocationTimeRangeQueryCreationRequest,
+  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -23,7 +24,9 @@ export const divineLocationRangeAnswer = async (
     const request = response as unknown as LocationTimeRangeQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
-    const locations = await queryLocationsInRange(sourceArchive, start.getTime(), stop.getTime())
+    const startTime = start.getTime()
+    const stopTime = stop.getTime()
+    const locations = await queryLocationsInRange(sourceArchive, locationWitnessPayloadSchema, startTime, stopTime)
     const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPointFeature)
     const answer = getFeatureCollection(geometries)
     return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)

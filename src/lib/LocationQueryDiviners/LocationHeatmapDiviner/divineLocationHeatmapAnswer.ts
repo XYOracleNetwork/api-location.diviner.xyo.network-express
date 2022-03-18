@@ -3,12 +3,18 @@ import {
   LocationHeatmapPointProperties,
   LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
+  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
-import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
+import {
+  currentLocationWitnessPayloadSchema,
+  FeaturesInRange,
+  SupportedLocationWitnessPayloadSchemas,
+  WithHashProperties,
+} from '../../../model'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
@@ -16,7 +22,7 @@ import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
 import { convertCurrentLocationWitnessPayloadToPointFeature } from './convertCurrentLocationWitnessPayloadToPointFeature'
-import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPoint'
+import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPointFeature'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
@@ -24,7 +30,7 @@ const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = 
   startTime: number,
   stopTime: number
 ) => {
-  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
+  return (await queryCurrentLocationsInRange(api, currentLocationWitnessPayloadSchema, startTime, stopTime))
     .filter(isValidCurrentLocationWitnessPayload)
     .map(convertCurrentLocationWitnessPayloadToPointFeature)
 }
@@ -34,7 +40,7 @@ const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
   startTime: number,
   stopTime: number
 ) => {
-  return (await queryLocationsInRange(api, startTime, stopTime))
+  return (await queryLocationsInRange(api, locationWitnessPayloadSchema, startTime, stopTime))
     .filter(isValidLocationWitnessPayload)
     .map(convertLocationWitnessPayloadToPointFeature)
 }
