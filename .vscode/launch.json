@@ -7,9 +7,7 @@
       "name": "Debug",
       "program": "${workspaceFolder}/src/index.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "runtimeArgs": [
-        "-r ts-node/register"
-      ],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
       "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,
       "resolveSourceMapLocations": [
@@ -17,6 +15,7 @@
         "!**/node_modules/**"
       ],
       "pauseForSourceMap": true,
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     },
     {
       "type": "node",
@@ -24,9 +23,7 @@
       "name": "Build & Debug",
       "program": "${workspaceFolder}/src/index.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "runtimeArgs": [
-        "-r ts-node/register"
-      ],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
       "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,
       "resolveSourceMapLocations": [
@@ -34,7 +31,8 @@
         "!**/node_modules/**"
       ],
       "pauseForSourceMap": true,
-      "preLaunchTask": "build"
+      "preLaunchTask": "build",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     },
     {
       "name": "Debug Jest Tests",
