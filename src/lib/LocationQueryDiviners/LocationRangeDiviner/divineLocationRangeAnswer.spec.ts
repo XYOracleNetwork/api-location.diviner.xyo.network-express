@@ -19,9 +19,10 @@ import {
   witnessNewLocation,
 } from '../../../test'
 
-const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
+const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
   expect(answerPayloads).toBeTruthy()
   expect(answerPayloads.length).toBeGreaterThan(0)
+  expect(answerPayloads[0].length).toBeGreaterThan(0)
 }
 
 const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
@@ -56,9 +57,9 @@ const getQueryAnswer = async (
   }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = (await api.getPayloadsByHash(queryAnswerResponse.answerHash || '')) || []
+  const answerPayloads = (await api.getPayloadsByHash(queryAnswerResponse.answerHash || '')) || [[]]
   validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads.pop()
+  const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(locationTimeRangeAnswerSchema)
   const answer = payload?.result as FeatureCollection<Point, LocationTimeRangePointProperties>
