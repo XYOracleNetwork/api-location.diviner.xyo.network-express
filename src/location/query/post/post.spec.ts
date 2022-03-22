@@ -3,18 +3,6 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { createQuery, getValidLocationRangeRequest } from '../../../test'
 
 describe('POST /location/query', () => {
-  describe('with invalid archive config', () => {
-    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archive`, async () => {
-      const request = getValidLocationRangeRequest()
-      request.sourceArchivist.apiDomain = ''
-      await createQuery(request, StatusCodes.BAD_REQUEST)
-    })
-    it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archive`, async () => {
-      const request = getValidLocationRangeRequest()
-      request.sourceArchivist.apiDomain = ''
-      await createQuery(request, StatusCodes.BAD_REQUEST)
-    })
-  })
   describe('with invalid query', () => {
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid schema`, async () => {
       const request = getValidLocationRangeRequest()
@@ -36,9 +24,14 @@ describe('POST /location/query', () => {
       delete (request.sourceArchivist as { apiDomain?: string })?.apiDomain
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for missing source archive`, async () => {
+      const request = getValidLocationRangeRequest()
+      delete (request as { sourceArchive?: string }).sourceArchive
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archive`, async () => {
       const request = getValidLocationRangeRequest()
-      delete (request.sourceArchive as { archive?: string })?.archive
+      request.sourceArchive = ''
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archivist`, async () => {
@@ -46,9 +39,14 @@ describe('POST /location/query', () => {
       delete (request.resultArchivist as { apiDomain?: string })?.apiDomain
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
+    it(`returns ${ReasonPhrases.BAD_REQUEST} for missing result archive`, async () => {
+      const request = getValidLocationRangeRequest()
+      delete (request as { resultArchive?: string }).resultArchive
+      await createQuery(request, StatusCodes.BAD_REQUEST)
+    })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archive`, async () => {
       const request = getValidLocationRangeRequest()
-      delete (request.resultArchive as { archive?: string })?.archive
+      request.resultArchive = ''
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
   })
