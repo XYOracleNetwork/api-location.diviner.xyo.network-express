@@ -1,6 +1,6 @@
 import {
   XyoAddress,
-  XyoArchivistApi,
+  XyoArchivistArchiveApi,
   XyoBoundWitnessBuilder,
   XyoPayload,
   XyoPayloadBuilder,
@@ -11,18 +11,18 @@ import { LocationAnswerSchema } from './LocationAnswerSchema'
 
 export const storePayload = async (
   payload: XyoPayload,
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   const resultWitness = new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
-  await api.archive.block.post(resultWitness)
+  await api.block.post(resultWitness)
   if (!resultWitness._hash) throw new Error('Error storing value')
   return resultWitness._hash
 }
 
 export const storeAnswer = (
   answer: FeatureCollection,
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   schema: LocationAnswerSchema,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
@@ -32,7 +32,7 @@ export const storeAnswer = (
 
 export const storeError = (
   error: string,
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   schema: LocationAnswerSchema,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {

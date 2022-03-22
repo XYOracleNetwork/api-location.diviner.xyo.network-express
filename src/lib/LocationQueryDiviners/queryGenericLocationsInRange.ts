@@ -1,4 +1,4 @@
-import { XyoArchivistApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas } from '../../model'
 import { getBoundWitnessesInTimeRange } from './getBoundWitnessesInTimeRange'
@@ -29,7 +29,7 @@ const hasTimestamp = (x: WithOptionalTimestamp): x is WithTimestamp => {
 }
 
 export const queryGenericLocationsInRange: QueryLocationDataInRange<SupportedLocationWitnessPayloads> = async (
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   schema: SupportedLocationWitnessPayloadSchemas,
   startTime = 0,
   stopTime = Date.now()

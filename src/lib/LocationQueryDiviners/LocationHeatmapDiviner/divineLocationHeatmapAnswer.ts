@@ -6,6 +6,7 @@ import {
   locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
+  XyoArchivistArchiveApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
@@ -26,7 +27,7 @@ import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWi
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   startTime: number,
   stopTime: number
 ) => {
@@ -36,7 +37,7 @@ const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = 
 }
 
 const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   startTime: number,
   stopTime: number
 ) => {
@@ -57,8 +58,8 @@ export const divineLocationHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
-  const sourceArchive = new XyoArchivistApi(response.sourceArchive)
-  const resultArchive = new XyoArchivistApi(response.resultArchive)
+  const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archives.select(response.sourceArchive)
+  const resultArchive = new XyoArchivistApi(response.resultArchivist).archives.select(response.resultArchive)
   try {
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)

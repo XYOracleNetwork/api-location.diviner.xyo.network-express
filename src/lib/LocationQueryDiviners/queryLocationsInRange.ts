@@ -1,7 +1,7 @@
 import {
   LocationWitnessPayload,
   locationWitnessPayloadSchema,
-  XyoArchivistApi,
+  XyoArchivistArchiveApi,
   XyoBoundWitness,
 } from '@xyo-network/sdk-xyo-client-js'
 
@@ -27,13 +27,16 @@ const withinTimeRange = (x: WithOptionalTimestamp, t1: number, t2: number): bool
   return x?._timestamp && x?._timestamp <= highestTime && x?._timestamp >= lowestTime ? true : false
 }
 
-const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi, boundWitnesses: XyoBoundWitness[]) => {
+const getLocationWitnessPayloadsForBoundWitnesses = async (
+  api: XyoArchivistArchiveApi,
+  boundWitnesses: XyoBoundWitness[]
+) => {
   const allPayloads: Array<LocationWitnessPayload & WithTimestamp> = []
   for (const boundWitness of boundWitnesses) {
     const hash = boundWitness._hash
     if (!hash) break
     // Get payloads associated with that bound witness
-    const payloads = await api.archive.block.getPayloadsByHash(hash)
+    const payloads = await api.block.getPayloadsByHash(hash)
     const locations = (payloads as (LocationWitnessPayload & WithTimestamp)[]).filter((p) => {
       // Filter those matching the appropriate schema and that have a timestamp
       return p.schema === locationWitnessPayloadSchema && p._timestamp
@@ -45,7 +48,7 @@ const getLocationWitnessPayloadsForBoundWitnesses = async (api: XyoArchivistApi,
 
 // TODO: Move to common method in queryGenericLocationsInRange.ts
 export const queryLocationsInRange: QueryLocationDataInRange<LocationWitnessPayload> = async (
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   schema: SupportedLocationWitnessPayloadSchemas,
   startTime = 0,
   stopTime = Date.now()
@@ -57,7 +60,7 @@ export const queryLocationsInRange: QueryLocationDataInRange<LocationWitnessPayl
   for (let i = 0; i < maxLoops; i++) {
     // Search backward from last timestamp
     const filterPredicate = (x: WithOptionalTimestamp): boolean => withinTimeRange(x, lowestTime, fromTimestamp)
-    const boundWitnesses = (await api.archive.block.getBefore(fromTimestamp, limit)).filter(
+    const boundWitnesses = ((await api.block.getBefore(fromTimestamp, limit)) ?? []).filter(
       filterPredicate
     ) as (XyoBoundWitness & WithTimestamp)[]
     // If there's no results, stop searching

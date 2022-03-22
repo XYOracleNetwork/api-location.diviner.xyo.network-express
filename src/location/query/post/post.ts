@@ -43,12 +43,12 @@ const handler: RequestHandler<
   LocationQueryCreationResponse,
   SupportedLocationQueryCreationRequest
 > = async (req, res, next) => {
-  const { sourceArchive, resultArchive, query } = req.body
-  if (!validateArchiveConfig(sourceArchive)) {
+  const { sourceArchivist, resultArchivist, query } = req.body
+  if (!validateArchiveConfig(sourceArchivist)) {
     next(sourceArchiveConfigError)
     return
   }
-  if (!validateArchiveConfig(resultArchive)) {
+  if (!validateArchiveConfig(resultArchivist)) {
     next(resultArchiveConfigError)
     return
   }
