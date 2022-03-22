@@ -52,10 +52,8 @@ export const getDiviner = (): SuperTest<Test> => {
   return request
 }
 
-export const getArchivist = (archive = testArchive, token?: string): XyoArchivistApi => {
-  return token
-    ? new XyoArchivistApi({ apiDomain, archive, jwtToken: token })
-    : new XyoArchivistApi({ apiDomain, archive })
+export const getArchivist = (token?: string): XyoArchivistApi => {
+  return token ? new XyoArchivistApi({ apiDomain, jwtToken: token }) : new XyoArchivistApi({ apiDomain })
 }
 
 export const getAuth = (): XyoAuthApi => {
@@ -79,11 +77,11 @@ export const signInWeb3User = async (user: TestWeb3User): Promise<string> => {
 }
 
 export const getTokenForNewUser = async (): Promise<string> => {
-  return signInWeb3User(await getNewWeb3User())
+  return await signInWeb3User(getNewWeb3User())
 }
 
-export const claimArchive = (token: string, archive: string = v4()): Promise<ArchiveResponse> => {
-  return getArchivist(archive, token).archive.put(archive)
+export const claimArchive = (token: string, archive: string = v4()): Promise<ArchiveResponse | undefined> => {
+  return getArchivist(token).archives.select(archive).put()
 }
 
 export const getValidLocationRangeRequest = (
@@ -93,9 +91,11 @@ export const getValidLocationRangeRequest = (
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
-    resultArchive: { apiDomain, archive },
+    resultArchive: archive,
+    resultArchivist: { apiDomain },
     schema: locationTimeRangeQuerySchema,
-    sourceArchive: { apiDomain, archive },
+    sourceArchive: archive,
+    sourceArchivist: { apiDomain },
   }
 }
 export const getValidLocationHeatmapRequest = (
@@ -105,9 +105,11 @@ export const getValidLocationHeatmapRequest = (
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
-    resultArchive: { apiDomain, archive },
+    resultArchive: archive,
+    resultArchivist: { apiDomain },
     schema: locationHeatmapQuerySchema,
-    sourceArchive: { apiDomain, archive },
+    sourceArchive: archive,
+    sourceArchivist: { apiDomain },
   }
 }
 
@@ -138,8 +140,8 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
   return new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
 }
 
-export const witnessNewLocation = async (api: XyoArchivistApi) => {
-  return await api.archive.block.post(getNewLocationWitness())
+export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp') => {
+  return await api.archives.select(archive).block.post(getNewLocationWitness())
 }
 
 export const createQuery = async (

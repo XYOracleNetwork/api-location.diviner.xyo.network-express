@@ -1,4 +1,4 @@
-import { XyoArchivistApi, XyoBoundWitness, XyoPayload } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi, XyoBoundWitness, XyoPayload } from '@xyo-network/sdk-xyo-client-js'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas } from '../../model'
 
@@ -10,7 +10,7 @@ const isValidPayloadOfSchemaType = <T extends SupportedLocationWitnessPayloads>(
 }
 
 export const getPayloadsForBoundWitnesses = async <T extends SupportedLocationWitnessPayloads>(
-  api: XyoArchivistApi,
+  api: XyoArchivistArchiveApi,
   boundWitnesses: XyoBoundWitness[],
   schema: SupportedLocationWitnessPayloadSchemas
 ) => {
@@ -20,7 +20,7 @@ export const getPayloadsForBoundWitnesses = async <T extends SupportedLocationWi
     const hash = boundWitness._hash
     if (!hash) break
     // Get payloads associated with that bound witness
-    const payloads = await api.archive.block.getPayloadsByHash(hash)
+    const payloads = (await api.block.getPayloadsByHash(hash)) ?? []
     const locations: T[] = payloads.filter<T>((p): p is T => {
       return isValidPayloadOfSchemaType(p, schema)
     })
