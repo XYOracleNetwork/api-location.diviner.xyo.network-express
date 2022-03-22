@@ -64,7 +64,7 @@ export const getXyoArchivistArchiveBlockApi = (token?: string): XyoArchivistArch
 }
 
 export const getAuth = (): XyoAuthApi => {
-  return new XyoAuthApi({ apiDomain })
+  return getArchivist().user
 }
 
 export const getNewWeb3User = (): TestWeb3User => {
