@@ -7,7 +7,7 @@ import { WithHashProperties } from '../../../model'
 // TODO: Move to SDK
 export interface LocationHeatmapPolygonProperties extends LocationHeatmapPointProperties {
   count: number
-  hashes: string[]
+  // hashes: string[]
 }
 
 // const minLatitude = -85.05112878
@@ -17,7 +17,7 @@ const maxLatitude = 85
 const minLongitude = -180
 const maxLongitude = 180
 
-const gridCellSide = 5
+const gridCellSide = 2
 const gridOptions: { units: Units } = { units: 'degrees' }
 
 const northWestQuadrantBoundingBox: BBox = [0, 0, minLongitude, maxLatitude]
@@ -38,6 +38,15 @@ const isString = (value: string | undefined): value is string => {
   return value !== undefined
 }
 
+const shuffleArray = <T>(array: Array<T>) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+}
+
 export const getHeatmapFromPoints = (
   points: FeatureCollection<Point, WithHashProperties>,
   _zoom: number
@@ -55,12 +64,16 @@ export const getHeatmapFromPoints = (
         const properties: LocationHeatmapPolygonProperties = {
           count: hits.features.length,
           hash: '',
-          hashes: hits.features.map((p) => p?.properties?.hash).filter<string>(isString),
+          // hashes: hits.features.map((p) => p?.properties?.hash).filter<string>(isString),
           value,
         }
         heatmap.push({ ...cell, properties })
       }
     }
   }
+  // shuffleArray(heatmap)
+  // return featureCollection(heatmap.slice(0, 300))
+  // const descendingHeatmap = heatmap.sort((a, b) => b.properties.value - a.properties.value)
+  // return featureCollection(descendingHeatmap.slice(0, 400))
   return featureCollection(heatmap)
 }

@@ -6,12 +6,12 @@ describe('POST /location/query', () => {
   describe('with invalid archive config', () => {
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archive`, async () => {
       const request = getValidLocationRangeRequest()
-      request.sourceArchive.apiDomain = ''
+      request.sourceArchivist.apiDomain = ''
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archive`, async () => {
       const request = getValidLocationRangeRequest()
-      request.resultArchive.apiDomain = ''
+      request.sourceArchivist.apiDomain = ''
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
   })
@@ -33,7 +33,7 @@ describe('POST /location/query', () => {
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archivist`, async () => {
       const request = getValidLocationRangeRequest()
-      delete (request.sourceArchive as { apiDomain?: string })?.apiDomain
+      delete (request.sourceArchivist as { apiDomain?: string })?.apiDomain
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid source archive`, async () => {
@@ -43,7 +43,7 @@ describe('POST /location/query', () => {
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archivist`, async () => {
       const request = getValidLocationRangeRequest()
-      delete (request.resultArchive as { apiDomain?: string })?.apiDomain
+      delete (request.resultArchivist as { apiDomain?: string })?.apiDomain
       await createQuery(request, StatusCodes.BAD_REQUEST)
     })
     it(`returns ${ReasonPhrases.BAD_REQUEST} for invalid result archive`, async () => {

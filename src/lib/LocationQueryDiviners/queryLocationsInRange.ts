@@ -37,10 +37,12 @@ const getLocationWitnessPayloadsForBoundWitnesses = async (
     if (!hash) break
     // Get payloads associated with that bound witness
     const payloads = await api.block.getPayloadsByHash(hash)
-    const locations = (payloads as (LocationWitnessPayload & WithTimestamp)[]).filter((p) => {
-      // Filter those matching the appropriate schema and that have a timestamp
-      return p.schema === locationWitnessPayloadSchema && p._timestamp
-    })
+    const locations = (payloads as (LocationWitnessPayload & WithTimestamp)[][])
+      .flatMap((p) => p)
+      .filter((p) => {
+        // Filter those matching the appropriate schema and that have a timestamp
+        return p.schema === locationWitnessPayloadSchema && p._timestamp
+      })
     allPayloads.push(...locations)
   }
   return allPayloads
