@@ -8,9 +8,7 @@
       "program": "${workspaceFolder}/src/index.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "runtimeArgs": [
-        "--max-old-space-size=8192",
-        "--experimental-specifier-resolution=node",
-        "--loader=ts-node/esm"
+        "-r ts-node/register"
       ],
       "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,
@@ -27,9 +25,7 @@
       "program": "${workspaceFolder}/src/index.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "runtimeArgs": [
-        "--max-old-space-size=8192",
-        "--experimental-specifier-resolution=node",
-        "--loader=ts-node/esm"
+        "-r ts-node/register"
       ],
       "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,
