@@ -63,6 +63,7 @@ const getCurrentLocationWitnessPayloadsForBoundWitnessesParallel = async (
         // Filter those matching the appropriate schema and that have a timestamp
         return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
       })
+      .slice(0, 1)
     allPayloads.push(...locations)
   })
   await Promise.allSettled(promises)
