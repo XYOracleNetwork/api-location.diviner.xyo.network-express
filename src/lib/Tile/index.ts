@@ -1,5 +1,4 @@
 export * from './constants'
-export * from './geoJsonPolygonUtils'
+export * from './coordinatesToQuadkey'
 export * from './tileFromPoint'
 export * from './tileFromQuadkey'
-export * from './tilesFromBoundingBox'

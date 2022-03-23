@@ -19,11 +19,6 @@ const testData: PointZoomTile[] = [
   { point: point([1, 1]), tile: [4, 3, 3], zoom: 3 },
   { point: point([-1, -1]), tile: [3, 4, 3], zoom: 3 },
   { point: point([1, -1]), tile: [4, 4, 3], zoom: 3 },
-
-  { point: point([-179, 89]), tile: [0, 0, 3], zoom: 3 },
-  { point: point([179, 89]), tile: [7, 0, 3], zoom: 3 },
-  { point: point([-179, -89]), tile: [0, 7, 3], zoom: 3 },
-  { point: point([179, -89]), tile: [7, 7, 3], zoom: 3 },
 ]
 
 describe('tileFromPoint', () => {
