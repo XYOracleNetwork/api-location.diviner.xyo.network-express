@@ -8,7 +8,6 @@ import {
   locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
-  XyoArchivistArchiveBlockApi,
   XyoAuthApi,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
