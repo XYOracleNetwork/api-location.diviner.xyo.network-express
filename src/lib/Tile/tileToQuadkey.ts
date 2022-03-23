@@ -12,4 +12,4 @@ const tileToQuadkey = (tile: CoordinatesWithZoom): string => {
   return index
 }
 
-export { tileToQuadkey as coordinatesToQuadkey }
+export { tileToQuadkey }

@@ -1,5 +1,5 @@
 import { TileWithZoom } from '../../model'
-import { coordinatesToQuadkey } from './tileToQuadkey'
+import { tileToQuadkey } from './tileToQuadkey'
 
 interface TileQuadkey {
   tile: TileWithZoom
@@ -16,7 +16,7 @@ const testData: TileQuadkey[] = [
 describe('tileToQuadkey', () => {
   it.each(testData)('converts tile to quadkey', (data: TileQuadkey) => {
     const { quadkey: expected, tile } = data
-    const actual = coordinatesToQuadkey(tile)
+    const actual = tileToQuadkey(tile)
     expect(actual).toEqual(expected)
   })
 })
