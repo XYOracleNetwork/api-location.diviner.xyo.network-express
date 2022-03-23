@@ -1,31 +1,36 @@
 import { point } from '@turf/turf'
-import { Feature, Point } from 'geojson'
+import { Point } from 'geojson'
 
 import { Zoom } from '../../model'
 import { pointToQuadkey } from './pointToQuadkey'
+import { TestData } from './TestData'
 
-interface PointZoomTile {
-  point: Feature<Point>
+interface PointWithZoom {
+  point: Point
   zoom: Zoom
-  quadkey: string
+}
+interface PointToQuadkeyTestData extends TestData<PointWithZoom, string> {
+  input: PointWithZoom
+  expected: string
 }
 
-const testData: PointZoomTile[] = [
-  { point: point([-90, 45]), quadkey: '0', zoom: 1 },
-  { point: point([90, 45]), quadkey: '1', zoom: 1 },
-  { point: point([-90, -45]), quadkey: '2', zoom: 1 },
-  { point: point([90, -45]), quadkey: '3', zoom: 1 },
+const testData: PointToQuadkeyTestData[] = [
+  { expected: '0', input: { point: point([-90, 45]).geometry, zoom: 1 } },
+  { expected: '1', input: { point: point([90, 45]).geometry, zoom: 1 } },
+  { expected: '2', input: { point: point([-90, -45]).geometry, zoom: 1 } },
+  { expected: '3', input: { point: point([90, -45]).geometry, zoom: 1 } },
 
-  { point: point([-1, 1]), quadkey: '033', zoom: 3 },
-  { point: point([1, 1]), quadkey: '122', zoom: 3 },
-  { point: point([-1, -1]), quadkey: '211', zoom: 3 },
-  { point: point([1, -1]), quadkey: '300', zoom: 3 },
+  { expected: '033', input: { point: point([-1, 1]).geometry, zoom: 3 } },
+  { expected: '122', input: { point: point([1, 1]).geometry, zoom: 3 } },
+  { expected: '211', input: { point: point([-1, -1]).geometry, zoom: 3 } },
+  { expected: '300', input: { point: point([1, -1]).geometry, zoom: 3 } },
 ]
 
 describe('pointToQuadkey', () => {
-  it.each(testData)('converts point to quadkey', (data: PointZoomTile) => {
-    const { point, zoom, quadkey: expected } = data
-    const actual = pointToQuadkey(point.geometry, zoom)
+  it.each(testData)('converts point to quadkey', (data: PointToQuadkeyTestData) => {
+    const { expected } = data
+    const { point, zoom } = data.input
+    const actual = pointToQuadkey(point, zoom)
     expect(actual).toEqual(expected)
   })
 })

@@ -1,4 +1,3 @@
-export * from './CoordinatesWithZoom'
 export * from './currentLocationWitness'
 export * from './FeaturesInRange'
 export * from './sortDirection'

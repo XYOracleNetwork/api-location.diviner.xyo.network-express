@@ -1,30 +1,35 @@
 import { point } from '@turf/turf'
-import { Feature, Point } from 'geojson'
+import { Point } from 'geojson'
 
 import { pointToTile } from './pointToTile'
+import { TestData } from './TestData'
 
-interface PointZoomTile {
-  point: Feature<Point>
+interface PointZoom {
+  point: Point
   zoom: number
-  tile: number[]
+}
+interface PointToTileTestData extends TestData<PointZoom, number[]> {
+  input: PointZoom
+  expected: number[]
 }
 
-const testData: PointZoomTile[] = [
-  { point: point([-90, 45]), tile: [0, 0, 1], zoom: 1 },
-  { point: point([90, 45]), tile: [1, 0, 1], zoom: 1 },
-  { point: point([-90, -45]), tile: [0, 1, 1], zoom: 1 },
-  { point: point([90, -45]), tile: [1, 1, 1], zoom: 1 },
+const testData: PointToTileTestData[] = [
+  { expected: [0, 0, 1], input: { point: point([-90, 45]).geometry, zoom: 1 } },
+  { expected: [1, 0, 1], input: { point: point([90, 45]).geometry, zoom: 1 } },
+  { expected: [0, 1, 1], input: { point: point([-90, -45]).geometry, zoom: 1 } },
+  { expected: [1, 1, 1], input: { point: point([90, -45]).geometry, zoom: 1 } },
 
-  { point: point([-1, 1]), tile: [3, 3, 3], zoom: 3 },
-  { point: point([1, 1]), tile: [4, 3, 3], zoom: 3 },
-  { point: point([-1, -1]), tile: [3, 4, 3], zoom: 3 },
-  { point: point([1, -1]), tile: [4, 4, 3], zoom: 3 },
+  { expected: [3, 3, 3], input: { point: point([-1, 1]).geometry, zoom: 3 } },
+  { expected: [4, 3, 3], input: { point: point([1, 1]).geometry, zoom: 3 } },
+  { expected: [3, 4, 3], input: { point: point([-1, -1]).geometry, zoom: 3 } },
+  { expected: [4, 4, 3], input: { point: point([1, -1]).geometry, zoom: 3 } },
 ]
 
 describe('pointToTile', () => {
-  it.each(testData)('converts point to tile', (data: PointZoomTile) => {
-    const { point, zoom, tile: expected } = data
-    const actual = pointToTile(point.geometry, zoom)
+  it.each(testData)('converts point to tile', (data: PointToTileTestData) => {
+    const { expected } = data
+    const { point, zoom } = data.input
+    const actual = pointToTile(point, zoom)
     expect(actual).toEqual(expected)
   })
 })

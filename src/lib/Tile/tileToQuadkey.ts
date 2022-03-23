@@ -1,6 +1,6 @@
-import { CoordinatesWithZoom } from '../../model'
+import { TileWithZoom } from '../../model'
 
-const tileToQuadkey = (tile: CoordinatesWithZoom): string => {
+const tileToQuadkey = (tile: TileWithZoom): string => {
   let index = ''
   for (let z = tile[2]; z > 0; z--) {
     let b = 0
