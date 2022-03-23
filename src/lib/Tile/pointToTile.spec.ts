@@ -1,7 +1,7 @@
 import { point } from '@turf/turf'
 import { Feature, Point } from 'geojson'
 
-import { tileFromPoint } from './tileFromPoint'
+import { pointToTile } from './pointToTile'
 
 interface PointZoomTile {
   point: Feature<Point>
@@ -21,10 +21,10 @@ const testData: PointZoomTile[] = [
   { point: point([1, -1]), tile: [4, 4, 3], zoom: 3 },
 ]
 
-describe('tileFromPoint', () => {
-  it.each(testData)('converts tiles to points', (data: PointZoomTile) => {
+describe('pointToTile', () => {
+  it.each(testData)('converts point to tile', (data: PointZoomTile) => {
     const { point, zoom, tile: expected } = data
-    const actual = tileFromPoint(point.geometry, zoom)
+    const actual = pointToTile(point.geometry, zoom)
     expect(actual).toEqual(expected)
   })
 })

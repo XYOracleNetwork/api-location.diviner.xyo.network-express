@@ -1,4 +1,4 @@
 export * from './constants'
-export * from './coordinatesToQuadkey'
-export * from './tileFromPoint'
-export * from './tileFromQuadkey'
+export * from './pointToTile'
+export * from './quadkeyToTile'
+export * from './tileToQuadkey'

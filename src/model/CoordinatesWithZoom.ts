@@ -1,1 +1,3 @@
-export type CoordinatesWithZoom = [number, number, number]
+import { Zoom } from './Zoom'
+
+export type CoordinatesWithZoom = [number, number, Zoom]

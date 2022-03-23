@@ -1,4 +1,4 @@
-export const tileFromQuadkey = (quadkey: string) => {
+export const quadkeyToTile = (quadkey: string) => {
   let x = 0
   let y = 0
   const z = quadkey.length

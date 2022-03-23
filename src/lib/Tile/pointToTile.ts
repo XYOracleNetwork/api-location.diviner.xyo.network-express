@@ -14,7 +14,7 @@ const pointToTileFraction = (point: Point, z: number): number[] => {
   return [x, y, z]
 }
 
-export const tileFromPoint = (point: Point, z: number): number[] => {
+export const pointToTile = (point: Point, z: number): number[] => {
   const tile = pointToTileFraction(point, z)
   tile[0] = Math.floor(tile[0])
   tile[1] = Math.floor(tile[1])
