@@ -1,8 +1,6 @@
-import {
-  LocationHeatmapQuery,
-  LocationTimeRangeQuery,
-  locationWitnessPayloadSchema,
-} from '@xyo-network/sdk-xyo-client-js'
+import { LocationHeatmapQuery, LocationTimeRangeQuery } from '@xyo-network/sdk-xyo-client-js'
+
+import { supportedLocationWitnessSchemasMap } from '../../../model'
 
 const validateDate = (date: Date) => {
   return date instanceof Date && !isNaN(date.valueOf())
@@ -10,7 +8,7 @@ const validateDate = (date: Date) => {
 
 export const validateQuery = (query: LocationTimeRangeQuery | LocationHeatmapQuery) => {
   const schema = query.schema
-  if (!schema || schema != locationWitnessPayloadSchema) {
+  if (!schema || !supportedLocationWitnessSchemasMap[schema]) {
     return false
   }
   const startTime = new Date(query.startTime || '')

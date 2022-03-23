@@ -20,9 +20,10 @@ import {
   witnessNewLocation,
 } from '../../../test'
 
-const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[]) => {
+const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
   expect(answerPayloads).toBeTruthy()
   expect(answerPayloads.length).toBeGreaterThan(0)
+  expect(answerPayloads[0].length).toBeGreaterThan(0)
 }
 
 const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
@@ -57,9 +58,11 @@ const getQueryAnswer = async (
   }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api.archive.block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
+  const answerPayloads = await api.archives
+    .select(queryCreationRequest.resultArchive)
+    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
   validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads.pop()
+  const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(locationHeatmapAnswerSchema)
   const answer = payload?.result as FeatureCollection<Point, LocationHeatmapPointProperties>
@@ -70,17 +73,18 @@ const getQueryAnswer = async (
 describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const locationsToWitness = 5
-  let api = getArchivist()
+  const api = getArchivist()
   let stopTime = ''
   let token = ''
   let archive = ''
   beforeAll(async () => {
     token = await getTokenForNewUser()
-    archive = (await claimArchive(token)).archive
-    api = getArchivist(archive)
+    expect(token).toBeTruthy()
+    archive = (await claimArchive(token))?.archive || ''
+    expect(archive).toBeTruthy()
     await delay(1000)
     for (let location = 0; location < locationsToWitness; location++) {
-      await witnessNewLocation(api)
+      await witnessNewLocation(api, archive)
     }
     await delay(1000)
     stopTime = new Date().toISOString()

@@ -20,10 +20,12 @@ export const getPayloadsForBoundWitnesses = async <T extends SupportedLocationWi
     const hash = boundWitness._hash
     if (!hash) break
     // Get payloads associated with that bound witness
-    const payloads = (await api.block.getPayloadsByHash(hash)) ?? []
-    const locations: T[] = payloads.filter<T>((p): p is T => {
-      return isValidPayloadOfSchemaType(p, schema)
-    })
+    const payloads = (await api.block.getPayloadsByHash(hash)) ?? [[]]
+    const locations: T[] = payloads
+      .flatMap((p) => p)
+      .filter<T>((p): p is T => {
+        return isValidPayloadOfSchemaType(p, schema)
+      })
     allPayloads.push(...locations)
   }
   return allPayloads

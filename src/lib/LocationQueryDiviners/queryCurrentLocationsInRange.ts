@@ -1,4 +1,4 @@
-import { XyoArchivistArchiveApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi, XyoArchivistArchiveBlockApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
 
 import {
   CurrentLocationWitnessPayload,
@@ -16,7 +16,7 @@ interface WithOptionalTimestamp {
 }
 
 // Set limit for how much data we can loop over
-const maxSupportedPayloads = 1000
+const maxSupportedPayloads = 20000
 const limit = 100
 const maxLoops = Math.floor(maxSupportedPayloads / limit)
 
@@ -36,12 +36,37 @@ const getCurrentLocationWitnessPayloadsForBoundWitnesses = async (
     if (!hash) break
     // Get payloads associated with that bound witness
     const payloads = await api.block.getPayloadsByHash(hash)
-    const locations = (payloads as (CurrentLocationWitnessPayload & WithTimestamp)[]).filter((p) => {
-      // Filter those matching the appropriate schema and that have a timestamp
-      return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
-    })
+    const locations = (payloads as (CurrentLocationWitnessPayload & WithTimestamp)[][])
+      .flatMap((p) => p)
+      .filter((p) => {
+        // Filter those matching the appropriate schema and that have a timestamp
+        return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
+      })
     allPayloads.push(...locations)
   }
+  return allPayloads
+}
+
+const getCurrentLocationWitnessPayloadsForBoundWitnessesParallel = async (
+  api: XyoArchivistArchiveBlockApi,
+  boundWitnesses: XyoBoundWitness[]
+) => {
+  const allPayloads: Array<CurrentLocationWitnessPayload & WithTimestamp> = []
+  const promises = boundWitnesses.map(async (boundWitness) => {
+    const hash = boundWitness._hash
+    if (!hash) throw new Error('No hash for bound witness')
+    // Get payloads associated with that bound witness
+    const payloads = await api.getPayloadsByHash(hash)
+    const locations = (payloads as (CurrentLocationWitnessPayload & WithTimestamp)[][])
+      .flatMap((p) => p)
+      .filter((p) => {
+        // Filter those matching the appropriate schema and that have a timestamp
+        return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
+      })
+      .slice(0, 1)
+    allPayloads.push(...locations)
+  })
+  await Promise.allSettled(promises)
   return allPayloads
 }
 
@@ -66,7 +91,7 @@ export const queryCurrentLocationsInRange: QueryLocationDataInRange<CurrentLocat
     if (!boundWitnesses.length) break
     const locations =
       // All location witness payloads
-      (await getCurrentLocationWitnessPayloadsForBoundWitnesses(api, boundWitnesses))
+      (await getCurrentLocationWitnessPayloadsForBoundWitnessesParallel(api.block, boundWitnesses))
         // Within the range specified
         .filter(filterPredicate)
     // TODO: Only take the last N elements if we're past the max
