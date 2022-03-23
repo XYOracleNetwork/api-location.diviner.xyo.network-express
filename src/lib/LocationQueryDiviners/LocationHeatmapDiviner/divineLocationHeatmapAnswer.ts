@@ -22,7 +22,7 @@ import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
-import { convertCurrentLocationWitnessPayloadToPointFeature } from './convertCurrentLocationWitnessPayloadToPointFeature'
+import { convertCurrentLocationWitnessForHeatmap } from './convertCurrentLocationWitnessForHeatmap'
 import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPointFeature'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
@@ -33,7 +33,7 @@ const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = 
 ) => {
   return (await queryCurrentLocationsInRange(api, currentLocationWitnessPayloadSchema, startTime, stopTime))
     .filter(isValidCurrentLocationWitnessPayload)
-    .map(convertCurrentLocationWitnessPayloadToPointFeature)
+    .map(convertCurrentLocationWitnessForHeatmap)
 }
 
 const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
