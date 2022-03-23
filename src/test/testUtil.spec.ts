@@ -57,12 +57,6 @@ export const getArchivist = (token?: string): XyoArchivistApi => {
   return token ? new XyoArchivistApi({ apiDomain, jwtToken: token }) : new XyoArchivistApi({ apiDomain })
 }
 
-export const getXyoArchivistArchiveBlockApi = (token?: string): XyoArchivistArchiveBlockApi => {
-  return token
-    ? new XyoArchivistArchiveBlockApi({ apiDomain, jwtToken: token })
-    : new XyoArchivistArchiveBlockApi({ apiDomain })
-}
-
 export const getAuth = (): XyoAuthApi => {
   return getArchivist().user
 }
