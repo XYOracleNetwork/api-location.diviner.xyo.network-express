@@ -5,7 +5,6 @@ import {
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoArchivistApi,
-  XyoArchivistArchiveBlockApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
@@ -48,7 +47,7 @@ const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, 
 }
 
 const getQueryAnswer = async (
-  api: XyoArchivistArchiveBlockApi,
+  api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
 ): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
@@ -59,7 +58,9 @@ const getQueryAnswer = async (
   }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = (await api.getPayloadsByHash(queryAnswerResponse.answerHash || '')) || [[]]
+  const answerPayloads = (await api.archives
+    .select(queryCreationRequest.resultArchive)
+    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')) || [[]]
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
@@ -81,18 +82,18 @@ describe('Round trip tests', () => {
     expect(token).toBeTruthy()
     archive = (await claimArchive(token))?.archive || ''
     expect(archive).toBeTruthy()
-    api = getArchivist(archive)
+    api = getArchivist()
     expect(api).toBeTruthy()
     await delay(1000)
     for (let location = 0; location < locationsToWitness; location++) {
-      await witnessNewLocation(api)
+      await witnessNewLocation(api, archive)
     }
     await delay(1000)
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
     const queryCreationRequest = getValidLocationHeatmapRequest(archive, startTime, stopTime)
-    const answer = await getQueryAnswer(api.archives.select(archive).block, queryCreationRequest)
+    const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBeGreaterThan(0)
   }, 10000)
   it('Generates an empty answer if no data was found', async () => {
@@ -106,7 +107,7 @@ describe('Round trip tests', () => {
       futureStartTime.toISOString(),
       futureStopTime.toISOString()
     )
-    const answer = await getQueryAnswer(api.archives.select(archive).block, queryCreationRequest)
+    const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(0)
   }, 10000)
   it.skip('Handles bad/misshapen data', async () => {
