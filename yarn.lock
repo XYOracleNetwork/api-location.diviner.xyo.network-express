@@ -5875,9 +5875,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-xyo-client-js@npm:^2.14.19":
-  version: 2.14.19
-  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.14.19"
+"@xyo-network/sdk-xyo-client-js@npm:^2.14.20":
+  version: 2.14.20
+  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.14.20"
   dependencies:
     "@ethersproject/providers": ^5.6.1
     "@xylabs/sdk-js": ^2.4.2
@@ -5898,7 +5898,7 @@ __metadata:
     systeminformation: ^5.11.9
     ua-parser-js: ^1.0.2
     uuid: ^8.3.2
-  checksum: 86afcc4ea21d71f96a3f27fc6f7ac15f1652a1c76be100b17f9ee9a5600c30348f082af7cc6086061b8845a3ed1d5e1570ab727ee9d1ac9c9339c8ac12bc9b2c
+  checksum: 255efb6ca73f2cefa0acfd05b3236235b5eb2368453106ee90270c67a9b04a13c68144a114cb87a2c7fe132f4923b3a98627d6deb120f1984eb13e6d78de6bc7
   languageName: node
   linkType: hard
 
@@ -6155,7 +6155,7 @@ __metadata:
     "@xylabs/sdk-js": ^2.4.3
     "@xylabs/ts-scripts": ^1.0.48
     "@xylabs/tsconfig": ^1.0.12
-    "@xyo-network/sdk-xyo-client-js": ^2.14.19
+    "@xyo-network/sdk-xyo-client-js": ^2.14.20
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
     axios: ^0.26.1
     babel-jest: ^27.5.1
