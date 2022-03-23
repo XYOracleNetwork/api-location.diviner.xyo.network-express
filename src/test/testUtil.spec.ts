@@ -57,7 +57,7 @@ export const getArchivist = (token?: string): XyoArchivistApi => {
 }
 
 export const getAuth = (): XyoAuthApi => {
-  return XyoAuthApi.get({ apiDomain })
+  return getArchivist().user
 }
 
 export const getNewWeb3User = (): TestWeb3User => {
@@ -69,11 +69,11 @@ export const getNewWeb3User = (): TestWeb3User => {
 export const signInWeb3User = async (user: TestWeb3User): Promise<string> => {
   const authApi = getAuth()
   const challengeResponse = await authApi.walletChallenge(user.address)
-  const message = challengeResponse.data.state
+  const message = challengeResponse.state
   const wallet = new Wallet(user.privateKey)
   const signature = await wallet.signMessage(message)
   const tokenResponse = await authApi.walletVerify(user.address, message, signature)
-  return tokenResponse.data.token
+  return tokenResponse.token
 }
 
 export const getTokenForNewUser = async (): Promise<string> => {

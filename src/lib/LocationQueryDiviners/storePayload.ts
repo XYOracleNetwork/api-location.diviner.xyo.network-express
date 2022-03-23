@@ -15,8 +15,9 @@ export const storePayload = async (
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   const resultWitness = new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
-  await api.block.post(resultWitness)
-  if (!resultWitness._hash) throw new Error('Error storing value')
+  if (!resultWitness._hash) throw new Error('Error creating stored result')
+  const result = await api.block.post(resultWitness)
+  if (result?.boundWitnesses !== 1 || result?.payloads !== 1) throw new Error('Error creating stored result')
   return resultWitness._hash
 }
 
@@ -36,6 +37,10 @@ export const storeError = (
   schema: LocationAnswerSchema,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
-  const payload = new XyoPayloadBuilder({ schema }).fields({ error }).build()
-  return storePayload(payload, api, address)
+  try {
+    const payload = new XyoPayloadBuilder({ schema }).fields({ error }).build()
+    return storePayload(payload, api, address)
+  } catch (error) {
+    return Promise.resolve('')
+  }
 }

@@ -3,8 +3,8 @@ import {
   LocationQueryCreationRequest,
   locationTimeRangeQuerySchema,
   XyoAddress,
+  XyoApiConfig,
   XyoArchivistApi,
-  XyoArchivistApiConfig,
   XyoBoundWitnessBuilder,
   XyoBoundWitnessBuilderConfig,
   XyoPayloadBuilder,
@@ -12,7 +12,7 @@ import {
 
 const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
-const getArchivistApiSdk = (config: XyoArchivistApiConfig) => {
+const getArchivistApiSdk = (config: XyoApiConfig) => {
   return new XyoArchivistApi(config)
 }
 
