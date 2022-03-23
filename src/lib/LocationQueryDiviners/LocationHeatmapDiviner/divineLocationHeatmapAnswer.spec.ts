@@ -58,9 +58,9 @@ const getQueryAnswer = async (
   }
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = (await api.archives
+  const answerPayloads = await api.archives
     .select(queryCreationRequest.resultArchive)
-    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')) || [[]]
+    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
@@ -73,7 +73,7 @@ const getQueryAnswer = async (
 describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const locationsToWitness = 5
-  let api = getArchivist()
+  const api = getArchivist()
   let stopTime = ''
   let token = ''
   let archive = ''
@@ -82,8 +82,6 @@ describe('Round trip tests', () => {
     expect(token).toBeTruthy()
     archive = (await claimArchive(token))?.archive || ''
     expect(archive).toBeTruthy()
-    api = getArchivist()
-    expect(api).toBeTruthy()
     await delay(1000)
     for (let location = 0; location < locationsToWitness; location++) {
       await witnessNewLocation(api, archive)

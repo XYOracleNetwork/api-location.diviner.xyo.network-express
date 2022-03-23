@@ -10,12 +10,13 @@ import {
 import { FeatureCollection, Point } from 'geojson'
 
 import {
+  claimArchive,
   createQuery,
   delay,
   getArchivist,
   getQuery,
+  getTokenForNewUser,
   getValidLocationRangeRequest,
-  testArchive,
   witnessNewLocation,
 } from '../../../test'
 
@@ -69,22 +70,27 @@ const getQueryAnswer = async (
   return answer
 }
 
-// TODO: Create separate archive so that we don't interfere with other tests
 describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const locationsToWitness = 5
   const api = getArchivist()
   let stopTime = ''
+  let token = ''
+  let archive = ''
   beforeAll(async () => {
+    token = await getTokenForNewUser()
+    expect(token).toBeTruthy()
+    archive = (await claimArchive(token))?.archive || ''
+    expect(archive).toBeTruthy()
     await delay(1000)
     for (let location = 0; location < locationsToWitness; location++) {
-      await witnessNewLocation(api)
+      await witnessNewLocation(api, archive)
     }
     await delay(1000)
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
-    const queryCreationRequest = getValidLocationRangeRequest(testArchive, startTime, stopTime)
+    const queryCreationRequest = getValidLocationRangeRequest(archive, startTime, stopTime)
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(locationsToWitness)
   }, 10000)
@@ -95,7 +101,7 @@ describe('Round trip tests', () => {
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
     const queryCreationRequest = getValidLocationRangeRequest(
-      testArchive,
+      archive,
       futureStartTime.toISOString(),
       futureStopTime.toISOString()
     )
