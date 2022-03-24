@@ -1,9 +1,8 @@
 import { point } from '@turf/turf'
 import { Point } from 'geojson'
 
-import { Zoom } from '../../model'
+import { TestData, Zoom } from '../../model'
 import { pointToQuadkey } from './pointToQuadkey'
-import { TestData } from './TestData'
 
 interface PointWithZoom {
   point: Point

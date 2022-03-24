@@ -1,5 +1,4 @@
-import { TileWithZoom } from '../../model'
-import { TestData } from './TestData'
+import { TestData, TileWithZoom } from '../../model'
 import { tileToQuadkey } from './tileToQuadkey'
 
 interface TileToQuadkeyTestData extends TestData<TileWithZoom, string> {

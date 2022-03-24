@@ -1,9 +1,8 @@
 import { point } from '@turf/turf'
 import { Feature, Point } from 'geojson'
 
-import { Zoom } from '../../model'
+import { TestData, Zoom } from '../../model'
 import { featureToQuadkey } from './featureToQuadkey'
-import { TestData } from './TestData'
 
 interface FeatureWithZoom {
   feature: Feature<Point>
