@@ -17,6 +17,7 @@ import {
   getQuery,
   getTokenForNewUser,
   getValidLocationHeatmapRequest,
+  pollUntilQueryComplete,
   witnessNewLocation,
 } from '../../../test'
 
@@ -52,10 +53,7 @@ const getQueryAnswer = async (
 ): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
-  for (let i = 0; i < 10; i++) {
-    await delay(1000)
-    if ((await getQuery(queryCreationResponse.hash)).answerHash) break
-  }
+  await pollUntilQueryComplete(queryCreationResponse)
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
   const answerPayloads = await api.archives
