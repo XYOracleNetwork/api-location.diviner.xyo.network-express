@@ -1,4 +1,4 @@
-export * from './currentLocationWitness'
+export * from './CurrentLocationWitness'
 export * from './FeaturesInRange'
 export * from './sortDirection'
 export * from './supportedLocationSchemas'

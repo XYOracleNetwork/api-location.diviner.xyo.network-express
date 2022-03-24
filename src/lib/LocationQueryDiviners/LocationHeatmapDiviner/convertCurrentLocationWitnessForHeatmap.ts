@@ -1,7 +1,7 @@
 import { Feature, Point } from 'geojson'
 
 import { CurrentLocationWitnessPayload, WithHashProperties } from '../../../model'
-import { ConvertLocationDataToGeoJsonGeometry } from '../../Converters'
+import { ConvertLocationDataToGeoJsonGeometry } from '../../LocationConverters'
 
 export const convertCurrentLocationWitnessForHeatmap: ConvertLocationDataToGeoJsonGeometry<
   CurrentLocationWitnessPayload,

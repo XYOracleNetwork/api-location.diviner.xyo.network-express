@@ -159,3 +159,14 @@ export const getQuery = async (
   const response = await getDiviner().get(`/location/query/${hash}`).expect(expectedStatus)
   return response.body.data
 }
+
+export const pollUntilQueryComplete = async (
+  queryCreationResponse: LocationQueryCreationResponse,
+  maxPolls = 15,
+  pollInterval = 1000
+) => {
+  for (let i = 0; i < maxPolls; i++) {
+    await delay(pollInterval)
+    if ((await getQuery(queryCreationResponse.hash)).answerHash) break
+  }
+}

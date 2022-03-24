@@ -2,7 +2,7 @@ import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, Point } from 'geojson'
 
 import { WithHashProperties } from '../../../model'
-import { ConvertLocationDataToGeoJsonGeometry } from '../../Converters'
+import { ConvertLocationDataToGeoJsonGeometry } from '../../LocationConverters'
 
 export const convertLocationWitnessPayloadToPointFeature: ConvertLocationDataToGeoJsonGeometry<
   LocationWitnessPayload,
