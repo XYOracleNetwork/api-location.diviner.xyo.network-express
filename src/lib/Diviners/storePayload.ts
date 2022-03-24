@@ -5,7 +5,6 @@ import {
   XyoPayload,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection } from 'geojson'
 
 import { LocationAnswerSchema } from '../../model'
 
@@ -22,7 +21,7 @@ export const storePayload = async (
 }
 
 export const storeAnswer = (
-  answer: FeatureCollection,
+  answer: unknown,
   api: XyoArchivistArchiveApi,
   schema: LocationAnswerSchema,
   address: XyoAddress = XyoAddress.random()
