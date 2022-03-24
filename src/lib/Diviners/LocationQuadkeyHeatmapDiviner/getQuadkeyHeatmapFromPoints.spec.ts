@@ -1,4 +1,5 @@
 import { points, randomPoint } from '@turf/turf'
+import { Position } from 'geojson'
 
 import { WithHashProperties } from '../../../model'
 import { getQuadkeyHeatmapFromPoints, QuadkeyHeatmapTile } from './getQuadkeyHeatmapFromPoints'
@@ -16,11 +17,11 @@ const closeTo = (actual: number, expected: number, tolerance: number): boolean =
   return Math.abs(actual - expected) < tolerance
 }
 
-const ensureResultIsValid = (actual: QuadkeyHeatmapTile[], expectedTilesWithValue?: number) => {
+const ensureResultIsValid = (actual: QuadkeyHeatmapTile[], expectedQuadkeys?: number) => {
   expect(actual).toBeTruthy()
   const tilesWithValue = actual.filter((h) => h.density !== 0).map((p) => p.density)
-  if (expectedTilesWithValue) {
-    expect(tilesWithValue.length).toBe(expectedTilesWithValue)
+  if (expectedQuadkeys) {
+    expect(tilesWithValue.length).toBe(expectedQuadkeys)
   } else {
     expect(tilesWithValue.length).toBeGreaterThan(0)
   }
@@ -28,16 +29,37 @@ const ensureResultIsValid = (actual: QuadkeyHeatmapTile[], expectedTilesWithValu
   // expect(closeTo(totalDensity, 100, 10)).toBeTruthy()
 }
 
-describe('getHeatmapFromPoints', () => {
-  it('calculates with known points', () => {
-    const coordinates = [
-      [-90, -45],
-      [-90, 45],
-      [90, -45],
-      [90, 45],
-    ]
-    const locations = points<WithHashProperties>(coordinates, { hash: 'foo' })
-    ensureResultIsValid(getQuadkeyHeatmapFromPoints(locations, 1), coordinates.length)
+type TestDataInput = {
+  coordinates: Position[]
+}
+type TestDataExpected = {
+  quadkeys: number
+}
+
+type GetQuadkeyHeatmapFromPointsTestData = {
+  input: TestDataInput
+  expected: TestDataExpected
+}
+const testData: GetQuadkeyHeatmapFromPointsTestData[] = [
+  {
+    expected: {
+      quadkeys: 4,
+    },
+    input: {
+      coordinates: [
+        [-90, -45],
+        [-90, 45],
+        [90, -45],
+        [90, 45],
+      ],
+    },
+  },
+]
+
+describe('getQuadkeyHeatmapFromPoints', () => {
+  it.each(testData)('calculates with known points', (data) => {
+    const locations = points<WithHashProperties>(data.input.coordinates, { hash: 'foo' })
+    ensureResultIsValid(getQuadkeyHeatmapFromPoints(locations, 1), data.expected.quadkeys)
   })
   it('calculates with random points', () => {
     const locations = randomPoint(1000, { bbox: [-179, -85, 179, 85] })
