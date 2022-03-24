@@ -16,9 +16,9 @@ import {
   SupportedLocationWitnessPayloadSchemas,
   WithHashProperties,
 } from '../../../model'
-import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../LocationConverters'
-import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../LocationWitnessQueries'
+import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../Converters'
 import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
+import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../WitnessQueries'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { storeAnswer, storeError } from '../storePayload'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'

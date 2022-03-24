@@ -7,9 +7,9 @@ import {
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { convertLocationWitnessForRange } from '../../LocationConverters'
-import { queryLocationsInRange } from '../../LocationWitnessQueries'
+import { convertLocationWitnessForRange } from '../../Converters'
 import { isValidLocationWitnessPayload } from '../../Validators'
+import { queryLocationsInRange } from '../../WitnessQueries'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { storeAnswer, storeError } from '../storePayload'
 
