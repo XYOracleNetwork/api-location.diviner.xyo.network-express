@@ -8,7 +8,7 @@ import {
   CurrentLocationWitnessPayload,
   CurrentLocationWitnessPayloadSchema,
   currentLocationWitnessPayloadSchema,
-} from './CurrentLocationWitness'
+} from './_currentLocationWitness'
 
 export const supportedLocationWitnessSchemas = [locationWitnessPayloadSchema, currentLocationWitnessPayloadSchema]
 export const supportedLocationWitnessSchemasMap: Record<SupportedLocationWitnessPayloadSchemas, true> = {
