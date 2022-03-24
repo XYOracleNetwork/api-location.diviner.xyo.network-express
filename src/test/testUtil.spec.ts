@@ -160,6 +160,20 @@ export const getQuery = async (
   return response.body.data
 }
 
+export const getArchiveWithLocationsWitnessed = async (locationsToWitness = 5): Promise<string> => {
+  const api = getArchivist()
+  const token = await getTokenForNewUser()
+  expect(token).toBeTruthy()
+  const archive = (await claimArchive(token))?.archive || ''
+  expect(archive).toBeTruthy()
+  await delay(1000)
+  for (let location = 0; location < locationsToWitness; location++) {
+    await witnessNewLocation(api, archive)
+  }
+  await delay(1000)
+  return archive
+}
+
 export const pollUntilQueryComplete = async (
   queryCreationResponse: LocationQueryCreationResponse,
   maxPolls = 15,

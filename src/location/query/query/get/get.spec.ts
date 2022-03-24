@@ -1,11 +1,22 @@
-import { LocationQueryCreationResponse } from '@xyo-network/sdk-xyo-client-js'
+import {
+  createQuery,
+  getArchiveWithLocationsWitnessed,
+  getQuery,
+  getValidLocationRangeRequest,
+  pollUntilQueryComplete,
+} from '../../../../test'
 
-import { createQuery, getQuery, pollUntilQueryComplete } from '../../../../test'
-
-// TODO: Make our own archive/data here to ensure query runs bounded/fast
 describe('GET /location/query/:hash', () => {
+  const startTime = new Date().toISOString()
+  let stopTime = ''
+  let archive = ''
+  beforeAll(async () => {
+    archive = await getArchiveWithLocationsWitnessed()
+    stopTime = new Date().toISOString()
+  })
   it('returns answerHash', async () => {
-    const queryResponse: LocationQueryCreationResponse = await createQuery()
+    const queryCreationRequest = getValidLocationRangeRequest(archive, startTime, stopTime)
+    const queryResponse = await createQuery(queryCreationRequest)
     await pollUntilQueryComplete(queryResponse)
     const result = await getQuery(queryResponse.hash)
     expect(result).toBeTruthy()

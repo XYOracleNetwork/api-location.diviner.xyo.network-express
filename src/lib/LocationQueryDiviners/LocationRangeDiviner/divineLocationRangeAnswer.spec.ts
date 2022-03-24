@@ -10,15 +10,12 @@ import {
 import { FeatureCollection, Point } from 'geojson'
 
 import {
-  claimArchive,
   createQuery,
-  delay,
+  getArchiveWithLocationsWitnessed,
   getArchivist,
   getQuery,
-  getTokenForNewUser,
   getValidLocationRangeRequest,
   pollUntilQueryComplete,
-  witnessNewLocation,
 } from '../../../test'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
@@ -73,18 +70,9 @@ describe('Round trip tests', () => {
   const locationsToWitness = 5
   const api = getArchivist()
   let stopTime = ''
-  let token = ''
   let archive = ''
   beforeAll(async () => {
-    token = await getTokenForNewUser()
-    expect(token).toBeTruthy()
-    archive = (await claimArchive(token))?.archive || ''
-    expect(archive).toBeTruthy()
-    await delay(1000)
-    for (let location = 0; location < locationsToWitness; location++) {
-      await witnessNewLocation(api, archive)
-    }
-    await delay(1000)
+    archive = await getArchiveWithLocationsWitnessed()
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
