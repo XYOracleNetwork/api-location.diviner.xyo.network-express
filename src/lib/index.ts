@@ -1,2 +1,2 @@
-export * from './LocationQueryDiviners'
+export * from './Diviners'
 export * from './QueryQueue'

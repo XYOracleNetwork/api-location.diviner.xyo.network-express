@@ -159,3 +159,28 @@ export const getQuery = async (
   const response = await getDiviner().get(`/location/query/${hash}`).expect(expectedStatus)
   return response.body.data
 }
+
+export const getArchiveWithLocationsWitnessed = async (locationsToWitness = 5): Promise<string> => {
+  const api = getArchivist()
+  const token = await getTokenForNewUser()
+  expect(token).toBeTruthy()
+  const archive = (await claimArchive(token))?.archive || ''
+  expect(archive).toBeTruthy()
+  await delay(1000)
+  for (let location = 0; location < locationsToWitness; location++) {
+    await witnessNewLocation(api, archive)
+  }
+  await delay(1000)
+  return archive
+}
+
+export const pollUntilQueryComplete = async (
+  queryCreationResponse: LocationQueryCreationResponse,
+  maxPolls = 15,
+  pollInterval = 1000
+) => {
+  for (let i = 0; i < maxPolls; i++) {
+    await delay(pollInterval)
+    if ((await getQuery(queryCreationResponse.hash)).answerHash) break
+  }
+}
