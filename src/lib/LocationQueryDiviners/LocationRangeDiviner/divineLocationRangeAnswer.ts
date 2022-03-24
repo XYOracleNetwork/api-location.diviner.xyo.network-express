@@ -7,7 +7,7 @@ import {
   XyoArchivistApi,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { convertLocationWitnessPayloadToPointFeature } from '../../LocationConverters'
+import { convertLocationWitnessForRange } from '../../LocationConverters'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryLocationsInRange } from '../queryLocationsInRange'
@@ -27,7 +27,7 @@ export const divineLocationRangeAnswer = async (
     const startTime = start.getTime()
     const stopTime = stop.getTime()
     const locations = await queryLocationsInRange(sourceArchive, locationWitnessPayloadSchema, startTime, stopTime)
-    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessPayloadToPointFeature)
+    const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessForRange)
     const answer = getFeatureCollection(geometries)
     return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
   } catch (error) {
