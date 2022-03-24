@@ -3,19 +3,13 @@ import {
   LocationHeatmapPointProperties,
   LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
-  locationWitnessPayloadSchema,
   XyoAddress,
   XyoArchivistApi,
   XyoArchivistArchiveApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
-import {
-  currentLocationWitnessPayloadSchema,
-  FeaturesInRange,
-  SupportedLocationWitnessPayloadSchemas,
-  WithHashProperties,
-} from '../../../model'
+import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
 import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../Converters'
 import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
 import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../WitnessQueries'
@@ -28,7 +22,7 @@ const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = 
   startTime: number,
   stopTime: number
 ) => {
-  return (await queryCurrentLocationsInRange(api, currentLocationWitnessPayloadSchema, startTime, stopTime))
+  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
     .filter(isValidCurrentLocationWitnessPayload)
     .map(convertCurrentLocationWitnessForHeatmap)
 }
@@ -38,7 +32,7 @@ const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
   startTime: number,
   stopTime: number
 ) => {
-  return (await queryLocationsInRange(api, locationWitnessPayloadSchema, startTime, stopTime))
+  return (await queryLocationsInRange(api, startTime, stopTime))
     .filter(isValidLocationWitnessPayload)
     .map(convertLocationWitnessForHeatmap)
 }
