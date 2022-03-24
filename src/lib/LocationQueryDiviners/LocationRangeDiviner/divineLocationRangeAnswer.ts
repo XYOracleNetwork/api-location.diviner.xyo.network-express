@@ -8,9 +8,9 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { convertLocationWitnessForRange } from '../../LocationConverters'
+import { queryLocationsInRange } from '../../LocationWitnessQueries'
 import { isValidLocationWitnessPayload } from '../../Validators'
 import { getFeatureCollection } from '../getFeatureCollection'
-import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
 
 export const divineLocationRangeAnswer = async (

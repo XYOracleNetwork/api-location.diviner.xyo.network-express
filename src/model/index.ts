@@ -1,5 +1,6 @@
 export * from './CurrentLocationWitness'
 export * from './FeaturesInRange'
+export * from './LocationAnswerSchema'
 export * from './SortDirection'
 export * from './SupportedLocationSchemas'
 export * from './TileWithZoom'

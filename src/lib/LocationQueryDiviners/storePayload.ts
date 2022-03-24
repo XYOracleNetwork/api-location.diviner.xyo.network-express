@@ -7,7 +7,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection } from 'geojson'
 
-import { LocationAnswerSchema } from './LocationAnswerSchema'
+import { LocationAnswerSchema } from '../../model'
 
 export const storePayload = async (
   payload: XyoPayload,
