@@ -26,27 +26,6 @@ const withinTimeRange = (x: WithOptionalTimestamp, t1: number, t2: number): bool
   return x?._timestamp && x?._timestamp <= highestTime && x?._timestamp >= lowestTime ? true : false
 }
 
-const getCurrentLocationWitnessPayloadsForBoundWitnesses = async (
-  api: XyoArchivistArchiveApi,
-  boundWitnesses: XyoBoundWitness[]
-) => {
-  const allPayloads: Array<CurrentLocationWitnessPayload & WithTimestamp> = []
-  for (const boundWitness of boundWitnesses) {
-    const hash = boundWitness._hash
-    if (!hash) break
-    // Get payloads associated with that bound witness
-    const payloads = await api.block.getPayloadsByHash(hash)
-    const locations = (payloads as (CurrentLocationWitnessPayload & WithTimestamp)[][])
-      .flatMap((p) => p)
-      .filter((p) => {
-        // Filter those matching the appropriate schema and that have a timestamp
-        return p.schema === currentLocationWitnessPayloadSchema && p._timestamp
-      })
-    allPayloads.push(...locations)
-  }
-  return allPayloads
-}
-
 const getCurrentLocationWitnessPayloadsForBoundWitnessesParallel = async (
   api: XyoArchivistArchiveBlockApi,
   boundWitnesses: XyoBoundWitness[]

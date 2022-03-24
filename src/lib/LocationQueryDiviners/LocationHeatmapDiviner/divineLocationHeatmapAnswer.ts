@@ -17,9 +17,8 @@ import {
   WithHashProperties,
 } from '../../../model'
 import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../LocationConverters'
+import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
 import { getFeatureCollection } from '../getFeatureCollection'
-import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
-import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'

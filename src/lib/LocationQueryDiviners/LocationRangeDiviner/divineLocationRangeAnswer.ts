@@ -8,8 +8,8 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { convertLocationWitnessForRange } from '../../LocationConverters'
+import { isValidLocationWitnessPayload } from '../../Validators'
 import { getFeatureCollection } from '../getFeatureCollection'
-import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
 

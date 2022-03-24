@@ -34,19 +34,6 @@ const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellS
 
 const grids = [northWestQuadrantGrid, northEastQuadrantGrid, southEastQuadrantGrid, southWestQuadrantGrid]
 
-const isString = (value: string | undefined): value is string => {
-  return value !== undefined
-}
-
-const shuffleArray = <T>(array: Array<T>) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-}
-
 export const getHeatmapFromPoints = (
   points: FeatureCollection<Point, WithHashProperties>,
   _zoom: number
@@ -71,9 +58,5 @@ export const getHeatmapFromPoints = (
       }
     }
   }
-  // shuffleArray(heatmap)
-  // return featureCollection(heatmap.slice(0, 300))
-  // const descendingHeatmap = heatmap.sort((a, b) => b.properties.value - a.properties.value)
-  // return featureCollection(descendingHeatmap.slice(0, 400))
   return featureCollection(heatmap)
 }

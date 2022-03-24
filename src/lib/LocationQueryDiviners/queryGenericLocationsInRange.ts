@@ -24,10 +24,6 @@ const withinTimeRange = (x: WithOptionalTimestamp, t1: number, t2: number): bool
   return x?._timestamp && x?._timestamp <= highestTime && x?._timestamp >= lowestTime ? true : false
 }
 
-const hasTimestamp = (x: WithOptionalTimestamp): x is WithTimestamp => {
-  throw new Error('')
-}
-
 export const queryGenericLocationsInRange: QueryLocationDataInRange<SupportedLocationWitnessPayloads> = async (
   api: XyoArchivistArchiveApi,
   schema: SupportedLocationWitnessPayloadSchemas,
