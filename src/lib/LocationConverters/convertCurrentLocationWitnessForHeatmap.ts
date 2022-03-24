@@ -1,11 +1,10 @@
-import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, Point } from 'geojson'
 
-import { WithHashProperties } from '../../../model'
-import { ConvertLocationDataToGeoJsonGeometry } from '../../LocationConverters'
+import { CurrentLocationWitnessPayload, WithHashProperties } from '../../model'
+import { ConvertLocationDataToGeoJsonGeometry } from './ConvertLocationDataToGeoJsonGeometry'
 
-export const convertLocationWitnessPayloadToPointFeature: ConvertLocationDataToGeoJsonGeometry<
-  LocationWitnessPayload,
+export const convertCurrentLocationWitnessForHeatmap: ConvertLocationDataToGeoJsonGeometry<
+  CurrentLocationWitnessPayload,
   Point,
   WithHashProperties
 > = (payload) => {
@@ -15,7 +14,7 @@ export const convertLocationWitnessPayloadToPointFeature: ConvertLocationDataToG
   // A position is an array of numbers.  There MUST be two or more
   // elements. The first two elements are longitude and latitude
   const geometry: Point = {
-    coordinates: [payload.currentLocation.coords.longitude, payload.currentLocation.coords.latitude],
+    coordinates: [payload.longitude, payload.latitude],
     type: 'Point',
   }
   const feature: Feature<Point, WithHashProperties> = {

@@ -16,14 +16,13 @@ import {
   SupportedLocationWitnessPayloadSchemas,
   WithHashProperties,
 } from '../../../model'
+import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../LocationConverters'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { isValidCurrentLocationWitnessPayload } from '../isValidCurrentLocationWitnessPayload'
 import { isValidLocationWitnessPayload } from '../isValidLocationWitnessPayload'
 import { queryCurrentLocationsInRange } from '../queryCurrentLocationsInRange'
 import { queryLocationsInRange } from '../queryLocationsInRange'
 import { storeAnswer, storeError } from '../storePayload'
-import { convertCurrentLocationWitnessForHeatmap } from './convertCurrentLocationWitnessForHeatmap'
-import { convertLocationWitnessPayloadToPointFeature } from './convertLocationWitnessPayloadToPointFeature'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
@@ -43,7 +42,7 @@ const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
 ) => {
   return (await queryLocationsInRange(api, locationWitnessPayloadSchema, startTime, stopTime))
     .filter(isValidLocationWitnessPayload)
-    .map(convertLocationWitnessPayloadToPointFeature)
+    .map(convertLocationWitnessForHeatmap)
 }
 
 const getLocationDataPointsBySchema: Record<

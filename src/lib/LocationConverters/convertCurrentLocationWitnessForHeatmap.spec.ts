@@ -1,4 +1,4 @@
-import { currentLocationWitnessSample } from '../../../test'
+import { currentLocationWitnessSample } from '../../test'
 import { convertCurrentLocationWitnessForHeatmap } from './convertCurrentLocationWitnessForHeatmap'
 describe('convertCurrentLocationWitnessForHeatmap', () => {
   it('converts data formatted according to the schema into a GeoJson Point', () => {
