@@ -1,7 +1,7 @@
 import { points } from '@turf/turf'
 import { Position } from 'geojson'
 
-import { TestData, WithHashProperties, Zoom } from '../../../model'
+import { MinZoom, TestData, WithHashProperties, Zoom } from '../../../model'
 import { getQuadkeyHeatmapFromPoints } from './getQuadkeyHeatmapFromPoints'
 
 type TestDataInput = {
@@ -25,6 +25,20 @@ const testData: TestData<TestDataInput, TestDataExpected>[] = [
         [90, 45],
       ],
       zoom: 1,
+    },
+  },
+  {
+    expected: {
+      quadkeys: 4,
+    },
+    input: {
+      coordinates: [
+        [-180, -90],
+        [-180, -90],
+        [-180, -90],
+        [-180, -90],
+      ],
+      zoom: 2,
     },
   },
 ]
