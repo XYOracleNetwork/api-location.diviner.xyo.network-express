@@ -11,5 +11,6 @@ export const decreaseZoom = (quadkey: string, zoom: Zoom): string => {
   if (currentZoom === zoom) return quadkey
   const tileWithZoom = quadkeyToTile(quadkey)
   tileWithZoom[2] = zoom
-  return tileToQuadkey(tileWithZoom)
+  // TODO: Calculate appropriate parent tile from this tile
+  throw new Error('Not implemented')
 }

@@ -1,7 +1,7 @@
 import { FeatureCollection, Point } from 'geojson'
 
-import { MaxZoom, WithHashProperties } from '../../../model'
-import { featureToQuadkey } from '../../Quadkey'
+import { MaxZoom, MinZoom, WithHashProperties } from '../../../model'
+import { decrementZoom, featureToQuadkey } from '../../Quadkey'
 
 const maxDensity = 0.25
 const maxAllowableZoom = MaxZoom
@@ -11,27 +11,50 @@ export interface QuadkeyHeatmapTile {
   density: number
 }
 
+const reduceZoom = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] => {
+  // TODO: By max density
+  return heatmap.map((tile) => {
+    return {
+      density: tile.density,
+      quadkey: decrementZoom(tile.quadkey),
+    }
+  })
+}
+
+// TODO: Aggregate sparse tiles using density by tree walking
+// from bottom up (with backtrack) to decrease until desired density
+const combineDuplicates = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] => {
+  const densityByQuadkey: Record<string, number> = {}
+  for (let p = 0; p < heatmap.length; p++) {
+    const point = heatmap[p]
+    densityByQuadkey[point.quadkey] = densityByQuadkey[point.quadkey]
+      ? densityByQuadkey[point.quadkey] + 1
+      : point.density
+  }
+  return Object.keys(densityByQuadkey).map((quadkey) => {
+    return { density: densityByQuadkey[quadkey], quadkey }
+  })
+}
+
+// TODO: Look ahead and determine if we should combine
+const decreaseZoomAndCalculateDensity = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] => {
+  return combineDuplicates(reduceZoom(heatmap))
+}
+
 export const getQuadkeyHeatmapFromPoints = (
   points: FeatureCollection<Point, WithHashProperties>
 ): QuadkeyHeatmapTile[] => {
-  const densityByQuadkey = points.features
+  let heatmap = points.features
     // Calculate each point at max allowable zoom level
-    .map((p) => {
+    .map<QuadkeyHeatmapTile>((p) => {
       return {
+        density: 1,
         quadkey: featureToQuadkey(p, maxAllowableZoom),
       }
     })
-    // Sort numerically (cast to numeric to fix string sort order)
-    .sort((a, b) => +a - +b)
-    // Combine duplicates to determine density
-    .reduce<Record<string, number>>((prev, cur) => {
-      prev[cur.quadkey] = (prev[cur.quadkey] || 0) + 1
-      return prev
-    }, {})
-  // TODO: Aggregate sparse tiles using density by tree walking
-  // from bottom up (with backtrack) to decrease until desired density
-  // TODO: By max density
-  return Object.keys(densityByQuadkey).map<QuadkeyHeatmapTile>((quadkey) => {
-    return { density: densityByQuadkey[quadkey], quadkey }
-  })
+
+  for (let zoom = maxAllowableZoom; zoom > MinZoom; zoom--) {
+    heatmap = decreaseZoomAndCalculateDensity(heatmap)
+  }
+  return heatmap
 }

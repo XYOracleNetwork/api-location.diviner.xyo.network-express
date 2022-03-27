@@ -33,7 +33,7 @@ const testData: ReduceZoomLevelTestData[] = [
   { expected: '1111111111111111111', input: { quadkey: '11111111111111111111', zoom: 19 } },
 ]
 
-describe('decreaseZoom', () => {
+describe.skip('decreaseZoom', () => {
   it.each(testData)('decreases the zoom to the level specified', (data: ReduceZoomLevelTestData) => {
     const { quadkey, zoom } = data.input
     const expected = data.expected
