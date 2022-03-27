@@ -1,12 +1,12 @@
 import { TestData } from '../../model'
-import { decrementZoom } from './decrementZoom'
+import { getParentQuadkey } from './getParentQuadkey'
 
-interface DecrementZoomTestData extends TestData<string, string> {
+interface GetParentQuadkeyTestData extends TestData<string, string> {
   input: string
   expected: string
 }
 
-const testData: DecrementZoomTestData[] = [
+const testData: GetParentQuadkeyTestData[] = [
   { expected: '1', input: '11' },
   { expected: '11', input: '111' },
   { expected: '111', input: '1111' },
@@ -28,11 +28,11 @@ const testData: DecrementZoomTestData[] = [
   { expected: '1111111111111111111', input: '11111111111111111111' },
 ]
 
-describe('decrementZoom', () => {
-  it.each(testData)('reduces the quadkey zoom by one level', (data: DecrementZoomTestData) => {
+describe('getParentQuadkey', () => {
+  it.each(testData)('reduces the quadkey zoom by one level', (data: GetParentQuadkeyTestData) => {
     const quadkey = data.input
     const expected = data.expected
-    const actual = decrementZoom(quadkey)
+    const actual = getParentQuadkey(quadkey)
     expect(actual).toEqual(expected)
   })
 })

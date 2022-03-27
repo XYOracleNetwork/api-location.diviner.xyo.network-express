@@ -1,7 +1,7 @@
 import { FeatureCollection, Point } from 'geojson'
 
 import { MaxZoom, MinZoom, WithHashProperties } from '../../../model'
-import { decrementZoom, featureToQuadkey } from '../../Quadkey'
+import { featureToQuadkey, getParentQuadkey } from '../../Quadkey'
 
 const maxDensity = 0.25
 const maxAllowableZoom = MaxZoom
@@ -16,7 +16,7 @@ const reduceZoom = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] => {
   return heatmap.map((tile) => {
     return {
       density: tile.density,
-      quadkey: decrementZoom(tile.quadkey),
+      quadkey: getParentQuadkey(tile.quadkey),
     }
   })
 }
