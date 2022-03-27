@@ -1,7 +1,9 @@
-export const quadkeyToTile = (quadkey: string) => {
+import { TileWithZoom, Zoom } from '../../model'
+
+export const quadkeyToTile = (quadkey: string): TileWithZoom => {
   let x = 0
   let y = 0
-  const z = quadkey.length
+  const z = quadkey.length as Zoom
 
   for (let i = z; i > 0; i--) {
     const mask = 1 << (i - 1)
