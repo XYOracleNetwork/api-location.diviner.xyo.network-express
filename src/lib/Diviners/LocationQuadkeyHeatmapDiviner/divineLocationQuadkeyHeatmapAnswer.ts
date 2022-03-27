@@ -58,7 +58,7 @@ export const divineLocationHeatmapAnswer = async (
     const stopTime = stop.getTime()
     const points = await getLocationDataPointsBySchema[request.query.schema](sourceArchive, startTime, stopTime)
     const collection = getFeatureCollection(points)
-    const answer = getQuadkeyHeatmapFromPoints(collection, 10)
+    const answer = getQuadkeyHeatmapFromPoints(collection)
     return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
