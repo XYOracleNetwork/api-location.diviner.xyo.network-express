@@ -1,5 +1,4 @@
 export * from './constants'
-export * from './decreaseZoom'
 export * from './featureToQuadkey'
 export * from './getParentQuadkey'
 export * from './getZoomLevel'
