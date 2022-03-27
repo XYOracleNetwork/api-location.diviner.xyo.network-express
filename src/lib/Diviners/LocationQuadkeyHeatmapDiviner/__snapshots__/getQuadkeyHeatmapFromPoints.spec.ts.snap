@@ -25,7 +25,7 @@ exports[`getQuadkeyHeatmapFromPoints calculates with known points 2`] = `
 Array [
   Object {
     "density": 4,
-    "quadkey": "0",
+    "quadkey": "0000000000000000000",
   },
 ]
 `;
