@@ -3,6 +3,7 @@ import {
   locationHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
+  LocationQuerySchema,
   locationTimeRangeQuerySchema,
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
@@ -19,6 +20,11 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
+import {
+  LocationGeoJsonHeatmapQuerySchema,
+  LocationQuadkeyHeatmapQuerySchema,
+  locationQuadkeyHeatmapQuerySchema,
+} from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -108,6 +114,27 @@ export const getValidLocationHeatmapRequest = (
     resultArchive: archive,
     resultArchivist: { apiDomain },
     schema: locationHeatmapQuerySchema,
+    sourceArchive: archive,
+    sourceArchivist: { apiDomain },
+  }
+}
+
+export const getValidLocationRequest = (
+  archive = testArchive,
+  startTime = new Date(0).toISOString(),
+  stopTime = new Date().toISOString(),
+  // TODO: Remove when types in SDK
+  schema:
+    | LocationQuerySchema
+    | LocationGeoJsonHeatmapQuerySchema
+    | LocationQuadkeyHeatmapQuerySchema = locationQuadkeyHeatmapQuerySchema
+): LocationQueryCreationRequest => {
+  return {
+    query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
+    resultArchive: archive,
+    resultArchivist: { apiDomain },
+    // TODO: Remove when types in SDK
+    schema: schema as unknown as LocationQuerySchema,
     sourceArchive: archive,
     sourceArchivist: { apiDomain },
   }

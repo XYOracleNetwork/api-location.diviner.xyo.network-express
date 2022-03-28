@@ -1,5 +1,7 @@
 export * from './constants'
 export * from './featureToQuadkey'
+export * from './getParentQuadkey'
+export * from './getZoomLevel'
 export * from './pointToQuadkey'
 export * from './pointToTile'
 export * from './quadkeyToTile'

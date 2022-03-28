@@ -1,6 +1,5 @@
-import { TileWithZoom } from '../../model'
+import { TestData, TileWithZoom } from '../../model'
 import { quadkeyToTile } from './quadkeyToTile'
-import { TestData } from './TestData'
 
 interface QuadkeyToTileTestData extends TestData<string, TileWithZoom> {
   expected: TileWithZoom

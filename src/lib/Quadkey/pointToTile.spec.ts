@@ -1,8 +1,8 @@
 import { point } from '@turf/turf'
 import { Point } from 'geojson'
 
+import { TestData } from '../../model'
 import { pointToTile } from './pointToTile'
-import { TestData } from './TestData'
 
 interface PointZoom {
   point: Point
