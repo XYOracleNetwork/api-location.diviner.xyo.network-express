@@ -8,7 +8,12 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { Point } from 'geojson'
 
-import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
+import {
+  FeaturesInRange,
+  locationQuadkeyHeatmapAnswerSchema,
+  SupportedLocationWitnessPayloadSchemas,
+  WithHashProperties,
+} from '../../../model'
 import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../Converters'
 import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
 import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../WitnessQueries'
@@ -44,7 +49,7 @@ const getLocationDataPointsBySchema: Record<
   'network.xyo.location': getLocationWitnesses,
 }
 
-export const divineLocationHeatmapAnswer = async (
+export const divineLocationQuadkeyHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
@@ -59,7 +64,7 @@ export const divineLocationHeatmapAnswer = async (
     const points = await getLocationDataPointsBySchema[request.query.schema](sourceArchive, startTime, stopTime)
     const collection = getFeatureCollection(points)
     const answer = getQuadkeyHeatmapFromPoints(collection)
-    return await storeAnswer(answer, resultArchive, locationHeatmapAnswerSchema, address)
+    return await storeAnswer(answer, resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
     return await storeError('Error calculating answer', resultArchive, locationHeatmapAnswerSchema, address)
