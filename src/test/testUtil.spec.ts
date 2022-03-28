@@ -1,5 +1,4 @@
 import {
-  ArchiveResponse,
   locationHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
@@ -8,6 +7,7 @@ import {
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
   XyoAddress,
+  XyoArchive,
   XyoArchivistApi,
   XyoAuthApi,
   XyoBoundWitness,
@@ -86,8 +86,8 @@ export const getTokenForNewUser = async (): Promise<string> => {
   return await signInWeb3User(getNewWeb3User())
 }
 
-export const claimArchive = (token: string, archive: string = v4()): Promise<ArchiveResponse | undefined> => {
-  return getArchivist(token).archives.select(archive).put()
+export const claimArchive = (token: string, archive: string = v4()): Promise<XyoArchive | undefined> => {
+  return getArchivist(token).archive(archive).put()
 }
 
 export const getValidLocationRangeRequest = (
@@ -168,7 +168,7 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp') => {
-  return await api.archives.select(archive).block.post(getNewLocationWitness())
+  return await api.archive(archive).block.post(getNewLocationWitness())
 }
 
 export const createQuery = async (

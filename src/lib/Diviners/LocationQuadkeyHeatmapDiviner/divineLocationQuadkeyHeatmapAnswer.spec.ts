@@ -56,8 +56,8 @@ const getQueryAnswer = async (
   await pollUntilQueryComplete(queryCreationResponse)
   const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api.archives
-    .select(queryCreationRequest.resultArchive)
+  const answerPayloads = await api
+    .archive(queryCreationRequest.resultArchive)
     .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()?.pop()

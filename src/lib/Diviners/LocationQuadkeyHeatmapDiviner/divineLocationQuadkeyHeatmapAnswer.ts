@@ -53,8 +53,8 @@ export const divineLocationQuadkeyHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
-  const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archives.select(response.sourceArchive)
-  const resultArchive = new XyoArchivistApi(response.resultArchivist).archives.select(response.resultArchive)
+  const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archive(response.sourceArchive)
+  const resultArchive = new XyoArchivistApi(response.resultArchivist).archive(response.resultArchive)
   try {
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)

@@ -17,7 +17,7 @@ const getArchivistApiSdk = (config: XyoApiConfig) => {
 }
 
 export const createLocationQuery = async (request: LocationQueryCreationRequest) => {
-  const api = getArchivistApiSdk(request.resultArchivist).archives.select(request.resultArchive)
+  const api = getArchivistApiSdk(request.resultArchivist).archive(request.resultArchive)
   // TODO: Strongly-typed support here
   const schema =
     // Default query to Location Range Query until strongly typed support
@@ -25,6 +25,6 @@ export const createLocationQuery = async (request: LocationQueryCreationRequest)
   const payload = new XyoPayloadBuilder({ schema }).fields({ ...request }).build()
   const address = XyoAddress.random()
   const bw = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  const { boundWitnesses, payloads } = (await api.block.post(bw)) ?? {}
-  return boundWitnesses && payloads ? bw._hash : undefined
+  const boundWitnesses = (await api.block.post(bw)) ?? {}
+  return boundWitnesses ? bw._hash : undefined
 }

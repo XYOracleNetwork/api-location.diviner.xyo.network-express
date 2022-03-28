@@ -40,6 +40,7 @@ const combineDuplicates = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] 
 }
 
 // TODO: Look ahead and determine if we should combine
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const decreaseZoomAndCalculateDensity = (heatmap: QuadkeyHeatmapTile[]): QuadkeyHeatmapTile[] => {
   return combineDuplicates(reduceZoom(heatmap))
 }
