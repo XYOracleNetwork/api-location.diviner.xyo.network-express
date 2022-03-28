@@ -1,12 +1,10 @@
 import {
   GetLocationQueryResponse,
-  LocationHeatmapPointProperties,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoArchivistApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
-import { FeatureCollection, Point } from 'geojson'
 
 import { locationQuadkeyHeatmapAnswerSchema } from '../../../model'
 import {
