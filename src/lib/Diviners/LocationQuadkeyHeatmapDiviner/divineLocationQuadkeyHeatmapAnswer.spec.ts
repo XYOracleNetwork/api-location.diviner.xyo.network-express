@@ -1,6 +1,5 @@
 import {
   GetLocationQueryResponse,
-  locationHeatmapAnswerSchema,
   LocationHeatmapPointProperties,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
@@ -9,15 +8,17 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
+import { locationQuadkeyHeatmapAnswerSchema } from '../../../model'
 import {
   createQuery,
   getArchiveWithLocationsWitnessed,
   getArchivist,
   getQuery,
   getTokenForNewUser,
-  getValidLocationHeatmapRequest,
+  getValidLocationRequest,
   pollUntilQueryComplete,
 } from '../../../test'
+import { QuadkeyHeatmapTile } from './getQuadkeyHeatmapFromPoints'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
   expect(answerPayloads).toBeTruthy()
@@ -38,17 +39,20 @@ const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
 
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationHeatmapPointProperties>) => {
+const validateQueryResponseShape = (queryResult: QuadkeyHeatmapTile[]) => {
   expect(queryResult).toBeTruthy()
-  expect(queryResult?.type).toBe('FeatureCollection')
-  expect(queryResult?.features).toBeTruthy()
-  expect(Array.isArray(queryResult?.features)).toBeTruthy()
+  expect(Array.isArray(queryResult)).toBeTruthy()
+  for (let i = 0; i < queryResult.length; i++) {
+    const point = queryResult[i]
+    expect(point.density).toBeTruthy()
+    expect(point.quadkey).toBeTruthy()
+  }
 }
 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
-): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
+): Promise<QuadkeyHeatmapTile[]> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
   await pollUntilQueryComplete(queryCreationResponse)
@@ -60,9 +64,9 @@ const getQueryAnswer = async (
   validateQueryAnswerPayloads(answerPayloads)
   const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationHeatmapAnswerSchema)
-  const answer = payload?.result as FeatureCollection<Point, LocationHeatmapPointProperties>
-  validateGeoJsonFeatureCollection(answer)
+  expect(payload?.schema).toBe(locationQuadkeyHeatmapAnswerSchema)
+  const answer = payload?.result as QuadkeyHeatmapTile[]
+  validateQueryResponseShape(answer)
   return answer
 }
 
@@ -79,9 +83,9 @@ describe('Round trip tests', () => {
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
-    const queryCreationRequest = getValidLocationHeatmapRequest(archive, startTime, stopTime)
+    const queryCreationRequest = getValidLocationRequest(archive, startTime, stopTime)
     const answer = await getQueryAnswer(api, queryCreationRequest)
-    expect(answer?.features?.length).toBeGreaterThan(0)
+    expect(answer?.length).toBeGreaterThan(0)
   }, 10000)
   it('Generates an empty answer if no data was found', async () => {
     const now = new Date()
@@ -89,13 +93,13 @@ describe('Round trip tests', () => {
     futureStartTime.setDate(now.getDate() + 1)
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
-    const queryCreationRequest = getValidLocationHeatmapRequest(
+    const queryCreationRequest = getValidLocationRequest(
       archive,
       futureStartTime.toISOString(),
       futureStopTime.toISOString()
     )
     const answer = await getQueryAnswer(api, queryCreationRequest)
-    expect(answer?.features?.length).toBe(0)
+    expect(answer?.length).toBe(0)
   }, 10000)
   it.skip('Handles bad/misshapen data', async () => {
     // TODO: test

@@ -13,13 +13,13 @@ export type LocationQuadkeyHeatmapQuery = {
   schema: LocationWitnessPayloadSchema
 }
 
-export type LocationGeojsonHeatmapQuerySchema = 'network.xyo.location.heatmap.geojson.query'
-export const locationGeojsonHeatmapQuerySchema: LocationGeojsonHeatmapQuerySchema =
+export type LocationGeoJsonHeatmapQuerySchema = 'network.xyo.location.heatmap.geojson.query'
+export const locationGeoJsonHeatmapQuerySchema: LocationGeoJsonHeatmapQuerySchema =
   'network.xyo.location.heatmap.geojson.query'
-export type LocationGeojsonHeatmapAnswerSchema = 'network.xyo.location.heatmap.geojson.answer'
-export const locationGeojsonHeatmapAnswerSchema: LocationGeojsonHeatmapAnswerSchema =
+export type LocationGeoJsonHeatmapAnswerSchema = 'network.xyo.location.heatmap.geojson.answer'
+export const locationGeoJsonHeatmapAnswerSchema: LocationGeoJsonHeatmapAnswerSchema =
   'network.xyo.location.heatmap.geojson.answer'
-export type LocationGeojsonHeatmapQuery = {
+export type LocationGeoJsonHeatmapQuery = {
   startTime?: string
   stopTime?: string
   schema: LocationWitnessPayloadSchema

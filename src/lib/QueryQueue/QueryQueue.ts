@@ -1,13 +1,23 @@
 import { LocationQueryCreationResponse, LocationQuerySchema } from '@xyo-network/sdk-xyo-client-js'
 
-import { divineLocationHeatmapAnswer, divineLocationRangeAnswer, QueryProcessor } from '../Diviners'
+import { LocationGeoJsonHeatmapQuerySchema, LocationQuadkeyHeatmapQuerySchema } from '../../model'
+import {
+  divineLocationHeatmapAnswer,
+  divineLocationQuadkeyHeatmapAnswer,
+  divineLocationRangeAnswer,
+  QueryProcessor,
+} from '../Diviners'
 
 interface QueueData {
   response: LocationQueryCreationResponse
   result?: string
 }
 
-const locationQueryDivinersBySchema: Record<LocationQuerySchema, QueryProcessor<LocationQueryCreationResponse>> = {
+type ProcessableQueries = LocationQuerySchema | LocationQuadkeyHeatmapQuerySchema | LocationGeoJsonHeatmapQuerySchema
+
+const locationQueryDivinersBySchema: Record<ProcessableQueries, QueryProcessor<LocationQueryCreationResponse>> = {
+  'network.xyo.location.heatmap.geojson.query': divineLocationHeatmapAnswer,
+  'network.xyo.location.heatmap.quadkey.query': divineLocationQuadkeyHeatmapAnswer,
   'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
   'network.xyo.location.range.query': divineLocationRangeAnswer,
 }

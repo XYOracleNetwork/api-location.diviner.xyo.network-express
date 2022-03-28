@@ -6,6 +6,7 @@ import { featureToQuadkey, getParentQuadkey, getZoomLevel } from '../../Quadkey'
 const minDensity = 2
 const maxAllowableZoom = MaxZoom
 
+// TODO: Make SDK type
 export interface QuadkeyHeatmapTile {
   quadkey: string
   density: number
