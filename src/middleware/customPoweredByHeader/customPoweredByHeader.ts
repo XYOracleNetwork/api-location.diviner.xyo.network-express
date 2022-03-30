@@ -1,6 +1,7 @@
 import { Express, NextFunction, Request, Response } from 'express'
 
 const header = 'X-Powered-By'
+const setting = 'x-powered-by'
 
 /**
  * By default Express appends the `X-Powered-By: Express` header to
@@ -8,7 +9,7 @@ const header = 'X-Powered-By'
  * @param app The Express app to disable the header on.
  */
 export const enableExpressDefaultPoweredByHeader = (app: Express) => {
-  app.enable(header)
+  app.enable(setting)
 }
 
 /**
@@ -17,7 +18,7 @@ export const enableExpressDefaultPoweredByHeader = (app: Express) => {
  * @param app The Express app to disable the header on.
  */
 export const disableExpressDefaultPoweredByHeader = (app: Express) => {
-  app.disable(header)
+  app.disable(setting)
 }
 
 export const customPoweredByHeader = (req: Request, res: Response, next: NextFunction) => {
