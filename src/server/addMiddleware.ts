@@ -2,6 +2,7 @@ import { Express } from 'express'
 
 import {
   customPoweredByHeader,
+  disableCaseSensitiveRouting,
   disableExpressDefaultPoweredByHeader,
   jsonBodyParser,
   responseProfiler,
@@ -15,5 +16,6 @@ export const addMiddleware = (app: Express) => {
   app.use(standardResponses)
   disableExpressDefaultPoweredByHeader(app)
   app.use(customPoweredByHeader)
+  disableCaseSensitiveRouting(app)
   useRequestCounters(app)
 }
