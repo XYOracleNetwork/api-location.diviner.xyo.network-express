@@ -1,30 +1,19 @@
 import {
-  locationHeatmapQuerySchema,
-  LocationQueryCreationRequest,
-  locationTimeRangeQuerySchema,
+  SupportedLocationQueryCreationRequest,
   XyoAddress,
-  XyoApiConfig,
   XyoArchivistApi,
   XyoBoundWitnessBuilder,
   XyoBoundWitnessBuilderConfig,
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-const boundWitnessBuilderConfig: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
+const config: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 
-const getArchivistApiSdk = (config: XyoApiConfig) => {
-  return new XyoArchivistApi(config)
-}
-
-export const createLocationQuery = async (request: LocationQueryCreationRequest) => {
-  const api = getArchivistApiSdk(request.resultArchivist).archives.select(request.resultArchive)
-  // TODO: Strongly-typed support here
-  const schema =
-    // Default query to Location Range Query until strongly typed support
-    request.schema === locationHeatmapQuerySchema ? locationHeatmapQuerySchema : locationTimeRangeQuerySchema
+export const createLocationQuery = async (request: SupportedLocationQueryCreationRequest, address: XyoAddress) => {
+  const api = new XyoArchivistApi(request.resultArchivist).archive(request.resultArchive)
+  const schema = request.schema
   const payload = new XyoPayloadBuilder({ schema }).fields({ ...request }).build()
-  const address = XyoAddress.random()
-  const bw = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  const { boundWitnesses, payloads } = (await api.block.post(bw)) ?? {}
-  return boundWitnesses && payloads ? bw._hash : undefined
+  const bw = new XyoBoundWitnessBuilder(config).witness(address).payload(payload).build()
+  const response = await api.block.post([bw])
+  return response?.[0]?._hash
 }

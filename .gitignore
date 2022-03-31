@@ -31,3 +31,5 @@ sdk
 !.yarn/versions
 
 swagger.json
+
+**/*.heapprofile

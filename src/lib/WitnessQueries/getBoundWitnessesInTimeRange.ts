@@ -17,7 +17,7 @@ export const getBoundWitnessesInTimeRange = async (
   fromTimestamp: number,
   limit = 100
 ): Promise<BoundWitnessWithTimestamp[]> => {
-  const boundWitnesses = (await api.block.getBefore(fromTimestamp, limit)) ?? []
+  const boundWitnesses = (await api.block.findBefore(fromTimestamp, limit)) ?? []
   return boundWitnesses.filter<BoundWitnessWithTimestamp>((x): x is BoundWitnessWithTimestamp =>
     isWithinTimeRange(x, lowestTime, fromTimestamp)
   )

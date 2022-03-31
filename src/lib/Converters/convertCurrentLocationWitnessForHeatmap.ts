@@ -1,6 +1,7 @@
+import { CurrentLocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 import { Feature, Point } from 'geojson'
 
-import { CurrentLocationWitnessPayload, WithHashProperties } from '../../model'
+import { WithHashProperties } from '../../model'
 import { ConvertLocationDataToGeoJsonGeometry } from './ConvertLocationDataToGeoJsonGeometry'
 
 export const convertCurrentLocationWitnessForHeatmap: ConvertLocationDataToGeoJsonGeometry<

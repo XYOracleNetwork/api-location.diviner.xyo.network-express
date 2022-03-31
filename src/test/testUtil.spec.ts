@@ -1,6 +1,7 @@
 import {
-  ArchiveResponse,
   locationHeatmapQuerySchema,
+  LocationQuadkeyHeatmapQuerySchema,
+  locationQuadkeyHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   LocationQuerySchema,
@@ -8,6 +9,7 @@ import {
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
   XyoAddress,
+  XyoArchive,
   XyoArchivistApi,
   XyoAuthApi,
   XyoBoundWitness,
@@ -20,11 +22,7 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import {
-  LocationGeoJsonHeatmapQuerySchema,
-  LocationQuadkeyHeatmapQuerySchema,
-  locationQuadkeyHeatmapQuerySchema,
-} from '../model'
+import { LocationGeoJsonHeatmapQuerySchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -86,8 +84,8 @@ export const getTokenForNewUser = async (): Promise<string> => {
   return await signInWeb3User(getNewWeb3User())
 }
 
-export const claimArchive = (token: string, archive: string = v4()): Promise<ArchiveResponse | undefined> => {
-  return getArchivist(token).archives.select(archive).put()
+export const claimArchive = (token: string, archive: string = v4()): Promise<XyoArchive | undefined> => {
+  return getArchivist(token).archive(archive).put()
 }
 
 export const getValidLocationRangeRequest = (
@@ -168,7 +166,7 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp') => {
-  return await api.archives.select(archive).block.post(getNewLocationWitness())
+  return await api.archive(archive).block.post([getNewLocationWitness()])
 }
 
 export const createQuery = async (
