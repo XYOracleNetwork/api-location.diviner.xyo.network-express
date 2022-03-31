@@ -1,5 +1,9 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
-import { LocationQueryCreationResponse, SupportedLocationQueryCreationRequest } from '@xyo-network/sdk-xyo-client-js'
+import {
+  LocationQueryCreationResponse,
+  SupportedLocationQueryCreationRequest,
+  XyoAddress,
+} from '@xyo-network/sdk-xyo-client-js'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
@@ -56,7 +60,8 @@ const handler: RequestHandler<
     next(queryValidationError)
     return
   }
-  const hash = await createLocationQuery(req.body)
+  const address: XyoAddress = XyoAddress.random()
+  const hash = await createLocationQuery(req.body, address)
   if (!hash) {
     next(queryCreationError)
     return
@@ -67,7 +72,7 @@ const handler: RequestHandler<
     next(queryQueuingError)
     return
   }
-  queue.enqueue(hash, response)
+  queue.enqueue(hash, response, address)
   res.json(response)
   next()
 }

@@ -47,7 +47,7 @@ const getLocationDataPointsBySchema: Record<
 
 export const divineLocationQuadkeyHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
-  address: XyoAddress = XyoAddress.random()
+  address: XyoAddress
 ): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archive(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchivist).archive(response.resultArchive)

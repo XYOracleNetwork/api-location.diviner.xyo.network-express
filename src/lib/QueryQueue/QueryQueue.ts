@@ -2,6 +2,7 @@ import {
   LocationQuadkeyHeatmapQuerySchema,
   LocationQueryCreationResponse,
   LocationQuerySchema,
+  XyoAddress,
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { LocationGeoJsonHeatmapQuerySchema } from '../../model'
@@ -29,7 +30,7 @@ const locationQueryDivinersBySchema: Record<ProcessableQueries, QueryProcessor<L
 export class QueryQueue {
   protected queue: Record<string, QueueData> = {}
 
-  public enqueue(hash: string, response: LocationQueryCreationResponse) {
+  public enqueue(hash: string, response: LocationQueryCreationResponse, address: XyoAddress) {
     const schema = response.schema as LocationQuerySchema
     const queryProcessor = locationQueryDivinersBySchema[schema]
     if (!queryProcessor) {
@@ -44,7 +45,7 @@ export class QueryQueue {
     this.queue[hash] = { response }
 
     // Fire off task in background
-    void queryProcessor(response)
+    void queryProcessor(response, address)
       .then((result) => {
         this.queue[hash].result = result
       })
