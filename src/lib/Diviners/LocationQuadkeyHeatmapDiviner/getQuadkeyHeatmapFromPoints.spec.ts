@@ -44,6 +44,7 @@ describe('getQuadkeyHeatmapFromPoints', () => {
   it.each(testData)('calculates with known points', (data) => {
     const { coordinates } = data.input
     const locations = points<WithHashProperties>(coordinates, { hash: '' })
-    expect(getQuadkeyHeatmapFromPoints(locations)).toMatchSnapshot()
+    const heatmap = getQuadkeyHeatmapFromPoints(locations)
+    expect(heatmap).toMatchSnapshot()
   })
 })

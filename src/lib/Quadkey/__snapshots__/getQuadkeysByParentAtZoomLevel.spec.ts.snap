@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 1`] = `
+Object {
+  "0": Array [
+    "00",
+    "03",
+    "03",
+  ],
+}
+`;
+
+exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 2`] = `
+Object {
+  "10": Array [
+    "100",
+  ],
+  "12": Array [
+    "122",
+    "122",
+  ],
+}
+`;
+
+exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 3`] = `
+Object {
+  "200": Array [
+    "2000",
+  ],
+  "211": Array [
+    "2110",
+    "2111",
+  ],
+}
+`;
+
+exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 4`] = `
+Object {
+  "3000": Array [
+    "30000",
+    "30000",
+    "30000",
+  ],
+}
+`;
+
+exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 5`] = `
+Object {
+  "40000": Array [
+    "400000",
+    "400000",
+    "400000",
+  ],
+}
+`;

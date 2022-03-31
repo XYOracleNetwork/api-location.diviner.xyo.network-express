@@ -37,7 +37,7 @@ export const getQuadkeyHeatmapFromPoints = (
     // Calculate each point at max allowable zoom level
     .map<string>((p) => featureToQuadkey(p, maxAllowableZoom))
   // Rollup to a heatmap
-  const heatmap = rollup(quadkeys, MinZoom)
+  const heatmap = rollup(quadkeys, MinZoom + 1)
   const quadkeysByParent = getQuadkeysByParent(heatmap)
   return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((quadkey) => {
     return {
