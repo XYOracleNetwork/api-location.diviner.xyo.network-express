@@ -1,6 +1,10 @@
-import { LocationQueryCreationResponse, LocationQuerySchema } from '@xyo-network/sdk-xyo-client-js'
+import {
+  LocationQuadkeyHeatmapQuerySchema,
+  LocationQueryCreationResponse,
+  LocationQuerySchema,
+} from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationGeoJsonHeatmapQuerySchema, LocationQuadkeyHeatmapQuerySchema } from '../../model'
+import { LocationGeoJsonHeatmapQuerySchema } from '../../model'
 import {
   divineLocationHeatmapAnswer,
   divineLocationQuadkeyHeatmapAnswer,

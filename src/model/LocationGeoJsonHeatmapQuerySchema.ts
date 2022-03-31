@@ -1,18 +1,7 @@
 import { LocationWitnessPayloadSchema } from '@xyo-network/sdk-xyo-client-js'
 
-// TODO: Move to SDK
-export type LocationQuadkeyHeatmapQuerySchema = 'network.xyo.location.heatmap.quadkey.query'
-export const locationQuadkeyHeatmapQuerySchema: LocationQuadkeyHeatmapQuerySchema =
-  'network.xyo.location.heatmap.quadkey.query'
-export type LocationQuadkeyHeatmapAnswerSchema = 'network.xyo.location.heatmap.quadkey.answer'
-export const locationQuadkeyHeatmapAnswerSchema: LocationQuadkeyHeatmapAnswerSchema =
-  'network.xyo.location.heatmap.quadkey.answer'
-export type LocationQuadkeyHeatmapQuery = {
-  startTime?: string
-  stopTime?: string
-  schema: LocationWitnessPayloadSchema
-}
-
+// TODO: Retype default heatmap query to use this schema as it's more explicit
+// about the return format
 export type LocationGeoJsonHeatmapQuerySchema = 'network.xyo.location.heatmap.geojson.query'
 export const locationGeoJsonHeatmapQuerySchema: LocationGeoJsonHeatmapQuerySchema =
   'network.xyo.location.heatmap.geojson.query'

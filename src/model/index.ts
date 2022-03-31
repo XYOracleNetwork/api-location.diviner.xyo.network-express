@@ -1,6 +1,6 @@
 export * from './FeaturesInRange'
 export * from './LocationAnswerSchema'
-export * from './LocationQuadkeyHeatmapSchema'
+export * from './LocationGeoJsonHeatmapQuerySchema'
 export * from './SortDirection'
 export * from './SupportedLocationSchemas'
 export * from './TestData'

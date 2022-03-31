@@ -1,6 +1,7 @@
 import {
   locationHeatmapAnswerSchema,
   LocationHeatmapQueryCreationRequest,
+  locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
@@ -8,12 +9,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { Point } from 'geojson'
 
-import {
-  FeaturesInRange,
-  locationQuadkeyHeatmapAnswerSchema,
-  SupportedLocationWitnessPayloadSchemas,
-  WithHashProperties,
-} from '../../../model'
+import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
 import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../Converters'
 import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
 import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../WitnessQueries'

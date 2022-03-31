@@ -1,4 +1,5 @@
 import {
+  LocationQuadkeyHeatmapAnswerSchema,
   XyoAddress,
   XyoArchivistArchiveApi,
   XyoBoundWitnessBuilder,
@@ -6,7 +7,7 @@ import {
   XyoPayloadBuilder,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationAnswerSchema, LocationQuadkeyHeatmapAnswerSchema } from '../../model'
+import { LocationAnswerSchema } from '../../model'
 
 export const storePayload = async (
   payload: XyoPayload,
