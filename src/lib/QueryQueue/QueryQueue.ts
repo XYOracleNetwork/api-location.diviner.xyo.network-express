@@ -1,11 +1,6 @@
-import {
-  LocationQuadkeyHeatmapQuerySchema,
-  LocationQueryCreationResponse,
-  LocationQuerySchema,
-  XyoAddress,
-} from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, XyoAddress } from '@xyo-network/sdk-xyo-client-js'
 
-import { LocationGeoJsonHeatmapQuerySchema } from '../../model'
+import { LocationQuerySchema } from '../../model'
 import {
   divineLocationHeatmapAnswer,
   divineLocationQuadkeyHeatmapAnswer,
@@ -18,9 +13,7 @@ interface QueueData {
   result?: string
 }
 
-type ProcessableQueries = LocationQuerySchema | LocationQuadkeyHeatmapQuerySchema | LocationGeoJsonHeatmapQuerySchema
-
-const locationQueryDivinersBySchema: Record<ProcessableQueries, QueryProcessor<LocationQueryCreationResponse>> = {
+const locationQueryDivinersBySchema: Record<LocationQuerySchema, QueryProcessor<LocationQueryCreationResponse>> = {
   'network.xyo.location.heatmap.geojson.query': divineLocationHeatmapAnswer,
   'network.xyo.location.heatmap.quadkey.query': divineLocationQuadkeyHeatmapAnswer,
   'network.xyo.location.heatmap.query': divineLocationHeatmapAnswer,
