@@ -1,38 +1,15 @@
 import { FeatureCollection, Point } from 'geojson'
 
 import { MaxZoom, MinZoom, QuadkeyWithDensity, WithHashProperties } from '../../../model'
-import { featureToQuadkey, getParentQuadkey } from '../../Quadkey'
+import {
+  featureToQuadkey,
+  getQuadkeyAtZoomLevel,
+  getQuadkeysByParent,
+  getQuadkeysByParentAtZoomLevel,
+} from '../../Quadkey'
 
 const minDensity = 2
 const maxAllowableZoom = MaxZoom
-
-type QuadkeyHeatmapTilesByParent = Record<string, string[]>
-
-const getQuadkeysByParent = (heatmap: string[]): QuadkeyHeatmapTilesByParent => {
-  const quadkeysByParent = heatmap.reduce<QuadkeyHeatmapTilesByParent>((acc, curr) => {
-    const parent = getParentQuadkey(curr)
-    acc[parent] = acc[parent] || []
-    acc[parent].push(curr)
-    return acc
-  }, {})
-  return quadkeysByParent
-}
-
-// TODO: Rollup to zoom
-const getQuadkeysByParentAtZoomLevel = (heatmap: string[], zoom: number): QuadkeyHeatmapTilesByParent => {
-  const quadkeysByParent = heatmap.reduce<QuadkeyHeatmapTilesByParent>((acc, curr) => {
-    const quadkey = getQuadkeyAtZoomLevel(curr, zoom)
-    const parent = getParentQuadkey(quadkey)
-    acc[parent] = acc[parent] || []
-    acc[parent].push(quadkey)
-    return acc
-  }, {})
-  return quadkeysByParent
-}
-
-const getQuadkeyAtZoomLevel = (quadkey: string, zoom: number): string => {
-  return quadkey.substring(0, zoom).padEnd(zoom, '0')
-}
 
 // NOTE: Can we use numbers instead of strings for performance
 const rollup = (quadkeys: string[], zoom: number): string[] => {
