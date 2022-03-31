@@ -1,16 +1,10 @@
 import { FeatureCollection, Point } from 'geojson'
 
-import { MaxZoom, MinZoom, WithHashProperties } from '../../../model'
+import { MaxZoom, MinZoom, QuadkeyWithDensity, WithHashProperties } from '../../../model'
 import { featureToQuadkey, getParentQuadkey } from '../../Quadkey'
 
 const minDensity = 2
 const maxAllowableZoom = MaxZoom
-
-// TODO: Make SDK type
-export interface QuadkeyHeatmapTile {
-  quadkey: string
-  density: number
-}
 
 type QuadkeyHeatmapTilesByParent = Record<string, string[]>
 
@@ -61,14 +55,14 @@ const rollup = (quadkeys: string[], zoom: number): string[] => {
 
 export const getQuadkeyHeatmapFromPoints = (
   points: FeatureCollection<Point, WithHashProperties>
-): QuadkeyHeatmapTile[] => {
+): QuadkeyWithDensity[] => {
   const quadkeys = points.features
     // Calculate each point at max allowable zoom level
     .map<string>((p) => featureToQuadkey(p, maxAllowableZoom))
   // Rollup to a heatmap
   const heatmap = rollup(quadkeys, MinZoom)
   const quadkeysByParent = getQuadkeysByParent(heatmap)
-  return Object.keys(quadkeysByParent).map<QuadkeyHeatmapTile>((quadkey) => {
+  return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((quadkey) => {
     return {
       density: quadkeysByParent[quadkey].length,
       quadkey: quadkey,

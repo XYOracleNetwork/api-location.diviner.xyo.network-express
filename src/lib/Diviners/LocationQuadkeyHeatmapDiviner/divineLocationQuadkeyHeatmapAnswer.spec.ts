@@ -7,6 +7,7 @@ import {
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 
+import { QuadkeyWithDensity } from '../../../model'
 import {
   createQuery,
   getArchiveWithLocationsWitnessed,
@@ -16,7 +17,6 @@ import {
   getValidLocationRequest,
   pollUntilQueryComplete,
 } from '../../../test'
-import { QuadkeyHeatmapTile } from './getQuadkeyHeatmapFromPoints'
 
 const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
   expect(answerPayloads).toBeTruthy()
@@ -37,7 +37,7 @@ const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
 
-const validateQueryResponseShape = (queryResult: QuadkeyHeatmapTile[]) => {
+const validateQueryResponseShape = (queryResult: QuadkeyWithDensity[]) => {
   expect(queryResult).toBeTruthy()
   expect(Array.isArray(queryResult)).toBeTruthy()
   for (let i = 0; i < queryResult.length; i++) {
@@ -50,7 +50,7 @@ const validateQueryResponseShape = (queryResult: QuadkeyHeatmapTile[]) => {
 const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
-): Promise<QuadkeyHeatmapTile[]> => {
+): Promise<QuadkeyWithDensity[]> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)
   await pollUntilQueryComplete(queryCreationResponse)
@@ -63,7 +63,7 @@ const getQueryAnswer = async (
   const payload = answerPayloads.pop()?.pop()
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(locationQuadkeyHeatmapAnswerSchema)
-  const answer = payload?.result as QuadkeyHeatmapTile[]
+  const answer = payload?.result as QuadkeyWithDensity[]
   validateQueryResponseShape(answer)
   return answer
 }
