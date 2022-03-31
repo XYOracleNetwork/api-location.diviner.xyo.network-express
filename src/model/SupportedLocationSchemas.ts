@@ -1,14 +1,11 @@
 import {
+  CurrentLocationWitnessPayload,
+  CurrentLocationWitnessPayloadSchema,
+  currentLocationWitnessPayloadSchema,
   LocationWitnessPayload,
   LocationWitnessPayloadSchema,
   locationWitnessPayloadSchema,
 } from '@xyo-network/sdk-xyo-client-js'
-
-import {
-  CurrentLocationWitnessPayload,
-  CurrentLocationWitnessPayloadSchema,
-  currentLocationWitnessPayloadSchema,
-} from './CurrentLocationWitness'
 
 export const supportedLocationWitnessSchemas = [locationWitnessPayloadSchema, currentLocationWitnessPayloadSchema]
 export const supportedLocationWitnessSchemasMap: Record<SupportedLocationWitnessPayloadSchemas, true> = {

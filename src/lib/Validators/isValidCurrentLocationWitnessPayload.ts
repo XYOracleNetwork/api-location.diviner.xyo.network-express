@@ -1,4 +1,5 @@
-import { CurrentLocationWitnessPayload } from '../../model'
+import { CurrentLocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+
 import { PayloadValidator } from './PayloadValidator'
 
 export const isValidCurrentLocationWitnessPayload: PayloadValidator<CurrentLocationWitnessPayload> = (payload) => {

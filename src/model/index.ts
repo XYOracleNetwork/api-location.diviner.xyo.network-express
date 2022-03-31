@@ -1,4 +1,3 @@
-export * from './CurrentLocationWitness'
 export * from './FeaturesInRange'
 export * from './LocationAnswerSchema'
 export * from './LocationQuadkeyHeatmapSchema'
