@@ -1,5 +1,6 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
 import {
+  isSupportedLocationQuerySchema,
   LocationQueryCreationResponse,
   SupportedLocationQueryCreationRequest,
   XyoAddress,
@@ -20,6 +21,12 @@ const sourceArchiveConfigError = {
 
 const resultArchiveConfigError = {
   message: 'Invalid result archive config',
+  name: ReasonPhrases.BAD_REQUEST,
+  statusCode: StatusCodes.BAD_REQUEST,
+}
+
+const requestSchemaError = {
+  message: 'Invalid request schema',
   name: ReasonPhrases.BAD_REQUEST,
   statusCode: StatusCodes.BAD_REQUEST,
 }
@@ -47,7 +54,11 @@ const handler: RequestHandler<
   LocationQueryCreationResponse,
   SupportedLocationQueryCreationRequest
 > = async (req, res, next) => {
-  const { sourceArchivist, sourceArchive, resultArchivist, resultArchive, query } = req.body
+  const { sourceArchivist, sourceArchive, resultArchivist, resultArchive, query, schema } = req.body
+  if (!isSupportedLocationQuerySchema(schema)) {
+    next(requestSchemaError)
+    return
+  }
   if (!validateArchiveConfig(sourceArchivist, sourceArchive)) {
     next(sourceArchiveConfigError)
     return
