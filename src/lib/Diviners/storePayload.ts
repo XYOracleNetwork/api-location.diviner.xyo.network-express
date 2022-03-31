@@ -1,5 +1,4 @@
 import {
-  LocationQuadkeyHeatmapAnswerSchema,
   XyoAddress,
   XyoArchivistArchiveApi,
   XyoBoundWitnessBuilder,
@@ -24,7 +23,7 @@ export const storePayload = async (
 export const storeAnswer = (
   answer: unknown,
   api: XyoArchivistArchiveApi,
-  schema: LocationAnswerSchema | LocationQuadkeyHeatmapAnswerSchema,
+  schema: LocationAnswerSchema,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
   const payload = new XyoPayloadBuilder({ schema }).fields({ result: answer }).build()

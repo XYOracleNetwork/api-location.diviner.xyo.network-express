@@ -7,6 +7,7 @@ import {
   locationWitnessPayloadSchema,
 } from '@xyo-network/sdk-xyo-client-js'
 
+// TODO: Move to SDK
 export const supportedLocationWitnessSchemas = [locationWitnessPayloadSchema, currentLocationWitnessPayloadSchema]
 export const supportedLocationWitnessSchemasMap: Record<SupportedLocationWitnessPayloadSchemas, true> = {
   'co.coinapp.currentlocationwitness': true,
