@@ -11,7 +11,7 @@ import { LocationAnswerSchema } from '../../model'
 export const storePayload = async (
   payload: XyoPayload,
   api: XyoArchivistArchiveApi,
-  address: XyoAddress = XyoAddress.random()
+  address: XyoAddress
 ): Promise<string> => {
   const bw = new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
   const response = await api.block.post([bw])
@@ -24,7 +24,7 @@ export const storeAnswer = (
   answer: unknown,
   api: XyoArchivistArchiveApi,
   schema: LocationAnswerSchema,
-  address: XyoAddress = XyoAddress.random()
+  address: XyoAddress
 ): Promise<string> => {
   const payload = new XyoPayloadBuilder({ schema }).fields({ result: answer }).build()
   return storePayload(payload, api, address)
@@ -34,7 +34,7 @@ export const storeError = (
   error: string,
   api: XyoArchivistArchiveApi,
   schema: LocationAnswerSchema,
-  address: XyoAddress = XyoAddress.random()
+  address: XyoAddress
 ): Promise<string> => {
   try {
     const payload = new XyoPayloadBuilder({ schema }).fields({ error }).build()
