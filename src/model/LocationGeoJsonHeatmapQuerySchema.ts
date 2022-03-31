@@ -1,5 +1,6 @@
 import { LocationWitnessPayloadSchema } from '@xyo-network/sdk-xyo-client-js'
 
+// TODO: Move to SDK
 // TODO: Retype default heatmap query to use this schema as it's more explicit
 // about the return format
 export type LocationGeoJsonHeatmapQuerySchema = 'network.xyo.location.heatmap.geojson.query'
