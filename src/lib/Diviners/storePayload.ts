@@ -1,3 +1,4 @@
+import { assertEx } from '@xylabs/sdk-js'
 import {
   XyoAddress,
   XyoArchivistArchiveApi,
@@ -13,11 +14,11 @@ export const storePayload = async (
   api: XyoArchivistArchiveApi,
   address: XyoAddress = XyoAddress.random()
 ): Promise<string> => {
-  const resultWitness = new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
-  if (!resultWitness._hash) throw new Error('Error creating stored result')
-  const result = await api.block.post(resultWitness)
-  if (result?.length !== 1) throw new Error('Error creating stored result')
-  return resultWitness._hash
+  const bw = new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
+  const response = await api.block.post([bw])
+  const hash = response?.[0]?._hash
+  if (!hash) throw new Error('Error storing result')
+  return hash
 }
 
 export const storeAnswer = (

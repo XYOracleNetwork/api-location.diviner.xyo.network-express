@@ -168,7 +168,7 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp') => {
-  return await api.archive(archive).block.post(getNewLocationWitness())
+  return await api.archive(archive).block.post([getNewLocationWitness()])
 }
 
 export const createQuery = async (

@@ -25,6 +25,6 @@ export const createLocationQuery = async (request: LocationQueryCreationRequest)
   const payload = new XyoPayloadBuilder({ schema }).fields({ ...request }).build()
   const address = XyoAddress.random()
   const bw = new XyoBoundWitnessBuilder(boundWitnessBuilderConfig).witness(address).payload(payload).build()
-  const boundWitnesses = (await api.block.post(bw)) ?? {}
-  return boundWitnesses ? bw._hash : undefined
+  const response = await api.block.post([bw])
+  return response?.[0]?._hash
 }
