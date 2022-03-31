@@ -1,6 +1,4 @@
-import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
-
-import { CurrentLocationWitnessPayloadBody } from '../model'
+import { CurrentLocationWitnessPayloadBody, LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
 
 export const locationWitnessSample: LocationWitnessPayload = {
   _archive: 'temp',

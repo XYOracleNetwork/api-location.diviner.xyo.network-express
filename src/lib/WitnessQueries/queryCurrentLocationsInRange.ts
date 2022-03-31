@@ -1,6 +1,9 @@
-import { XyoArchivistArchiveApi } from '@xyo-network/sdk-xyo-client-js'
+import {
+  CurrentLocationWitnessPayload,
+  currentLocationWitnessPayloadSchema,
+  XyoArchivistArchiveApi,
+} from '@xyo-network/sdk-xyo-client-js'
 
-import { CurrentLocationWitnessPayload, currentLocationWitnessPayloadSchema } from '../../model'
 import { queryGenericLocationsInRange } from './queryGenericLocationsInRange'
 import { QueryLocationDataInRange } from './QueryLocationDataInRange'
 

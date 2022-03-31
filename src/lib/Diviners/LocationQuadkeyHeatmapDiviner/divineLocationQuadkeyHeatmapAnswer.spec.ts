@@ -1,12 +1,12 @@
 import {
   GetLocationQueryResponse,
+  locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   XyoArchivistApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 
-import { locationQuadkeyHeatmapAnswerSchema } from '../../../model'
 import {
   createQuery,
   getArchiveWithLocationsWitnessed,

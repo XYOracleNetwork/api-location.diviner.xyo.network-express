@@ -1,5 +1,7 @@
 import {
   locationHeatmapQuerySchema,
+  LocationQuadkeyHeatmapQuerySchema,
+  locationQuadkeyHeatmapQuerySchema,
   LocationQueryCreationRequest,
   LocationQueryCreationResponse,
   LocationQuerySchema,
@@ -20,11 +22,7 @@ import supertest, { SuperTest, Test } from 'supertest'
 import { v4 } from 'uuid'
 
 import { GetLocationQueryResponse } from '../location'
-import {
-  LocationGeoJsonHeatmapQuerySchema,
-  LocationQuadkeyHeatmapQuerySchema,
-  locationQuadkeyHeatmapQuerySchema,
-} from '../model'
+import { LocationGeoJsonHeatmapQuerySchema } from '../model'
 
 test('Must have ARCHIVIST_URL ENV VAR defined', () => {
   expect(process.env.ARCHIVIST_URL).toBeTruthy()
@@ -168,7 +166,7 @@ export const getNewLocationWitness = (): XyoBoundWitness => {
 }
 
 export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp') => {
-  return await api.archive(archive).block.post(getNewLocationWitness())
+  return await api.archive(archive).block.post([getNewLocationWitness()])
 }
 
 export const createQuery = async (

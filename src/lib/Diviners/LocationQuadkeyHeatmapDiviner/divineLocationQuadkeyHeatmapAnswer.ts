@@ -1,6 +1,7 @@
 import {
   locationHeatmapAnswerSchema,
   LocationHeatmapQueryCreationRequest,
+  locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationResponse,
   XyoAddress,
   XyoArchivistApi,
@@ -8,12 +9,7 @@ import {
 } from '@xyo-network/sdk-xyo-client-js'
 import { Point } from 'geojson'
 
-import {
-  FeaturesInRange,
-  locationQuadkeyHeatmapAnswerSchema,
-  SupportedLocationWitnessPayloadSchemas,
-  WithHashProperties,
-} from '../../../model'
+import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
 import { convertCurrentLocationWitnessForHeatmap, convertLocationWitnessForHeatmap } from '../../Converters'
 import { isValidCurrentLocationWitnessPayload, isValidLocationWitnessPayload } from '../../Validators'
 import { queryCurrentLocationsInRange, queryLocationsInRange } from '../../WitnessQueries'
@@ -51,7 +47,7 @@ const getLocationDataPointsBySchema: Record<
 
 export const divineLocationQuadkeyHeatmapAnswer = async (
   response: LocationQueryCreationResponse,
-  address: XyoAddress = XyoAddress.random()
+  address: XyoAddress
 ): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archive(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchivist).archive(response.resultArchive)
