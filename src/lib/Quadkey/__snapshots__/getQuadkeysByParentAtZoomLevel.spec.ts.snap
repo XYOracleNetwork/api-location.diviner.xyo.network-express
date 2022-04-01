@@ -2,54 +2,58 @@
 
 exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 1`] = `
 Object {
-  "0": Array [
-    "00",
-    "03",
-    "03",
+  "00": Array [
+    "000",
+  ],
+  "03": Array [
+    "0330",
+    "03330",
   ],
 }
 `;
 
 exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 2`] = `
 Object {
-  "10": Array [
-    "100",
+  "100": Array [
+    "1000",
   ],
-  "12": Array [
-    "122",
-    "122",
+  "122": Array [
+    "12200",
+    "122200",
   ],
 }
 `;
 
 exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 3`] = `
 Object {
-  "200": Array [
-    "2000",
+  "2000": Array [
+    "20000",
   ],
-  "211": Array [
-    "2110",
-    "2111",
+  "2110": Array [
+    "211000",
+  ],
+  "2111": Array [
+    "2111000",
   ],
 }
 `;
 
 exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 4`] = `
 Object {
-  "3000": Array [
-    "30000",
-    "30000",
-    "30000",
+  "30000": Array [
+    "300000",
+    "3000000",
+    "30000000",
   ],
 }
 `;
 
 exports[`getQuadkeysByParent converts the quadkey at the specified zoom level 5`] = `
 Object {
-  "40000": Array [
-    "400000",
-    "400000",
-    "400000",
+  "400000": Array [
+    "4000000",
+    "4000000",
+    "4000000",
   ],
 }
 `;
