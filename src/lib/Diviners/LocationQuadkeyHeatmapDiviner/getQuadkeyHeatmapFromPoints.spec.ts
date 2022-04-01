@@ -76,7 +76,9 @@ describe('getQuadkeyHeatmapFromPoints', () => {
       return [long, lat]
     })
     const locations = points<WithHashProperties>(coordinates, { hash: '' })
-    const heatmap = getQuadkeyHeatmapFromPoints(locations)
+    const heatmap = getQuadkeyHeatmapFromPoints(locations).sort((a, b) => {
+      return b.density - a.density
+    })
     expect(heatmap).toMatchSnapshot()
   })
 })
