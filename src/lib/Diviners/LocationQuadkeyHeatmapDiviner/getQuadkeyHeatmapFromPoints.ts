@@ -24,7 +24,7 @@ const rollup = (quadkeys: string[], zoom: Zoom): string[] => {
     // Recursive case
     const nextZoom = (zoom + 1) as Zoom
     // Group by tile and calculate density here
-    const quadkeysByParent = getQuadkeysByParentAtZoomLevel(quadkeys, nextZoom)
+    const quadkeysByParent = getQuadkeysByParentAtZoomLevel(quadkeys, zoom)
     return Object.keys(quadkeysByParent)
       .map((q) => rollup(quadkeysByParent[q], nextZoom))
       .flatMap((q) => q)
