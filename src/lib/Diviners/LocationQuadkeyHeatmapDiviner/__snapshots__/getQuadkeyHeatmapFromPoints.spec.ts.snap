@@ -29,3 +29,68 @@ Array [
   },
 ]
 `;
+
+exports[`getQuadkeyHeatmapFromPoints calculates with many points 1`] = `
+Array [
+  Object {
+    "density": 112,
+    "quadkey": "300000000000000000",
+  },
+  Object {
+    "density": 96,
+    "quadkey": "300300000000000000",
+  },
+  Object {
+    "density": 80,
+    "quadkey": "303000000000000000",
+  },
+  Object {
+    "density": 64,
+    "quadkey": "303122222222222222",
+  },
+  Object {
+    "density": 48,
+    "quadkey": "330000000000000000",
+  },
+  Object {
+    "density": 32,
+    "quadkey": "330300000000000000",
+  },
+  Object {
+    "density": 16,
+    "quadkey": "333000000000000000",
+  },
+  Object {
+    "density": 240,
+    "quadkey": "000000000000000000",
+  },
+  Object {
+    "density": 224,
+    "quadkey": "000122222222222222",
+  },
+  Object {
+    "density": 208,
+    "quadkey": "003000000000000000",
+  },
+  Object {
+    "density": 192,
+    "quadkey": "003300000000000000",
+  },
+  Object {
+    "density": 176,
+    "quadkey": "012222222222222222",
+  },
+  Object {
+    "density": 160,
+    "quadkey": "030300000000000000",
+  },
+  Object {
+    "density": 144,
+    "quadkey": "033000000000000000",
+  },
+  Object {
+    "density": 128,
+    "quadkey": "033300000000000000",
+  },
+]
+`;
