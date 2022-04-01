@@ -4,19 +4,19 @@ exports[`getQuadkeyHeatmapFromPoints calculates with known points 1`] = `
 Array [
   Object {
     "density": 1,
-    "quadkey": "0",
+    "quadkey": "13",
   },
   Object {
     "density": 1,
-    "quadkey": "1",
+    "quadkey": "21",
   },
   Object {
     "density": 1,
-    "quadkey": "2",
+    "quadkey": "31",
   },
   Object {
     "density": 1,
-    "quadkey": "3",
+    "quadkey": "03",
   },
 ]
 `;
@@ -25,7 +25,7 @@ exports[`getQuadkeyHeatmapFromPoints calculates with known points 2`] = `
 Array [
   Object {
     "density": 4,
-    "quadkey": "0000000000000000000",
+    "quadkey": "000000000000000000",
   },
 ]
 `;
