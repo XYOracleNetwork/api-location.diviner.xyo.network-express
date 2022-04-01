@@ -9,8 +9,8 @@ import {
 } from '../../Quadkey'
 
 const minLocationsPerTile = 3
-const minHeatmapZoom: Zoom = 3
-const maxHeatmapZoom: Zoom = 15
+const minHeatmapZoom: Zoom = 5
+const maxHeatmapZoom: Zoom = 10
 
 // NOTE: Can we use numbers instead of strings for performance
 const rollup = (quadkeys: string[], zoom: Zoom): string[] => {
