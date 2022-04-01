@@ -6,11 +6,13 @@ import {
   getQuadkeyAtZoomLevel,
   getQuadkeysByParent,
   getQuadkeysByParentAtZoomLevel,
+  getZoomLevel,
 } from '../../Quadkey'
 
 const minLocationsPerTile = 3
 const minHeatmapZoom: Zoom = 5
 const maxHeatmapZoom: Zoom = 10
+const densityMultiplier = 1 / (minLocationsPerTile * maxHeatmapZoom)
 
 // NOTE: Can we use numbers instead of strings for performance
 const rollup = (quadkeys: string[], zoom: Zoom): string[] => {
@@ -42,10 +44,11 @@ export const getQuadkeyHeatmapFromPoints = (
   const heatmap = rollup(quadkeys, minHeatmapZoom)
   const quadkeysByParent = getQuadkeysByParent(heatmap)
   return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((parent) => {
+    const parentZoom = getZoomLevel(parent)
     return {
-      // TODO: Normalize density to zoom level so that same number of points
+      // Normalize density to zoom level so that same number of points
       // at higher zoom is a higher density
-      density: quadkeysByParent[parent].length,
+      density: quadkeysByParent[parent].length * parentZoom * densityMultiplier,
       quadkey: parent,
     }
   })
