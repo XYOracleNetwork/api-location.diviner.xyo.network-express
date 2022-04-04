@@ -9,9 +9,9 @@ import {
   getZoomLevel,
 } from '../../Quadkey'
 
-const minLocationsPerTile = 3
-const minHeatmapZoom: Zoom = 5
-const maxHeatmapZoom: Zoom = 10
+const minLocationsPerTile = 2
+const minHeatmapZoom: Zoom = 9
+const maxHeatmapZoom: Zoom = 12
 const densityMultiplier = 1 / (minLocationsPerTile * maxHeatmapZoom)
 
 // NOTE: Can we use numbers instead of strings for performance
