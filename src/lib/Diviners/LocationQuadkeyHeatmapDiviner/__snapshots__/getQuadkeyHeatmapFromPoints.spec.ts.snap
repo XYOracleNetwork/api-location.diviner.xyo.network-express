@@ -3,20 +3,20 @@
 exports[`getQuadkeyHeatmapFromPoints calculates with known points 1`] = `
 Array [
   Object {
-    "density": 0.16666666666666666,
-    "quadkey": "13022",
+    "density": 0.375,
+    "quadkey": "130222000",
   },
   Object {
-    "density": 0.16666666666666666,
-    "quadkey": "21200",
+    "density": 0.375,
+    "quadkey": "212000222",
   },
   Object {
-    "density": 0.16666666666666666,
-    "quadkey": "31200",
+    "density": 0.375,
+    "quadkey": "312000222",
   },
   Object {
-    "density": 0.16666666666666666,
-    "quadkey": "03022",
+    "density": 0.375,
+    "quadkey": "030222000",
   },
 ]
 `;
@@ -24,8 +24,8 @@ Array [
 exports[`getQuadkeyHeatmapFromPoints calculates with known points 2`] = `
 Array [
   Object {
-    "density": 1.0666666666666667,
-    "quadkey": "00000000",
+    "density": 1.6666666666666665,
+    "quadkey": "0000000000",
   },
 ]
 `;
@@ -33,64 +33,64 @@ Array [
 exports[`getQuadkeyHeatmapFromPoints calculates with many points 1`] = `
 Array [
   Object {
-    "density": 64,
-    "quadkey": "00000000",
+    "density": 100,
+    "quadkey": "0000000000",
   },
   Object {
-    "density": 59.733333333333334,
-    "quadkey": "00012222",
+    "density": 93.33333333333333,
+    "quadkey": "0001222222",
   },
   Object {
-    "density": 55.46666666666667,
-    "quadkey": "00300000",
+    "density": 86.66666666666666,
+    "quadkey": "0030000000",
   },
   Object {
-    "density": 51.2,
-    "quadkey": "00330000",
+    "density": 80,
+    "quadkey": "0033000000",
   },
   Object {
-    "density": 46.93333333333333,
-    "quadkey": "01222222",
+    "density": 73.33333333333333,
+    "quadkey": "0122222222",
   },
   Object {
-    "density": 42.666666666666664,
-    "quadkey": "03030000",
+    "density": 66.66666666666666,
+    "quadkey": "0303000000",
   },
   Object {
-    "density": 38.4,
-    "quadkey": "03300000",
+    "density": 60,
+    "quadkey": "0330000000",
   },
   Object {
-    "density": 34.13333333333333,
-    "quadkey": "03330000",
+    "density": 53.33333333333333,
+    "quadkey": "0333000000",
   },
   Object {
-    "density": 29.866666666666667,
-    "quadkey": "30000000",
+    "density": 46.666666666666664,
+    "quadkey": "3000000000",
   },
   Object {
-    "density": 25.6,
-    "quadkey": "30030000",
+    "density": 40,
+    "quadkey": "3003000000",
   },
   Object {
-    "density": 21.333333333333332,
-    "quadkey": "30300000",
+    "density": 33.33333333333333,
+    "quadkey": "3030000000",
   },
   Object {
-    "density": 17.066666666666666,
-    "quadkey": "30312222",
+    "density": 26.666666666666664,
+    "quadkey": "3031222222",
   },
   Object {
-    "density": 12.8,
-    "quadkey": "33000000",
+    "density": 20,
+    "quadkey": "3300000000",
   },
   Object {
-    "density": 8.533333333333333,
-    "quadkey": "33030000",
+    "density": 13.333333333333332,
+    "quadkey": "3303000000",
   },
   Object {
-    "density": 4.266666666666667,
-    "quadkey": "33300000",
+    "density": 6.666666666666666,
+    "quadkey": "3330000000",
   },
 ]
 `;
