@@ -11,7 +11,7 @@ export const queryCurrentLocationsInRange: QueryLocationDataInRange<CurrentLocat
   api: XyoArchivistArchiveApi,
   startTime = 0,
   stopTime = Date.now(),
-  maxSupportedLocations = 20000
+  maxSupportedLocations = 2000000
 ) => {
   return queryGenericLocationsInRange(
     api,
