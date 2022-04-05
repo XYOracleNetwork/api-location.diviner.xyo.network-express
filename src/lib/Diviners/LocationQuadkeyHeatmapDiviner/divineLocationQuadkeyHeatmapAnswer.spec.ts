@@ -17,8 +17,11 @@ const validateQueryResult = (queryResult: QuadkeyWithDensity[]) => {
   expect(Array.isArray(queryResult)).toBeTruthy()
   for (let i = 0; i < queryResult.length; i++) {
     const point = queryResult[i]
-    expect(point.density).toBeTruthy()
-    expect(point.quadkey).toBeTruthy()
+    const { quadkey, density } = point
+    expect(density).toBeTruthy()
+    expect(density).toBeGreaterThanOrEqual(0)
+    expect(density).toBeLessThanOrEqual(1)
+    expect(quadkey).toBeTruthy()
   }
 }
 
