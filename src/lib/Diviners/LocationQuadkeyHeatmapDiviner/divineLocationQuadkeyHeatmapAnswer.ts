@@ -1,5 +1,4 @@
 import {
-  locationHeatmapAnswerSchema,
   LocationHeatmapQueryCreationRequest,
   locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationResponse,
@@ -63,6 +62,6 @@ export const divineLocationQuadkeyHeatmapAnswer = async (
     return await storeAnswer(answer, resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
-    return await storeError('Error calculating answer', resultArchive, locationHeatmapAnswerSchema, address)
+    return await storeError('Error calculating answer', resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
   }
 }

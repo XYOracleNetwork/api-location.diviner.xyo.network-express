@@ -1,12 +1,17 @@
-import { getParentQuadkey } from './getParentQuadkey'
+import { assertEx } from '@xylabs/sdk-js'
+
+import { MaxZoom, MinZoom, Zoom } from '../../model'
 import { getQuadkeyAtZoomLevel } from './getQuadkeyAtZoomLevel'
 
-export const getQuadkeysByParentAtZoomLevel = (heatmap: string[], zoom: number): Record<string, string[]> => {
+export const getQuadkeysByParentAtZoomLevel = (heatmap: string[], zoom: Zoom): Record<string, string[]> => {
+  assertEx(
+    zoom > MinZoom && zoom < MaxZoom,
+    `Zoom supplied to getQuadkeysByParentAtZoomLevel (${zoom}) outside valid range`
+  )
   const quadkeysByParent = heatmap.reduce<Record<string, string[]>>((acc, curr) => {
-    const quadkey = getQuadkeyAtZoomLevel(curr, zoom)
-    const parent = getParentQuadkey(quadkey)
+    const parent = getQuadkeyAtZoomLevel(curr, zoom)
     acc[parent] = acc[parent] || []
-    acc[parent].push(quadkey)
+    acc[parent].push(curr)
     return acc
   }, {})
   return quadkeysByParent

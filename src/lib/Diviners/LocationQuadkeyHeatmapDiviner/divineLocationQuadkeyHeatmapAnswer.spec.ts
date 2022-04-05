@@ -1,43 +1,19 @@
 import {
-  GetLocationQueryResponse,
   locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationRequest,
-  LocationQueryCreationResponse,
   XyoArchivistApi,
-  XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { QuadkeyWithDensity } from '../../../model'
 import {
-  createQuery,
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getQuery,
   getTokenForNewUser,
   getValidLocationRequest,
-  pollUntilQueryComplete,
+  validateQueryAnswer,
 } from '../../../test'
 
-const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
-  expect(answerPayloads).toBeTruthy()
-  expect(answerPayloads.length).toBeGreaterThan(0)
-  expect(answerPayloads[0].length).toBeGreaterThan(0)
-}
-
-const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
-  expect(queryCreationResponse?.hash).not.toBeNull()
-}
-
-const validateQueryAnswerResponse = (
-  queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationQueryCreationResponse
-) => {
-  expect(queryAnswerResponse).toBeTruthy()
-  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
-  expect(queryAnswerResponse.answerHash).toBeTruthy()
-}
-
-const validateQueryResponseShape = (queryResult: QuadkeyWithDensity[]) => {
+const validateQueryResult = (queryResult: QuadkeyWithDensity[]) => {
   expect(queryResult).toBeTruthy()
   expect(Array.isArray(queryResult)).toBeTruthy()
   for (let i = 0; i < queryResult.length; i++) {
@@ -51,20 +27,12 @@ const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
 ): Promise<QuadkeyWithDensity[]> => {
-  const queryCreationResponse = await createQuery(queryCreationRequest)
-  validateQueryCreationResponse(queryCreationResponse)
-  await pollUntilQueryComplete(queryCreationResponse)
-  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
-  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api
-    .archive(queryCreationRequest.resultArchive)
-    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
-  validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads.pop()?.pop()
-  expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationQuadkeyHeatmapAnswerSchema)
-  const answer = payload?.result as QuadkeyWithDensity[]
-  validateQueryResponseShape(answer)
+  const answer = await validateQueryAnswer<QuadkeyWithDensity[]>(
+    api,
+    queryCreationRequest,
+    locationQuadkeyHeatmapAnswerSchema
+  )
+  validateQueryResult(answer)
   return answer
 }
 
@@ -72,11 +40,8 @@ describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const api = getArchivist()
   let stopTime = ''
-  let token = ''
   let archive = ''
   beforeAll(async () => {
-    token = await getTokenForNewUser()
-    expect(token).toBeTruthy()
     archive = await getArchiveWithLocationsWitnessed()
     stopTime = new Date().toISOString()
   })

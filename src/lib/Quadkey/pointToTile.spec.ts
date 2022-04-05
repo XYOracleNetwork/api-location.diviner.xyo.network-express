@@ -1,12 +1,12 @@
 import { point } from '@turf/turf'
 import { Point } from 'geojson'
 
-import { TestData } from '../../model'
+import { TestData, Zoom } from '../../model'
 import { pointToTile } from './pointToTile'
 
 interface PointZoom {
   point: Point
-  zoom: number
+  zoom: Zoom
 }
 interface PointToTileTestData extends TestData<PointZoom, number[]> {
   input: PointZoom

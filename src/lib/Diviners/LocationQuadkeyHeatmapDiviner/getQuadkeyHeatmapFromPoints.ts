@@ -1,29 +1,33 @@
 import { FeatureCollection, Point } from 'geojson'
 
-import { MaxZoom, MinZoom, QuadkeyWithDensity, WithHashProperties } from '../../../model'
+import { QuadkeyWithDensity, WithHashProperties, Zoom } from '../../../model'
 import {
   featureToQuadkey,
   getQuadkeyAtZoomLevel,
   getQuadkeysByParent,
   getQuadkeysByParentAtZoomLevel,
+  getZoomLevel,
 } from '../../Quadkey'
 
-const minDensity = 2
-const maxAllowableZoom = MaxZoom
+const minLocationsPerTile = 2
+const minHeatmapZoom: Zoom = 9
+const maxHeatmapZoom: Zoom = 12
+const densityMultiplier = 1 / (minLocationsPerTile * maxHeatmapZoom)
 
 // NOTE: Can we use numbers instead of strings for performance
-const rollup = (quadkeys: string[], zoom: number): string[] => {
-  const density = quadkeys.length
-  if (zoom >= maxAllowableZoom || density < minDensity) {
+const rollup = (quadkeys: string[], zoom: Zoom): string[] => {
+  const locations = quadkeys.length
+  if (zoom >= maxHeatmapZoom - 1 || locations < minLocationsPerTile) {
     // Base case, stop recursing
     // Convert keys to this zoom level (this is lossy and
     // that's what we want)
     return quadkeys.map((q) => getQuadkeyAtZoomLevel(q, zoom))
   } else {
     // Recursive case
-    const nextZoom = zoom + 1
-    // Group by tile and calculate density here
-    const quadkeysByParent = getQuadkeysByParentAtZoomLevel(quadkeys, nextZoom)
+    const nextZoom = (zoom + 1) as Zoom
+    // Group by parent tile
+    const quadkeysByParent = getQuadkeysByParentAtZoomLevel(quadkeys, zoom)
+    // Rollup all the quadkeys at the next zoom level
     return Object.keys(quadkeysByParent)
       .map((q) => rollup(quadkeysByParent[q], nextZoom))
       .flatMap((q) => q)
@@ -35,14 +39,17 @@ export const getQuadkeyHeatmapFromPoints = (
 ): QuadkeyWithDensity[] => {
   const quadkeys = points.features
     // Calculate each point at max allowable zoom level
-    .map<string>((p) => featureToQuadkey(p, maxAllowableZoom))
-  // Rollup to a heatmap
-  const heatmap = rollup(quadkeys, MinZoom)
+    .map<string>((p) => featureToQuadkey(p, maxHeatmapZoom))
+  // Rollup quadkeys to an array starting at the minium zoom
+  const heatmap = rollup(quadkeys, minHeatmapZoom)
   const quadkeysByParent = getQuadkeysByParent(heatmap)
-  return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((quadkey) => {
+  return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((parent) => {
+    const parentZoom = getZoomLevel(parent)
     return {
-      density: quadkeysByParent[quadkey].length,
-      quadkey: quadkey,
+      // Normalize density to zoom level so that same number of points
+      // at higher zoom is a higher density
+      density: quadkeysByParent[parent].length * parentZoom * densityMultiplier,
+      quadkey: parent,
     }
   })
 }

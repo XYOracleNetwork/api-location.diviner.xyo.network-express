@@ -3,20 +3,20 @@
 exports[`getQuadkeyHeatmapFromPoints calculates with known points 1`] = `
 Array [
   Object {
-    "density": 1,
-    "quadkey": "0",
+    "density": 0.375,
+    "quadkey": "130222000",
   },
   Object {
-    "density": 1,
-    "quadkey": "1",
+    "density": 0.375,
+    "quadkey": "212000222",
   },
   Object {
-    "density": 1,
-    "quadkey": "2",
+    "density": 0.375,
+    "quadkey": "312000222",
   },
   Object {
-    "density": 1,
-    "quadkey": "3",
+    "density": 0.375,
+    "quadkey": "030222000",
   },
 ]
 `;
@@ -24,8 +24,73 @@ Array [
 exports[`getQuadkeyHeatmapFromPoints calculates with known points 2`] = `
 Array [
   Object {
-    "density": 4,
-    "quadkey": "0000000000000000000",
+    "density": 1.6666666666666665,
+    "quadkey": "0000000000",
+  },
+]
+`;
+
+exports[`getQuadkeyHeatmapFromPoints calculates with many points 1`] = `
+Array [
+  Object {
+    "density": 100,
+    "quadkey": "0000000000",
+  },
+  Object {
+    "density": 93.33333333333333,
+    "quadkey": "0001222222",
+  },
+  Object {
+    "density": 86.66666666666666,
+    "quadkey": "0030000000",
+  },
+  Object {
+    "density": 80,
+    "quadkey": "0033000000",
+  },
+  Object {
+    "density": 73.33333333333333,
+    "quadkey": "0122222222",
+  },
+  Object {
+    "density": 66.66666666666666,
+    "quadkey": "0303000000",
+  },
+  Object {
+    "density": 60,
+    "quadkey": "0330000000",
+  },
+  Object {
+    "density": 53.33333333333333,
+    "quadkey": "0333000000",
+  },
+  Object {
+    "density": 46.666666666666664,
+    "quadkey": "3000000000",
+  },
+  Object {
+    "density": 40,
+    "quadkey": "3003000000",
+  },
+  Object {
+    "density": 33.33333333333333,
+    "quadkey": "3030000000",
+  },
+  Object {
+    "density": 26.666666666666664,
+    "quadkey": "3031222222",
+  },
+  Object {
+    "density": 20,
+    "quadkey": "3300000000",
+  },
+  Object {
+    "density": 13.333333333333332,
+    "quadkey": "3303000000",
+  },
+  Object {
+    "density": 6.666666666666666,
+    "quadkey": "3330000000",
   },
 ]
 `;
