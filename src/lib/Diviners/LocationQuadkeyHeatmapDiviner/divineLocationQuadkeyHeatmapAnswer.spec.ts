@@ -8,7 +8,6 @@ import { QuadkeyWithDensity } from '../../../model'
 import {
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getTokenForNewUser,
   getValidLocationRequest,
   validateQueryAnswer,
 } from '../../../test'

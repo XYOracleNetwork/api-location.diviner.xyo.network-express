@@ -215,10 +215,11 @@ export const pollUntilQueryComplete = async (
   }
 }
 
-export const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
+export const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[][]>) => {
   expect(answerPayloads).toBeTruthy()
   expect(answerPayloads?.length).toBeGreaterThan(0)
   expect(answerPayloads?.[0].length).toBeGreaterThan(0)
+  expect(answerPayloads?.[0]?.[0]).toBeTruthy()
 }
 
 export const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
@@ -249,10 +250,9 @@ export const validateQueryAnswer = async <T>(
     .block.payloads(queryAnswerResponse.answerHash || '')
     .get()
   validateQueryAnswerPayloads(answerPayloads)
-  // TODO: Remove once SDK types are updated
-  const payload = (answerPayloads?.[0] as any)?.[0]
+  const payload = answerPayloads?.[0]?.[0]
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(expectedSchema)
-  const answer = payload?.result as T
-  return answer
+  expect(payload?.result).toBeTruthy()
+  return payload?.result as T
 }
