@@ -11,10 +11,10 @@ import {
   XyoAddress,
   XyoArchive,
   XyoArchivistApi,
-  XyoAuthApi,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
   XyoPayloadBuilder,
+  XyoWalletApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
@@ -60,8 +60,8 @@ export const getArchivist = (token?: string): XyoArchivistApi => {
   return token ? new XyoArchivistApi({ apiDomain, jwtToken: token }) : new XyoArchivistApi({ apiDomain })
 }
 
-export const getAuth = (): XyoAuthApi => {
-  return getArchivist().user
+export const getAuth = (user: TestWeb3User): XyoWalletApi => {
+  return getArchivist().wallet(user.address.substring(2))
 }
 
 export const getNewWeb3User = (): TestWeb3User => {
@@ -71,12 +71,15 @@ export const getNewWeb3User = (): TestWeb3User => {
 }
 
 export const signInWeb3User = async (user: TestWeb3User): Promise<string> => {
-  const authApi = getAuth()
-  const challengeResponse = await authApi.walletChallenge(user.address)
+  const authApi = getAuth(user)
+  const challengeResponse = await authApi.challenge.post()
+  if (!challengeResponse?.state) throw new Error('Challenge not received')
   const message = challengeResponse.state
   const wallet = new Wallet(user.privateKey)
   const signature = await wallet.signMessage(message)
-  const tokenResponse = await authApi.walletVerify(user.address, message, signature)
+  const data = { message, signature }
+  const tokenResponse = await authApi.verify.post(data)
+  if (!tokenResponse?.token) throw new Error('Token not received')
   return tokenResponse.token
 }
 
