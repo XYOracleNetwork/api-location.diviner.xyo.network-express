@@ -233,3 +233,26 @@ export const validateQueryAnswerResponse = (
   expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
   expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
+
+export const validateQueryAnswer = async <T>(
+  api: XyoArchivistApi,
+  queryCreationRequest: LocationQueryCreationRequest,
+  expectedSchema: string // TODO: Strongly type response schema in SDK
+): Promise<T> => {
+  const queryCreationResponse = await createQuery(queryCreationRequest)
+  validateQueryCreationResponse(queryCreationResponse)
+  await pollUntilQueryComplete(queryCreationResponse)
+  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
+  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
+  const answerPayloads = await api
+    .archive(queryCreationRequest.resultArchive)
+    .block.payloads(queryAnswerResponse.answerHash || '')
+    .get()
+  validateQueryAnswerPayloads(answerPayloads)
+  // TODO: Remove once SDK types are updated
+  const payload = (answerPayloads?.[0] as any)?.[0]
+  expect(payload).toBeTruthy()
+  expect(payload?.schema).toBe(expectedSchema)
+  const answer = payload?.result as T
+  return answer
+}

@@ -6,19 +6,14 @@ import {
 
 import { QuadkeyWithDensity } from '../../../model'
 import {
-  createQuery,
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getQuery,
   getTokenForNewUser,
   getValidLocationRequest,
-  pollUntilQueryComplete,
-  validateQueryAnswerPayloads,
-  validateQueryAnswerResponse,
-  validateQueryCreationResponse,
+  validateQueryAnswer,
 } from '../../../test'
 
-const validateQueryResponseShape = (queryResult: QuadkeyWithDensity[]) => {
+const validateQueryResult = (queryResult: QuadkeyWithDensity[]) => {
   expect(queryResult).toBeTruthy()
   expect(Array.isArray(queryResult)).toBeTruthy()
   for (let i = 0; i < queryResult.length; i++) {
@@ -32,21 +27,12 @@ const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
 ): Promise<QuadkeyWithDensity[]> => {
-  const queryCreationResponse = await createQuery(queryCreationRequest)
-  validateQueryCreationResponse(queryCreationResponse)
-  await pollUntilQueryComplete(queryCreationResponse)
-  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
-  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api
-    .archive(queryCreationRequest.resultArchive)
-    .block.payloads(queryAnswerResponse.answerHash || '')
-    .get()
-  validateQueryAnswerPayloads(answerPayloads)
-  const payload = (answerPayloads?.[0] as any)?.[0]
-  expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationQuadkeyHeatmapAnswerSchema)
-  const answer = payload?.result as QuadkeyWithDensity[]
-  validateQueryResponseShape(answer)
+  const answer = await validateQueryAnswer<QuadkeyWithDensity[]>(
+    api,
+    queryCreationRequest,
+    locationQuadkeyHeatmapAnswerSchema
+  )
+  validateQueryResult(answer)
   return answer
 }
 

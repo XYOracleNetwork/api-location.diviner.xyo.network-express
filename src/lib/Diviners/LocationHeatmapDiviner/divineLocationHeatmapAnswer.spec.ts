@@ -7,19 +7,14 @@ import {
 import { FeatureCollection, Point } from 'geojson'
 
 import {
-  createQuery,
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getQuery,
   getTokenForNewUser,
   getValidLocationHeatmapRequest,
-  pollUntilQueryComplete,
-  validateQueryAnswerPayloads,
-  validateQueryAnswerResponse,
-  validateQueryCreationResponse,
+  validateQueryAnswer,
 } from '../../../test'
 
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationHeatmapPointProperties>) => {
+const validateQueryResult = (queryResult: FeatureCollection<Point, LocationHeatmapPointProperties>) => {
   expect(queryResult).toBeTruthy()
   expect(queryResult?.type).toBe('FeatureCollection')
   expect(queryResult?.features).toBeTruthy()
@@ -30,21 +25,12 @@ const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
 ): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
-  const queryCreationResponse = await createQuery(queryCreationRequest)
-  validateQueryCreationResponse(queryCreationResponse)
-  await pollUntilQueryComplete(queryCreationResponse)
-  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
-  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api
-    .archive(queryCreationRequest.resultArchive)
-    .block.payloads(queryAnswerResponse.answerHash || '')
-    .get()
-  validateQueryAnswerPayloads(answerPayloads)
-  const payload = (answerPayloads?.[0] as any)?.[0]
-  expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationHeatmapAnswerSchema)
-  const answer = payload?.result as FeatureCollection<Point, LocationHeatmapPointProperties>
-  validateGeoJsonFeatureCollection(answer)
+  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationHeatmapPointProperties>>(
+    api,
+    queryCreationRequest,
+    locationHeatmapAnswerSchema
+  )
+  validateQueryResult(answer)
   return answer
 }
 
