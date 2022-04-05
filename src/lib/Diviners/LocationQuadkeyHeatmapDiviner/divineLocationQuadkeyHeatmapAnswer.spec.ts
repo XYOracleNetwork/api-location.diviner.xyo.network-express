@@ -1,11 +1,7 @@
 import {
-  GetLocationQueryResponse,
   locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationRequest,
-  LocationQueryCreationResponse,
-  XyoApiResponseBody,
   XyoArchivistApi,
-  XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 
 import { QuadkeyWithDensity } from '../../../model'
@@ -17,26 +13,10 @@ import {
   getTokenForNewUser,
   getValidLocationRequest,
   pollUntilQueryComplete,
+  validateQueryAnswerPayloads,
+  validateQueryAnswerResponse,
+  validateQueryCreationResponse,
 } from '../../../test'
-
-const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
-  expect(answerPayloads).toBeTruthy()
-  expect(answerPayloads?.length).toBeGreaterThan(0)
-  expect(answerPayloads?.[0].length).toBeGreaterThan(0)
-}
-
-const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
-  expect(queryCreationResponse?.hash).not.toBeNull()
-}
-
-const validateQueryAnswerResponse = (
-  queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationQueryCreationResponse
-) => {
-  expect(queryAnswerResponse).toBeTruthy()
-  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
-  expect(queryAnswerResponse.answerHash).toBeTruthy()
-}
 
 const validateQueryResponseShape = (queryResult: QuadkeyWithDensity[]) => {
   expect(queryResult).toBeTruthy()

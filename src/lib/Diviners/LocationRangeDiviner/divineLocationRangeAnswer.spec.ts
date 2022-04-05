@@ -1,12 +1,8 @@
 import {
-  GetLocationQueryResponse,
   LocationQueryCreationRequest,
-  LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
   LocationTimeRangePointProperties,
-  XyoApiResponseBody,
   XyoArchivistApi,
-  XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
@@ -17,26 +13,10 @@ import {
   getQuery,
   getValidLocationRangeRequest,
   pollUntilQueryComplete,
+  validateQueryAnswerPayloads,
+  validateQueryAnswerResponse,
+  validateQueryCreationResponse,
 } from '../../../test'
-
-const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
-  expect(answerPayloads).toBeTruthy()
-  expect(answerPayloads?.length).toBeGreaterThan(0)
-  expect(answerPayloads?.[0].length).toBeGreaterThan(0)
-}
-
-const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
-  expect(queryCreationResponse?.hash).not.toBeNull()
-}
-
-const validateQueryAnswerResponse = (
-  queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationQueryCreationResponse
-) => {
-  expect(queryAnswerResponse).toBeTruthy()
-  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
-  expect(queryAnswerResponse.answerHash).toBeTruthy()
-}
 
 const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationTimeRangePointProperties>) => {
   expect(queryResult).toBeTruthy()

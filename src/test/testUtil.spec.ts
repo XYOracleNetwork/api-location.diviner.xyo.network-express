@@ -9,10 +9,12 @@ import {
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
   XyoAddress,
+  XyoApiResponseBody,
   XyoArchive,
   XyoArchivistApi,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
+  XyoPayload,
   XyoPayloadBuilder,
   XyoWalletApi,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -211,4 +213,23 @@ export const pollUntilQueryComplete = async (
     await delay(pollInterval)
     if ((await getQuery(queryCreationResponse.hash)).answerHash) break
   }
+}
+
+export const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
+  expect(answerPayloads).toBeTruthy()
+  expect(answerPayloads?.length).toBeGreaterThan(0)
+  expect(answerPayloads?.[0].length).toBeGreaterThan(0)
+}
+
+export const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
+  expect(queryCreationResponse?.hash).not.toBeNull()
+}
+
+export const validateQueryAnswerResponse = (
+  queryAnswerResponse: GetLocationQueryResponse,
+  queryCreationResponse: LocationQueryCreationResponse
+) => {
+  expect(queryAnswerResponse).toBeTruthy()
+  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
+  expect(queryAnswerResponse.answerHash).toBeTruthy()
 }
