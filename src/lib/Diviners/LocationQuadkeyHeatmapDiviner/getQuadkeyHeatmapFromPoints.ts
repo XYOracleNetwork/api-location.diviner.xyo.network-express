@@ -43,7 +43,7 @@ export const getQuadkeyHeatmapFromPoints = (
   // Rollup quadkeys to an array starting at the minium zoom
   const heatmap = rollup(quadkeys, minHeatmapZoom)
   const quadkeysByParent = getQuadkeysByParent(heatmap)
-  return Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((parent) => {
+  const quadkeysWithDensity = Object.keys(quadkeysByParent).map<QuadkeyWithDensity>((parent) => {
     const parentZoom = getZoomLevel(parent)
     return {
       // Normalize density to zoom level so that same number of points
@@ -52,4 +52,12 @@ export const getQuadkeyHeatmapFromPoints = (
       quadkey: parent,
     }
   })
+  const maxCount = Math.max(...quadkeysWithDensity.map((q) => q.density))
+  const quadkeysWithNormalizedDensity = quadkeysWithDensity.map((q) => {
+    return {
+      density: q.density / maxCount,
+      quadkey: q.quadkey,
+    }
+  })
+  return quadkeysWithNormalizedDensity
 }
