@@ -38,11 +38,8 @@ describe('Round trip tests', () => {
   const startTime = new Date().toISOString()
   const api = getArchivist()
   let stopTime = ''
-  let token = ''
   let archive = ''
   beforeAll(async () => {
-    token = await getTokenForNewUser()
-    expect(token).toBeTruthy()
     archive = await getArchiveWithLocationsWitnessed()
     stopTime = new Date().toISOString()
   })

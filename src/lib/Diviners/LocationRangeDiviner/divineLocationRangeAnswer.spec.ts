@@ -40,7 +40,7 @@ describe('Round trip tests', () => {
   let stopTime = ''
   let archive = ''
   beforeAll(async () => {
-    archive = await getArchiveWithLocationsWitnessed()
+    archive = await getArchiveWithLocationsWitnessed(locationsToWitness)
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
