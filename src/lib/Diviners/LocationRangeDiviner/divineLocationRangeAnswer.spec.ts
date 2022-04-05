@@ -4,6 +4,7 @@ import {
   LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
   LocationTimeRangePointProperties,
+  XyoApiResponseBody,
   XyoArchivistApi,
   XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -18,10 +19,10 @@ import {
   pollUntilQueryComplete,
 } from '../../../test'
 
-const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
+const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
   expect(answerPayloads).toBeTruthy()
-  expect(answerPayloads.length).toBeGreaterThan(0)
-  expect(answerPayloads[0].length).toBeGreaterThan(0)
+  expect(answerPayloads?.length).toBeGreaterThan(0)
+  expect(answerPayloads?.[0].length).toBeGreaterThan(0)
 }
 
 const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
@@ -55,9 +56,10 @@ const getQueryAnswer = async (
   validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
   const answerPayloads = await api
     .archive(queryCreationRequest.resultArchive)
-    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
+    .block.payloads(queryAnswerResponse.answerHash || '')
+    .get()
   validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads.pop()?.pop()
+  const payload = (answerPayloads?.[0] as any)?.[0]
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(locationTimeRangeAnswerSchema)
   const answer = payload?.result as FeatureCollection<Point, LocationTimeRangePointProperties>
