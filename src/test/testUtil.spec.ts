@@ -9,12 +9,14 @@ import {
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
   XyoAddress,
+  XyoApiResponseBody,
   XyoArchive,
   XyoArchivistApi,
-  XyoAuthApi,
   XyoBoundWitness,
   XyoBoundWitnessBuilder,
+  XyoPayload,
   XyoPayloadBuilder,
+  XyoWalletApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
@@ -60,8 +62,8 @@ export const getArchivist = (token?: string): XyoArchivistApi => {
   return token ? new XyoArchivistApi({ apiDomain, jwtToken: token }) : new XyoArchivistApi({ apiDomain })
 }
 
-export const getAuth = (): XyoAuthApi => {
-  return getArchivist().user
+export const getAuth = (user: TestWeb3User): XyoWalletApi => {
+  return getArchivist().wallet(user.address.substring(2))
 }
 
 export const getNewWeb3User = (): TestWeb3User => {
@@ -71,12 +73,15 @@ export const getNewWeb3User = (): TestWeb3User => {
 }
 
 export const signInWeb3User = async (user: TestWeb3User): Promise<string> => {
-  const authApi = getAuth()
-  const challengeResponse = await authApi.walletChallenge(user.address)
+  const authApi = getAuth(user)
+  const challengeResponse = await authApi.challenge.post()
+  if (!challengeResponse?.state) throw new Error('Challenge not received')
   const message = challengeResponse.state
   const wallet = new Wallet(user.privateKey)
   const signature = await wallet.signMessage(message)
-  const tokenResponse = await authApi.walletVerify(user.address, message, signature)
+  const data = { message, signature }
+  const tokenResponse = await authApi.verify.post(data)
+  if (!tokenResponse?.token) throw new Error('Token not received')
   return tokenResponse.token
 }
 
@@ -208,4 +213,46 @@ export const pollUntilQueryComplete = async (
     await delay(pollInterval)
     if ((await getQuery(queryCreationResponse.hash)).answerHash) break
   }
+}
+
+export const validateQueryAnswerPayloads = (answerPayloads: XyoApiResponseBody<XyoPayload[]>) => {
+  expect(answerPayloads).toBeTruthy()
+  expect(answerPayloads?.length).toBeGreaterThan(0)
+  expect(answerPayloads?.[0].length).toBeGreaterThan(0)
+}
+
+export const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
+  expect(queryCreationResponse?.hash).not.toBeNull()
+}
+
+export const validateQueryAnswerResponse = (
+  queryAnswerResponse: GetLocationQueryResponse,
+  queryCreationResponse: LocationQueryCreationResponse
+) => {
+  expect(queryAnswerResponse).toBeTruthy()
+  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
+  expect(queryAnswerResponse.answerHash).toBeTruthy()
+}
+
+export const validateQueryAnswer = async <T>(
+  api: XyoArchivistApi,
+  queryCreationRequest: LocationQueryCreationRequest,
+  expectedSchema: string // TODO: Strongly type response schema in SDK
+): Promise<T> => {
+  const queryCreationResponse = await createQuery(queryCreationRequest)
+  validateQueryCreationResponse(queryCreationResponse)
+  await pollUntilQueryComplete(queryCreationResponse)
+  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
+  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
+  const answerPayloads = await api
+    .archive(queryCreationRequest.resultArchive)
+    .block.payloads(queryAnswerResponse.answerHash || '')
+    .get()
+  validateQueryAnswerPayloads(answerPayloads)
+  // TODO: Remove once SDK types are updated
+  const payload = (answerPayloads?.[0] as any)?.[0]
+  expect(payload).toBeTruthy()
+  expect(payload?.schema).toBe(expectedSchema)
+  const answer = payload?.result as T
+  return answer
 }

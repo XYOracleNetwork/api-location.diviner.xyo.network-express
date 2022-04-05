@@ -1,43 +1,19 @@
 import {
-  GetLocationQueryResponse,
   LocationQueryCreationRequest,
-  LocationQueryCreationResponse,
   locationTimeRangeAnswerSchema,
   LocationTimeRangePointProperties,
   XyoArchivistApi,
-  XyoPayload,
 } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
 import {
-  createQuery,
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getQuery,
   getValidLocationRangeRequest,
-  pollUntilQueryComplete,
+  validateQueryAnswer,
 } from '../../../test'
 
-const validateQueryAnswerPayloads = (answerPayloads: XyoPayload[][]) => {
-  expect(answerPayloads).toBeTruthy()
-  expect(answerPayloads.length).toBeGreaterThan(0)
-  expect(answerPayloads[0].length).toBeGreaterThan(0)
-}
-
-const validateQueryCreationResponse = (queryCreationResponse: LocationQueryCreationResponse) => {
-  expect(queryCreationResponse?.hash).not.toBeNull()
-}
-
-const validateQueryAnswerResponse = (
-  queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationQueryCreationResponse
-) => {
-  expect(queryAnswerResponse).toBeTruthy()
-  expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
-  expect(queryAnswerResponse.answerHash).toBeTruthy()
-}
-
-const validateGeoJsonFeatureCollection = (queryResult: FeatureCollection<Point, LocationTimeRangePointProperties>) => {
+const validateQueryResult = (queryResult: FeatureCollection<Point, LocationTimeRangePointProperties>) => {
   expect(queryResult).toBeTruthy()
   expect(queryResult?.type).toBe('FeatureCollection')
   expect(queryResult?.features).toBeTruthy()
@@ -48,20 +24,12 @@ const getQueryAnswer = async (
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest
 ): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
-  const queryCreationResponse = await createQuery(queryCreationRequest)
-  validateQueryCreationResponse(queryCreationResponse)
-  await pollUntilQueryComplete(queryCreationResponse)
-  const queryAnswerResponse = await getQuery(queryCreationResponse.hash)
-  validateQueryAnswerResponse(queryAnswerResponse, queryCreationResponse)
-  const answerPayloads = await api
-    .archive(queryCreationRequest.resultArchive)
-    .block.getPayloadsByHash(queryAnswerResponse.answerHash || '')
-  validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads.pop()?.pop()
-  expect(payload).toBeTruthy()
-  expect(payload?.schema).toBe(locationTimeRangeAnswerSchema)
-  const answer = payload?.result as FeatureCollection<Point, LocationTimeRangePointProperties>
-  validateGeoJsonFeatureCollection(answer)
+  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationTimeRangePointProperties>>(
+    api,
+    queryCreationRequest,
+    locationTimeRangeAnswerSchema
+  )
+  validateQueryResult(answer)
   return answer
 }
 
@@ -72,7 +40,7 @@ describe('Round trip tests', () => {
   let stopTime = ''
   let archive = ''
   beforeAll(async () => {
-    archive = await getArchiveWithLocationsWitnessed()
+    archive = await getArchiveWithLocationsWitnessed(locationsToWitness)
     stopTime = new Date().toISOString()
   })
   it('Generates answer if data was found', async () => {
