@@ -9,7 +9,6 @@ import { FeatureCollection, Point } from 'geojson'
 import {
   getArchiveWithLocationsWitnessed,
   getArchivist,
-  getTokenForNewUser,
   getValidLocationHeatmapRequest,
   validateQueryAnswer,
 } from '../../../test'

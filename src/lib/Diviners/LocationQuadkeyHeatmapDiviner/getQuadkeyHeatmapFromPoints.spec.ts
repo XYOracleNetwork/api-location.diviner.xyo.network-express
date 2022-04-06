@@ -1,8 +1,8 @@
 import { points } from '@turf/turf'
 import { Position } from 'geojson'
 
-import { TestData, WithHashProperties, Zoom } from '../../../model'
-import { r2d } from '../../Quadkey'
+import { QuadkeyWithDensity, TestData, WithHashProperties, Zoom } from '../../../model'
+import { toLatitude, toLongitude } from '../../Quadkey'
 import { getQuadkeyHeatmapFromPoints } from './getQuadkeyHeatmapFromPoints'
 
 type TestDataInput = {
@@ -41,13 +41,11 @@ const testData: TestData<TestDataInput, TestDataExpected>[] = [
   },
 ]
 
-const toLongitude = (x: number, z: number): number => {
-  return (x / Math.pow(2, z)) * 360 - 180
-}
-
-const toLatitude = (y: number, z: number): number => {
-  const n = Math.PI - (2 * Math.PI * y) / Math.pow(2, z)
-  return r2d * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)))
+const validateDensityRange = (heatmap: QuadkeyWithDensity[]) => {
+  const minDensity = Math.min(...heatmap.map((q) => q.density))
+  expect(minDensity).toBeGreaterThan(0)
+  const maxDensity = Math.max(...heatmap.map((q) => q.density))
+  expect(maxDensity).toBeLessThanOrEqual(1)
 }
 
 describe('getQuadkeyHeatmapFromPoints', () => {
@@ -55,6 +53,7 @@ describe('getQuadkeyHeatmapFromPoints', () => {
     const { coordinates } = data.input
     const locations = points<WithHashProperties>(coordinates, { hash: '' })
     const heatmap = getQuadkeyHeatmapFromPoints(locations)
+    validateDensityRange(heatmap)
     expect(heatmap).toMatchSnapshot()
   })
   it('calculates with many points', () => {
@@ -79,6 +78,7 @@ describe('getQuadkeyHeatmapFromPoints', () => {
     const heatmap = getQuadkeyHeatmapFromPoints(locations).sort((a, b) => {
       return b.density - a.density
     })
+    validateDensityRange(heatmap)
     expect(heatmap).toMatchSnapshot()
   })
 })
