@@ -5,12 +5,12 @@ services:
     build: .
     restart: always
     depends_on:
-      - mongo
+      - archivist
     ports:
       - "8082:8082"
     environment:
       APP_PORT: 8082
-      ARCHIVIST_URL: http://localhost:8080
+      ARCHIVIST_URL: http://host.docker.internal:8080
       ARCHIVE: temp
   mongo:
     container_name: mongo
@@ -27,7 +27,6 @@ services:
   archivist:
     container_name: archivist
     image: public.ecr.aws/t4x5y6n8/api-xyo-archivist:latest
-    build: .
     restart: always
     depends_on:
       - mongo
