@@ -7,9 +7,9 @@ services:
     depends_on:
       - mongo
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
-      APP_PORT: 8080
+      APP_PORT: 8082
       CORS_ALLOWED_ORIGINS: http://localhost:3000
       MONGO_CONNECTION_STRING: mongodb://root:example@mongo:27017/?retryWrites=true&w=majority
       MONGO_DATABASE: diviner
