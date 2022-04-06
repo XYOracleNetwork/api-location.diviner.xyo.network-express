@@ -10,12 +10,8 @@ services:
       - "8082:8082"
     environment:
       APP_PORT: 8082
-      CORS_ALLOWED_ORIGINS: http://localhost:3000
-      MONGO_CONNECTION_STRING: mongodb://root:example@mongo:27017/?retryWrites=true&w=majority
-      MONGO_DATABASE: diviner
-      MONGO_DOMAIN: "mongo"
-      MONGO_PASSWORD: example
-      MONGO_USERNAME: root
+      ARCHIVIST_URL: http://localhost:8080
+      ARCHIVE: temp
   mongo:
     container_name: mongo
     image: mongo:4.4
