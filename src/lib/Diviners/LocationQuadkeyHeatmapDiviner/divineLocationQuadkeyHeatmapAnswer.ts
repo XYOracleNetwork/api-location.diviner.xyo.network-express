@@ -6,6 +6,7 @@ import {
   XyoArchivistApi,
   XyoArchivistArchiveApi,
 } from '@xyo-network/sdk-xyo-client-js'
+import { readFile, writeFile } from 'fs/promises'
 import { Point } from 'geojson'
 
 import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'
@@ -54,11 +55,18 @@ export const divineLocationQuadkeyHeatmapAnswer = async (
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
+    const queryFileName = `${start.toISOString()}-${stop.toISOString()}.json`
     const startTime = start.getTime()
     const stopTime = stop.getTime()
+    console.log(`Running query for: ${queryFileName}`)
     const points = await getLocationDataPointsBySchema[request.query.schema](sourceArchive, startTime, stopTime)
     const collection = getFeatureCollection(points)
+    await writeFile(queryFileName, JSON.stringify(collection), { encoding: 'utf-8' })
+    // const previousData = await readFile('points.json', { encoding: 'utf-8' })
+    // const collection = JSON.parse(previousData)
+    console.log(`Data queried for: ${queryFileName}`)
     const answer = getQuadkeyHeatmapFromPoints(collection)
+    console.log(`Storing answer for: ${queryFileName}`)
     return await storeAnswer(answer, resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
   } catch (error) {
     console.log(error)
