@@ -55,7 +55,7 @@ export const divineLocationQuadkeyHeatmapAnswer = async (
     const request = response as unknown as LocationHeatmapQueryCreationRequest
     const start = request.query.startTime ? new Date(request.query.startTime) : new Date(0)
     const stop = request.query.stopTime ? new Date(request.query.stopTime) : new Date()
-    const queryFileName = `${start.toISOString()}-${stop.toISOString()}.json`
+    const queryFileName = `${start.toISOString()}-${stop.toISOString()}.json`.replace(':', '-')
     const startTime = start.getTime()
     const stopTime = stop.getTime()
     console.log(`Running query for: ${queryFileName}`)
