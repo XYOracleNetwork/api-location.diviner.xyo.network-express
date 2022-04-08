@@ -76,8 +76,8 @@ export const getQuadkeyHeatmapFromPoints = (
     return {
       // Normalize density to zoom level so that same number of points
       // at higher zoom is a higher density
-      density: quadkeysByParent[parent].length * parentZoom * densityZoomMultiplier,
-      // density: quadkeysByParent[parent].length,
+      // density: quadkeysByParent[parent].length * parentZoom * densityZoomMultiplier,
+      density: quadkeysByParent[parent].length,
       quadkey: parent,
     }
   })
@@ -94,15 +94,15 @@ export const getQuadkeyHeatmapFromPoints = (
   // Scale the range of all the quadkey densities to ensure that the
   // resultant density is always always in the range [0.0, 1.0]
   return quadkeysWithDensity
-    .map((q) => {
-      const clampedDensity = clamp(q.density, lowerBound, upperBound)
-      const scaledDensity = range(lowerBound, upperBound, 0.1, 0.9, clampedDensity)
-      return {
-        density: scaledDensity,
-        quadkey: q.quadkey,
-      }
-    })
-    .sort((a, b) => b.density - a.density)
+  // .map((q) => {
+  //   const clampedDensity = clamp(q.density, lowerBound, upperBound)
+  //   const scaledDensity = range(lowerBound, upperBound, 0.1, 0.9, clampedDensity)
+  //   return {
+  //     density: scaledDensity,
+  //     quadkey: q.quadkey,
+  //   }
+  // })
+  // .sort((a, b) => b.density - a.density)
 }
 
 const calculateDistribution = (densities: number[]): [number, number, number] => {
