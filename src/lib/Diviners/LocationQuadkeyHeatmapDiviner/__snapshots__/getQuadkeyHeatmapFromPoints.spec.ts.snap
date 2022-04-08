@@ -4,19 +4,19 @@ exports[`getQuadkeyHeatmapFromPoints calculates with known points 1`] = `
 Array [
   Object {
     "density": 1,
-    "quadkey": "130222000",
+    "quadkey": "1302220000",
   },
   Object {
     "density": 1,
-    "quadkey": "212000222",
+    "quadkey": "2120002222",
   },
   Object {
     "density": 1,
-    "quadkey": "312000222",
+    "quadkey": "3120002222",
   },
   Object {
     "density": 1,
-    "quadkey": "030222000",
+    "quadkey": "0302220000",
   },
 ]
 `;
@@ -24,7 +24,7 @@ Array [
 exports[`getQuadkeyHeatmapFromPoints calculates with known points 2`] = `
 Array [
   Object {
-    "density": 1,
+    "density": 4,
     "quadkey": "0000000000",
   },
 ]
@@ -33,63 +33,63 @@ Array [
 exports[`getQuadkeyHeatmapFromPoints calculates with many points 1`] = `
 Array [
   Object {
-    "density": 1,
+    "density": 240,
     "quadkey": "0000000000",
   },
   Object {
-    "density": 0.9333333333333332,
+    "density": 224,
     "quadkey": "0001222222",
   },
   Object {
-    "density": 0.8666666666666666,
+    "density": 208,
     "quadkey": "0030000000",
   },
   Object {
-    "density": 0.8,
+    "density": 192,
     "quadkey": "0033000000",
   },
   Object {
-    "density": 0.7333333333333333,
+    "density": 176,
     "quadkey": "0122222222",
   },
   Object {
-    "density": 0.6666666666666665,
+    "density": 160,
     "quadkey": "0303000000",
   },
   Object {
-    "density": 0.6,
+    "density": 144,
     "quadkey": "0330000000",
   },
   Object {
-    "density": 0.5333333333333333,
+    "density": 128,
     "quadkey": "0333000000",
   },
   Object {
-    "density": 0.4666666666666666,
+    "density": 112,
     "quadkey": "3000000000",
   },
   Object {
-    "density": 0.4,
+    "density": 96,
     "quadkey": "3003000000",
   },
   Object {
-    "density": 0.33333333333333326,
+    "density": 80,
     "quadkey": "3030000000",
   },
   Object {
-    "density": 0.26666666666666666,
+    "density": 64,
     "quadkey": "3031222222",
   },
   Object {
-    "density": 0.2,
+    "density": 48,
     "quadkey": "3300000000",
   },
   Object {
-    "density": 0.13333333333333333,
+    "density": 32,
     "quadkey": "3303000000",
   },
   Object {
-    "density": 0.06666666666666667,
+    "density": 16,
     "quadkey": "3330000000",
   },
 ]
