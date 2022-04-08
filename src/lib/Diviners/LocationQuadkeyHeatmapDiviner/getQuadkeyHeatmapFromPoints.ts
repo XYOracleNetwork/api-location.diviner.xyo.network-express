@@ -85,16 +85,18 @@ export const getQuadkeyHeatmapFromPoints = (
   const densities = quadkeysWithDensity.map((q) => q.density)
   // const minDensity = Math.min(...densities)
   // const maxDensity = Math.max(...densities)
-  const [mean, standardDeviation] = calculateDistribution(densities)
-  const lowerBound = Math.round(Math.max(mean - standardDeviation, minLocationsPerQuadkey))
-  const upperBound = Math.round(mean + standardDeviation)
+  const [, median, standardDeviation] = calculateDistribution(densities)
+  const roundedMedian = Math.max(Math.round(median), 2)
+  const roundedStandardDeviation = Math.round(standardDeviation)
+  const lowerBound = Math.round(Math.max(roundedMedian - roundedStandardDeviation, 1))
+  const upperBound = Math.max(Math.abs(Math.round(roundedMedian - lowerBound)) + roundedMedian, 3)
 
   // Scale the range of all the quadkey densities to ensure that the
   // resultant density is always always in the range [0.0, 1.0]
   return quadkeysWithDensity
     .map((q) => {
       const clampedDensity = clamp(q.density, lowerBound, upperBound)
-      const scaledDensity = range(lowerBound, upperBound, 0.2, 0.8, clampedDensity)
+      const scaledDensity = range(lowerBound, upperBound, 0.1, 0.9, clampedDensity)
       return {
         density: scaledDensity,
         quadkey: q.quadkey,
@@ -103,15 +105,18 @@ export const getQuadkeyHeatmapFromPoints = (
     .sort((a, b) => b.density - a.density)
 }
 
-const calculateDistribution = (densities: number[]): [number, number] => {
-  if (!densities.length) {
-    return [0, 0]
+const calculateDistribution = (densities: number[]): [number, number, number] => {
+  const count = densities.length
+  if (!count) {
+    return [0, 0, 0]
   }
-  const sum = densities.reduce((acc, n) => acc + n)
-  const mean = sum / densities.length
-  const variance = densities.reduce((acc, n) => (acc += (n - mean) * (n - mean)), 0) / densities.length
+  const sum = densities.reduce((acc, n) => acc + n, 0)
+  const mean = sum / count
+  const variance = densities.reduce((acc, n) => (acc += (n - mean) * (n - mean)), 0) / count
   const standardDeviation = Math.sqrt(variance)
-  return [mean, standardDeviation]
+  const sortedDensities = densities.sort((a, b) => a - b)
+  const median = sortedDensities[Math.floor(count / 2)]
+  return [mean, median, standardDeviation]
 }
 
 const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a
