@@ -1,16 +1,7 @@
-import {
-  locationQuadkeyHeatmapAnswerSchema,
-  LocationQueryCreationRequest,
-  XyoArchivistApi,
-} from '@xyo-network/sdk-xyo-client-js'
+import { locationQuadkeyHeatmapAnswerSchema, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
 
 import { QuadkeyWithDensity } from '../../../model'
-import {
-  getArchiveWithLocationsWitnessed,
-  getArchivist,
-  getValidLocationRequest,
-  validateQueryAnswer,
-} from '../../../test'
+import { getArchiveWithLocationsWitnessed, getArchivist, getValidLocationRequest, validateQueryAnswer } from '../../../test'
 
 const validateQueryResult = (queryResult: QuadkeyWithDensity[]) => {
   expect(queryResult).toBeTruthy()
@@ -25,15 +16,8 @@ const validateQueryResult = (queryResult: QuadkeyWithDensity[]) => {
   }
 }
 
-const getQueryAnswer = async (
-  api: XyoArchivistApi,
-  queryCreationRequest: LocationQueryCreationRequest
-): Promise<QuadkeyWithDensity[]> => {
-  const answer = await validateQueryAnswer<QuadkeyWithDensity[]>(
-    api,
-    queryCreationRequest,
-    locationQuadkeyHeatmapAnswerSchema
-  )
+const getQueryAnswer = async (api: XyoArchivistApi, queryCreationRequest: LocationQueryCreationRequest): Promise<QuadkeyWithDensity[]> => {
+  const answer = await validateQueryAnswer<QuadkeyWithDensity[]>(api, queryCreationRequest, locationQuadkeyHeatmapAnswerSchema)
   validateQueryResult(answer)
   return answer
 }
@@ -58,11 +42,7 @@ describe('Round trip tests', () => {
     futureStartTime.setDate(now.getDate() + 1)
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
-    const queryCreationRequest = getValidLocationRequest(
-      archive,
-      futureStartTime.toISOString(),
-      futureStopTime.toISOString()
-    )
+    const queryCreationRequest = getValidLocationRequest(archive, futureStartTime.toISOString(), futureStopTime.toISOString())
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.length).toBe(0)
   }, 10000)

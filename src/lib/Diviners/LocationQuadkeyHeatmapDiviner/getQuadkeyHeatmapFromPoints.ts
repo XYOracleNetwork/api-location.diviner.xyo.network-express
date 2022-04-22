@@ -1,12 +1,7 @@
 import { FeatureCollection, Point } from 'geojson'
 
 import { QuadkeyWithDensity, WithHashProperties, Zoom } from '../../../model'
-import {
-  featureToQuadkey,
-  getQuadkeyAtZoomLevel,
-  getQuadkeysByParent,
-  getQuadkeysByParentAtZoomLevel,
-} from '../../Quadkey'
+import { featureToQuadkey, getQuadkeyAtZoomLevel, getQuadkeysByParent, getQuadkeysByParentAtZoomLevel } from '../../Quadkey'
 
 /**
  * The number of location results within a quadkey at which
@@ -61,9 +56,7 @@ const rollup = (quadkeys: string[], zoom: Zoom): string[] => {
   }
 }
 
-export const getQuadkeyHeatmapFromPoints = (
-  points: FeatureCollection<Point, WithHashProperties>
-): QuadkeyWithDensity[] => {
+export const getQuadkeyHeatmapFromPoints = (points: FeatureCollection<Point, WithHashProperties>): QuadkeyWithDensity[] => {
   const quadkeys = points.features
     // Calculate each point at max allowable zoom level
     .map<string>((p) => featureToQuadkey(p, maxHeatmapZoom))

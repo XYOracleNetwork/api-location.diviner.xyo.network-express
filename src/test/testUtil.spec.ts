@@ -8,7 +8,8 @@ import {
   locationTimeRangeQuerySchema,
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
-  XyoAddress,
+  XyoAccount,
+  XyoAccountApi,
   XyoApiResponseBody,
   XyoArchive,
   XyoArchivistApi,
@@ -16,7 +17,6 @@ import {
   XyoBoundWitnessBuilder,
   XyoPayload,
   XyoPayloadBuilder,
-  XyoWalletApi,
 } from '@xyo-network/sdk-xyo-client-js'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
@@ -62,8 +62,8 @@ export const getArchivist = (token?: string): XyoArchivistApi => {
   return token ? new XyoArchivistApi({ apiDomain, jwtToken: token }) : new XyoArchivistApi({ apiDomain })
 }
 
-export const getAuth = (user: TestWeb3User): XyoWalletApi => {
-  return getArchivist().wallet(user.address.substring(2))
+export const getAuth = (user: TestWeb3User): XyoAccountApi => {
+  return getArchivist().account(user.address.substring(2))
 }
 
 export const getNewWeb3User = (): TestWeb3User => {
@@ -93,11 +93,7 @@ export const claimArchive = (token: string, archive: string = v4()): Promise<Xyo
   return getArchivist(token).archive(archive).put()
 }
 
-export const getValidLocationRangeRequest = (
-  archive = testArchive,
-  startTime = new Date(0).toISOString(),
-  stopTime = new Date().toISOString()
-): LocationQueryCreationRequest => {
+export const getValidLocationRangeRequest = (archive = testArchive, startTime = new Date(0).toISOString(), stopTime = new Date().toISOString()): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: archive,
@@ -107,11 +103,7 @@ export const getValidLocationRangeRequest = (
     sourceArchivist: { apiDomain },
   }
 }
-export const getValidLocationHeatmapRequest = (
-  archive = testArchive,
-  startTime = new Date(0).toISOString(),
-  stopTime = new Date().toISOString()
-): LocationQueryCreationRequest => {
+export const getValidLocationHeatmapRequest = (archive = testArchive, startTime = new Date(0).toISOString(), stopTime = new Date().toISOString()): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: archive,
@@ -127,10 +119,7 @@ export const getValidLocationRequest = (
   startTime = new Date(0).toISOString(),
   stopTime = new Date().toISOString(),
   // TODO: Remove when types in SDK
-  schema:
-    | LocationQuerySchema
-    | LocationGeoJsonHeatmapQuerySchema
-    | LocationQuadkeyHeatmapQuerySchema = locationQuadkeyHeatmapQuerySchema
+  schema: LocationQuerySchema | LocationGeoJsonHeatmapQuerySchema | LocationQuadkeyHeatmapQuerySchema = locationQuadkeyHeatmapQuerySchema
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
@@ -165,7 +154,7 @@ export const getNewLocation = (): LocationWitnessPayloadBody => {
 }
 
 export const getNewLocationWitness = (): XyoBoundWitness => {
-  const address = XyoAddress.random()
+  const address = XyoAccount.random()
   const payload = getNewLocation()
   return new XyoBoundWitnessBuilder({ inlinePayloads: true }).witness(address).payload(payload).build()
 }
@@ -182,10 +171,7 @@ export const createQuery = async (
   return response.body.data
 }
 
-export const getQuery = async (
-  hash: string,
-  expectedStatus: StatusCodes = StatusCodes.OK
-): Promise<GetLocationQueryResponse> => {
+export const getQuery = async (hash: string, expectedStatus: StatusCodes = StatusCodes.OK): Promise<GetLocationQueryResponse> => {
   const response = await getDiviner().get(`/location/query/${hash}`).expect(expectedStatus)
   return response.body.data
 }
@@ -204,11 +190,7 @@ export const getArchiveWithLocationsWitnessed = async (locationsToWitness = 5): 
   return archive
 }
 
-export const pollUntilQueryComplete = async (
-  queryCreationResponse: LocationQueryCreationResponse,
-  maxPolls = 15,
-  pollInterval = 1000
-) => {
+export const pollUntilQueryComplete = async (queryCreationResponse: LocationQueryCreationResponse, maxPolls = 15, pollInterval = 1000) => {
   for (let i = 0; i < maxPolls; i++) {
     await delay(pollInterval)
     if ((await getQuery(queryCreationResponse.hash)).answerHash) break
@@ -226,10 +208,7 @@ export const validateQueryCreationResponse = (queryCreationResponse: LocationQue
   expect(queryCreationResponse?.hash).not.toBeNull()
 }
 
-export const validateQueryAnswerResponse = (
-  queryAnswerResponse: GetLocationQueryResponse,
-  queryCreationResponse: LocationQueryCreationResponse
-) => {
+export const validateQueryAnswerResponse = (queryAnswerResponse: GetLocationQueryResponse, queryCreationResponse: LocationQueryCreationResponse) => {
   expect(queryAnswerResponse).toBeTruthy()
   expect(queryAnswerResponse.queryHash).toBe(queryCreationResponse.hash)
   expect(queryAnswerResponse.answerHash).toBeTruthy()

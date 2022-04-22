@@ -18,10 +18,7 @@ const closeTo = (actual: number, expected: number, tolerance: number): boolean =
   return Math.abs(actual - expected) < tolerance
 }
 
-const ensureResultIsValid = (
-  actual: FeatureCollection<Polygon, LocationHeatmapPointProperties>,
-  expectedTilesWithValue?: number
-) => {
+const ensureResultIsValid = (actual: FeatureCollection<Polygon, LocationHeatmapPointProperties>, expectedTilesWithValue?: number) => {
   expect(actual).toBeTruthy()
   const tilesWithValue = actual.features.filter((h) => h.properties.value !== 0).map((p) => p.properties.value)
   if (expectedTilesWithValue) {

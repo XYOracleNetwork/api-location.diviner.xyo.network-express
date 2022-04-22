@@ -1,12 +1,7 @@
-import { LocationQueryCreationResponse, XyoAddress } from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, XyoAccount } from '@xyo-network/sdk-xyo-client-js'
 
 import { LocationQuerySchema } from '../../model'
-import {
-  divineLocationHeatmapAnswer,
-  divineLocationQuadkeyHeatmapAnswer,
-  divineLocationRangeAnswer,
-  QueryProcessor,
-} from '../Diviners'
+import { divineLocationHeatmapAnswer, divineLocationQuadkeyHeatmapAnswer, divineLocationRangeAnswer, QueryProcessor } from '../Diviners'
 
 interface QueueData {
   response: LocationQueryCreationResponse
@@ -23,7 +18,7 @@ const locationQueryDivinersBySchema: Record<LocationQuerySchema, QueryProcessor<
 export class QueryQueue {
   protected queue: Record<string, QueueData> = {}
 
-  public enqueue(hash: string, response: LocationQueryCreationResponse, address: XyoAddress) {
+  public enqueue(hash: string, response: LocationQueryCreationResponse, account: XyoAccount) {
     const schema = response.schema as LocationQuerySchema
     const queryProcessor = locationQueryDivinersBySchema[schema]
     if (!queryProcessor) {
@@ -38,7 +33,7 @@ export class QueryQueue {
     this.queue[hash] = { response }
 
     // Fire off task in background
-    void queryProcessor(response, address)
+    void queryProcessor(response, account)
       .then((result) => {
         this.queue[hash].result = result
       })

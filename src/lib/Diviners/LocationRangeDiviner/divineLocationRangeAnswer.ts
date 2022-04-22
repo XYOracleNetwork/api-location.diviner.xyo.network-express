@@ -1,10 +1,4 @@
-import {
-  LocationQueryCreationResponse,
-  locationTimeRangeAnswerSchema,
-  LocationTimeRangeQueryCreationRequest,
-  XyoAddress,
-  XyoArchivistApi,
-} from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, locationTimeRangeAnswerSchema, LocationTimeRangeQueryCreationRequest, XyoAccount, XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
 
 import { convertLocationWitnessForRange } from '../../Converters'
 import { isValidLocationWitnessPayload } from '../../Validators'
@@ -12,10 +6,7 @@ import { queryLocationsInRange } from '../../WitnessQueries'
 import { getFeatureCollection } from '../getFeatureCollection'
 import { storeAnswer, storeError } from '../storePayload'
 
-export const divineLocationRangeAnswer = async (
-  response: LocationQueryCreationResponse,
-  address: XyoAddress
-): Promise<string> => {
+export const divineLocationRangeAnswer = async (response: LocationQueryCreationResponse, account: XyoAccount): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archive(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchivist).archive(response.resultArchive)
   try {
@@ -28,9 +19,9 @@ export const divineLocationRangeAnswer = async (
     const locations = await queryLocationsInRange(sourceArchive, startTime, stopTime)
     const geometries = locations.filter(isValidLocationWitnessPayload).map(convertLocationWitnessForRange)
     const answer = getFeatureCollection(geometries)
-    return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, address)
+    return await storeAnswer(answer, resultArchive, locationTimeRangeAnswerSchema, account)
   } catch (error) {
     console.log(error)
-    return await storeError('Error calculating answer', resultArchive, locationTimeRangeAnswerSchema, address)
+    return await storeError('Error calculating answer', resultArchive, locationTimeRangeAnswerSchema, account)
   }
 }

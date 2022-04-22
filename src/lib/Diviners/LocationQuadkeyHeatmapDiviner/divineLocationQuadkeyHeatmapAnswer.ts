@@ -2,7 +2,7 @@ import {
   LocationHeatmapQueryCreationRequest,
   locationQuadkeyHeatmapAnswerSchema,
   LocationQueryCreationResponse,
-  XyoAddress,
+  XyoAccount,
   XyoArchivistApi,
   XyoArchivistArchiveApi,
 } from '@xyo-network/sdk-xyo-client-js'
@@ -17,38 +17,20 @@ import { getFeatureCollection } from '../getFeatureCollection'
 import { storeAnswer, storeError } from '../storePayload'
 import { getQuadkeyHeatmapFromPoints } from './getQuadkeyHeatmapFromPoints'
 
-const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
-  api: XyoArchivistArchiveApi,
-  startTime: number,
-  stopTime: number
-) => {
-  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
-    .filter(isValidCurrentLocationWitnessPayload)
-    .map(convertCurrentLocationWitnessForHeatmap)
+const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {
+  return (await queryCurrentLocationsInRange(api, startTime, stopTime)).filter(isValidCurrentLocationWitnessPayload).map(convertCurrentLocationWitnessForHeatmap)
 }
 
-const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (
-  api: XyoArchivistArchiveApi,
-  startTime: number,
-  stopTime: number
-) => {
-  return (await queryLocationsInRange(api, startTime, stopTime))
-    .filter(isValidLocationWitnessPayload)
-    .map(convertLocationWitnessForHeatmap)
+const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {
+  return (await queryLocationsInRange(api, startTime, stopTime)).filter(isValidLocationWitnessPayload).map(convertLocationWitnessForHeatmap)
 }
 
-const getLocationDataPointsBySchema: Record<
-  SupportedLocationWitnessPayloadSchemas,
-  FeaturesInRange<Point, WithHashProperties>
-> = {
+const getLocationDataPointsBySchema: Record<SupportedLocationWitnessPayloadSchemas, FeaturesInRange<Point, WithHashProperties>> = {
   'co.coinapp.currentlocationwitness': getCurrentLocationWitnesses,
   'network.xyo.location': getLocationWitnesses,
 }
 
-export const divineLocationQuadkeyHeatmapAnswer = async (
-  response: LocationQueryCreationResponse,
-  address: XyoAddress
-): Promise<string> => {
+export const divineLocationQuadkeyHeatmapAnswer = async (response: LocationQueryCreationResponse, account: XyoAccount): Promise<string> => {
   const sourceArchive = new XyoArchivistApi(response.sourceArchivist).archive(response.sourceArchive)
   const resultArchive = new XyoArchivistApi(response.resultArchivist).archive(response.resultArchive)
   try {
@@ -67,9 +49,9 @@ export const divineLocationQuadkeyHeatmapAnswer = async (
     console.log(`Data queried for: ${queryFileName}`)
     const answer = getQuadkeyHeatmapFromPoints(collection)
     console.log(`Storing answer for: ${queryFileName}`)
-    return await storeAnswer(answer, resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
+    return await storeAnswer(answer, resultArchive, locationQuadkeyHeatmapAnswerSchema, account)
   } catch (error) {
     console.log(error)
-    return await storeError('Error calculating answer', resultArchive, locationQuadkeyHeatmapAnswerSchema, address)
+    return await storeError('Error calculating answer', resultArchive, locationQuadkeyHeatmapAnswerSchema, account)
   }
 }

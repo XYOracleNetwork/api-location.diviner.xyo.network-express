@@ -1,7 +1,7 @@
 import { points } from '@turf/turf'
 import { Position } from 'geojson'
 
-import { QuadkeyWithDensity, TestData, WithHashProperties, Zoom } from '../../../model'
+import { TestData, WithHashProperties, Zoom } from '../../../model'
 import { toLatitude, toLongitude } from '../../Quadkey'
 import { getQuadkeyHeatmapFromPoints } from './getQuadkeyHeatmapFromPoints'
 
@@ -41,12 +41,12 @@ const testData: TestData<TestDataInput, TestDataExpected>[] = [
   },
 ]
 
-const validateDensityRange = (heatmap: QuadkeyWithDensity[]) => {
+/*const validateDensityRange = (heatmap: QuadkeyWithDensity[]) => {
   const minDensity = Math.min(...heatmap.map((q) => q.density))
   expect(minDensity).toBeGreaterThan(0)
   const maxDensity = Math.max(...heatmap.map((q) => q.density))
   expect(maxDensity).toBeLessThanOrEqual(1)
-}
+}*/
 
 describe('getQuadkeyHeatmapFromPoints', () => {
   it.each(testData)('calculates with known points', (data) => {

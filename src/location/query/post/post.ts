@@ -1,10 +1,5 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
-import {
-  isSupportedLocationQuerySchema,
-  LocationQueryCreationResponse,
-  SupportedLocationQueryCreationRequest,
-  XyoAddress,
-} from '@xyo-network/sdk-xyo-client-js'
+import { isSupportedLocationQuerySchema, LocationQueryCreationResponse, SupportedLocationQueryCreationRequest, XyoAccount } from '@xyo-network/sdk-xyo-client-js'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
@@ -49,11 +44,7 @@ const queryQueuingError = {
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
 }
 
-const handler: RequestHandler<
-  NoReqParams,
-  LocationQueryCreationResponse,
-  SupportedLocationQueryCreationRequest
-> = async (req, res, next) => {
+const handler: RequestHandler<NoReqParams, LocationQueryCreationResponse, SupportedLocationQueryCreationRequest> = async (req, res, next) => {
   const { sourceArchivist, sourceArchive, resultArchivist, resultArchive, query, schema } = req.body
   if (!isSupportedLocationQuerySchema(schema)) {
     next(requestSchemaError)
@@ -71,8 +62,8 @@ const handler: RequestHandler<
     next(queryValidationError)
     return
   }
-  const address: XyoAddress = XyoAddress.random()
-  const hash = await createLocationQuery(req.body, address)
+  const account = XyoAccount.random()
+  const hash = await createLocationQuery(req.body, account)
   if (!hash) {
     next(queryCreationError)
     return
@@ -83,7 +74,7 @@ const handler: RequestHandler<
     next(queryQueuingError)
     return
   }
-  queue.enqueue(hash, response, address)
+  queue.enqueue(hash, response, account)
   res.json(response)
   next()
 }
