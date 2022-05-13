@@ -1,17 +1,7 @@
-import {
-  locationHeatmapAnswerSchema,
-  LocationHeatmapPointProperties,
-  LocationQueryCreationRequest,
-  XyoArchivistApi,
-} from '@xyo-network/sdk-xyo-client-js'
+import { locationHeatmapAnswerSchema, LocationHeatmapPointProperties, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
 import { FeatureCollection, Point } from 'geojson'
 
-import {
-  getArchiveWithLocationsWitnessed,
-  getArchivist,
-  getValidLocationHeatmapRequest,
-  validateQueryAnswer,
-} from '../../../test'
+import { getArchiveWithLocationsWitnessed, getArchivist, getValidLocationHeatmapRequest, validateQueryAnswer } from '../../../test'
 
 const validateQueryResult = (queryResult: FeatureCollection<Point, LocationHeatmapPointProperties>) => {
   expect(queryResult).toBeTruthy()
@@ -20,15 +10,8 @@ const validateQueryResult = (queryResult: FeatureCollection<Point, LocationHeatm
   expect(Array.isArray(queryResult?.features)).toBeTruthy()
 }
 
-const getQueryAnswer = async (
-  api: XyoArchivistApi,
-  queryCreationRequest: LocationQueryCreationRequest
-): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
-  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationHeatmapPointProperties>>(
-    api,
-    queryCreationRequest,
-    locationHeatmapAnswerSchema
-  )
+const getQueryAnswer = async (api: XyoArchivistApi, queryCreationRequest: LocationQueryCreationRequest): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
+  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationHeatmapPointProperties>>(api, queryCreationRequest, locationHeatmapAnswerSchema)
   validateQueryResult(answer)
   return answer
 }
@@ -53,11 +36,7 @@ describe('Round trip tests', () => {
     futureStartTime.setDate(now.getDate() + 1)
     const futureStopTime = new Date()
     futureStopTime.setDate(now.getDate() + 2)
-    const queryCreationRequest = getValidLocationHeatmapRequest(
-      archive,
-      futureStartTime.toISOString(),
-      futureStopTime.toISOString()
-    )
+    const queryCreationRequest = getValidLocationHeatmapRequest(archive, futureStartTime.toISOString(), futureStopTime.toISOString())
     const answer = await getQueryAnswer(api, queryCreationRequest)
     expect(answer?.features?.length).toBe(0)
   }, 10000)

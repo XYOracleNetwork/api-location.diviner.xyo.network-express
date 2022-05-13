@@ -1,8 +1,4 @@
-import {
-  CurrentLocationWitnessPayload,
-  currentLocationWitnessPayloadSchema,
-  XyoArchivistArchiveApi,
-} from '@xyo-network/sdk-xyo-client-js'
+import { CurrentLocationWitnessPayload, currentLocationWitnessPayloadSchema, XyoArchivistArchiveApi } from '@xyo-network/sdk-xyo-client-js'
 
 import { queryGenericLocationsInRange } from './queryGenericLocationsInRange'
 import { QueryLocationDataInRange } from './QueryLocationDataInRange'
@@ -13,11 +9,5 @@ export const queryCurrentLocationsInRange: QueryLocationDataInRange<CurrentLocat
   stopTime = Date.now(),
   maxSupportedLocations = 2000000
 ) => {
-  return queryGenericLocationsInRange(
-    api,
-    currentLocationWitnessPayloadSchema,
-    startTime,
-    stopTime,
-    maxSupportedLocations
-  )
+  return queryGenericLocationsInRange(api, currentLocationWitnessPayloadSchema, startTime, stopTime, maxSupportedLocations)
 }

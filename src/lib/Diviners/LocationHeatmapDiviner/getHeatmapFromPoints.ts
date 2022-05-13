@@ -34,10 +34,7 @@ const southWestQuadrantGrid = squareGrid(southWestQuadrantBoundingBox, gridCellS
 
 const grids = [northWestQuadrantGrid, northEastQuadrantGrid, southEastQuadrantGrid, southWestQuadrantGrid]
 
-export const getHeatmapFromPoints = (
-  points: FeatureCollection<Point, WithHashProperties>,
-  _zoom: number
-): FeatureCollection<Polygon, LocationHeatmapPointProperties> => {
+export const getHeatmapFromPoints = (points: FeatureCollection<Point, WithHashProperties>, _zoom: number): FeatureCollection<Polygon, LocationHeatmapPointProperties> => {
   const heatmap: Feature<Polygon, LocationHeatmapPointProperties>[] = []
   // TODO: Replace with QuadKey/H3 implementation for faster performance
   for (let i = 0; i < grids.length; i++) {

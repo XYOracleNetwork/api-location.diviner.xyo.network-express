@@ -1,10 +1,4 @@
-import {
-  createQuery,
-  getArchiveWithLocationsWitnessed,
-  getQuery,
-  getValidLocationRangeRequest,
-  pollUntilQueryComplete,
-} from '../../../../test'
+import { createQuery, getArchiveWithLocationsWitnessed, getQuery, getValidLocationRangeRequest, pollUntilQueryComplete } from '../../../../test'
 
 describe('GET /location/query/:hash', () => {
   const startTime = new Date().toISOString()
