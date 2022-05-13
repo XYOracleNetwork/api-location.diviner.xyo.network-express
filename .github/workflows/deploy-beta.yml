@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - beta
+      - feature/aws-ecs-execution
 
 env:
   AWS_REGION: us-east-1
