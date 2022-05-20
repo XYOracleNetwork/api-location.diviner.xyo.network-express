@@ -3,10 +3,10 @@ import {
   LocationHeatmapPointProperties,
   LocationHeatmapQueryCreationRequest,
   LocationQueryCreationResponse,
-  XyoAccount,
   XyoArchivistApi,
   XyoArchivistArchiveApi,
-} from '@xyo-network/sdk-xyo-client-js'
+} from '@xyo-network/api'
+import { XyoAccount } from '@xyo-network/core'
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
 import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'

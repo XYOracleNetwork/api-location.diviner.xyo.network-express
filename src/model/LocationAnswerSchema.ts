@@ -1,4 +1,4 @@
-import { LocationHeatmapAnswerSchema, LocationQuadkeyHeatmapAnswerSchema, LocationTimeRangeAnswerSchema } from '@xyo-network/sdk-xyo-client-js'
+import { LocationHeatmapAnswerSchema, LocationQuadkeyHeatmapAnswerSchema, LocationTimeRangeAnswerSchema } from '@xyo-network/api'
 
 import { LocationGeoJsonHeatmapAnswerSchema } from './LocationGeoJsonHeatmapQuerySchema'
 

@@ -1,4 +1,5 @@
-import { XyoArchivistArchiveApi, XyoBoundWitness } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi } from '@xyo-network/api'
+import { XyoBoundWitness } from '@xyo-network/core'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas, WithTimestamp } from '../../model'
 import { isSchemaType } from './isSchemaType'

@@ -1,4 +1,5 @@
-import { XyoAccount, XyoArchivistArchiveApi, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi } from '@xyo-network/api'
+import { XyoAccount, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/core'
 
 import { LocationAnswerSchema } from '../../model'
 

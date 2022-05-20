@@ -1,4 +1,4 @@
-import { XyoApiConfig } from '@xyo-network/sdk-xyo-client-js'
+import { XyoApiConfig } from '@xyo-network/api'
 
 export const validateArchiveConfig = (config: XyoApiConfig, archive: string) => {
   if (!config) {

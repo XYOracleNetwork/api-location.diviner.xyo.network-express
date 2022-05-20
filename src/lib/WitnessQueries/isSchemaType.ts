@@ -1,4 +1,4 @@
-import { XyoBoundWitness, XyoPayload } from '@xyo-network/sdk-xyo-client-js'
+import { XyoBoundWitness, XyoPayload } from '@xyo-network/core'
 
 import { SupportedLocationWitnessPayloadSchemas } from '../../model'
 

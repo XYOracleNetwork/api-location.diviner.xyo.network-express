@@ -1,4 +1,4 @@
-import { LocationHeatmapQuery, LocationTimeRangeQuery } from '@xyo-network/sdk-xyo-client-js'
+import { LocationHeatmapQuery, LocationTimeRangeQuery } from '@xyo-network/api'
 
 import { supportedLocationWitnessSchemasMap } from '../../../model'
 

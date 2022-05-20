@@ -1,4 +1,4 @@
-import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+import { LocationWitnessPayload } from '@xyo-network/api'
 
 import { PayloadValidator } from './PayloadValidator'
 

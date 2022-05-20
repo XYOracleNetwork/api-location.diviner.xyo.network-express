@@ -1,4 +1,5 @@
-import { LocationQueryCreationResponse, locationTimeRangeAnswerSchema, LocationTimeRangeQueryCreationRequest, XyoAccount, XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
+import { LocationQueryCreationResponse, locationTimeRangeAnswerSchema, LocationTimeRangeQueryCreationRequest, XyoArchivistApi } from '@xyo-network/api'
+import { XyoAccount } from '@xyo-network/core'
 
 import { convertLocationWitnessForRange } from '../../Converters'
 import { isValidLocationWitnessPayload } from '../../Validators'

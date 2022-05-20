@@ -8,16 +8,12 @@ import {
   locationTimeRangeQuerySchema,
   LocationWitnessPayloadBody,
   locationWitnessPayloadSchema,
-  XyoAccount,
   XyoAccountApi,
   XyoApiResponseBody,
   XyoArchive,
   XyoArchivistApi,
-  XyoBoundWitness,
-  XyoBoundWitnessBuilder,
-  XyoPayload,
-  XyoPayloadBuilder,
-} from '@xyo-network/sdk-xyo-client-js'
+} from '@xyo-network/api'
+import { XyoAccount, XyoBoundWitness, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/core'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'

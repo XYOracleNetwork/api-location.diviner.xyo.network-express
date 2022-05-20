@@ -1,11 +1,5 @@
-import {
-  SupportedLocationQueryCreationRequest,
-  XyoAccount,
-  XyoArchivistApi,
-  XyoBoundWitnessBuilder,
-  XyoBoundWitnessBuilderConfig,
-  XyoPayloadBuilder,
-} from '@xyo-network/sdk-xyo-client-js'
+import { SupportedLocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/api'
+import { XyoAccount, XyoBoundWitnessBuilder, XyoBoundWitnessBuilderConfig, XyoPayloadBuilder } from '@xyo-network/core'
 
 const config: XyoBoundWitnessBuilderConfig = { inlinePayloads: true }
 

@@ -1,4 +1,4 @@
-import { LocationQuerySchema as SdkLocationQuerySchema } from '@xyo-network/sdk-xyo-client-js'
+import { LocationQuerySchema as SdkLocationQuerySchema } from '@xyo-network/api'
 
 import { LocationGeoJsonHeatmapQuerySchema } from './LocationGeoJsonHeatmapQuerySchema'
 

@@ -5,7 +5,7 @@ import {
   LocationWitnessPayload,
   LocationWitnessPayloadSchema,
   locationWitnessPayloadSchema,
-} from '@xyo-network/sdk-xyo-client-js'
+} from '@xyo-network/api'
 
 // TODO: Move to SDK
 export const supportedLocationWitnessSchemas = [locationWitnessPayloadSchema, currentLocationWitnessPayloadSchema]

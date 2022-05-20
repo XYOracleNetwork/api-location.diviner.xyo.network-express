@@ -1,4 +1,4 @@
-import { locationQuadkeyHeatmapAnswerSchema, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/sdk-xyo-client-js'
+import { locationQuadkeyHeatmapAnswerSchema, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/core'
 
 import { QuadkeyWithDensity } from '../../../model'
 import { getArchiveWithLocationsWitnessed, getArchivist, getValidLocationRequest, validateQueryAnswer } from '../../../test'

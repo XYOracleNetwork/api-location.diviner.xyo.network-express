@@ -1975,7 +1975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.8.4":
   version: 7.17.2
   resolution: "@babel/runtime@npm:7.17.2"
   dependencies:
@@ -2289,7 +2289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.6.4, @ethersproject/providers@npm:^5.6.4":
+"@ethersproject/providers@npm:5.6.4":
   version: 5.6.4
   resolution: "@ethersproject/providers@npm:5.6.4"
   dependencies:
@@ -4690,6 +4690,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^17.0.27":
+  version: 17.0.35
+  resolution: "@types/node@npm:17.0.35"
+  checksum: 7a24946ae7fd20267ed92466384f594e448bfb151081158d565cc635d406ecb29ea8fb85fcd2a1f71efccf26fb5bd3c6f509bde56077eb8b832b847a6664bc62
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -5178,6 +5185,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/sdk-js@npm:^2.5.5":
+  version: 2.5.5
+  resolution: "@xylabs/sdk-js@npm:2.5.5"
+  dependencies:
+    "@types/node": ^17.0.27
+    axios: ^0.26.1
+    bn.js: ^5.2.0
+    buffer: ^6.0.3
+    rollbar: ^2.25.0
+  checksum: c67665cf79f77602a953040476e344c96f3052e8973134df7deb66dc8b7d993e59b4135ac2e2d6235d96d9a19ed64ae5d160c921cfe9b642dd672b66d4139b3c
+  languageName: node
+  linkType: hard
+
 "@xylabs/ts-scripts@npm:^1.0.53":
   version: 1.0.53
   resolution: "@xylabs/ts-scripts@npm:1.0.53"
@@ -5251,32 +5271,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-xyo-client-js@npm:^2.18.4":
-  version: 2.18.4
-  resolution: "@xyo-network/sdk-xyo-client-js@npm:2.18.4"
+"@xyo-network/api@npm:^2.18.4":
+  version: 2.20.31
+  resolution: "@xyo-network/api@npm:2.20.31"
   dependencies:
-    "@ethersproject/providers": ^5.6.4
-    "@xylabs/sdk-js": ^2.4.5
-    "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
-    ajv: ^8.11.0
-    axios: ^0.26.1
-    bn.js: ^5.2.0
-    bowser: ^2.11.0
-    buffer: ^6.0.3
+    "@xylabs/sdk-js": ^2.5.5
+    "@xyo-network/core": ^2.20.31
+    axios: ^0.27.2
+    pako: ^2.0.4
+    uuid: ^8.3.2
+  checksum: 9fabe2e919b1bd8a95b14013c701e0a3d9d36b53f46babf28b82da28c506332efdcaeacac1f275f7e95e2eb5e4a2d2ff9f97d3339c8d94489cfaeb3f126d85e0
+  languageName: node
+  linkType: hard
+
+"@xyo-network/core@npm:^2.18.4, @xyo-network/core@npm:^2.20.31":
+  version: 2.20.31
+  resolution: "@xyo-network/core@npm:2.20.31"
+  dependencies:
+    "@xylabs/sdk-js": ^2.5.5
+    axios: ^0.27.2
     elliptic: ^6.5.4
     keccak256: ^1.0.6
     lodash: ^4.17.21
-    lru-cache: ^7.8.1
-    mongodb: ^4.5.0
-    neo4j-driver: ^4.4.5
-    neo4j-driver-core: ^4.4.5
-    pako: ^2.0.4
-    randombytes: ^2.1.0
     sha.js: ^2.4.11
-    systeminformation: ^5.11.12
     ua-parser-js: ^1.0.2
-    uuid: ^8.3.2
-  checksum: 790ffe5306f4c0f55c18cf9fca5b6051cda18eea6e9ac685f2009d0001aca7876f57d59796c38d04e1f5f4772e75d3d1822d69b3344fc7e2f29c1829a3bd84b5
+  checksum: 618cf9deabe2179413f3d0d85da154dbcf999cb61f988775217b42fc73058377a7386586e893eabd8245ef19bc3e4a010a8d9d3cbd32cbac91c16a402861a06c
   languageName: node
   linkType: hard
 
@@ -5435,18 +5454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.11.0":
-  version: 8.11.0
-  resolution: "ajv@npm:8.11.0"
-  dependencies:
-    fast-deep-equal: ^3.1.1
-    json-schema-traverse: ^1.0.0
-    require-from-string: ^2.0.2
-    uri-js: ^4.2.2
-  checksum: 5e0ff226806763be73e93dd7805b634f6f5921e3e90ca04acdf8db81eed9d8d3f0d4c5f1213047f45ebbf8047ffe0c840fa1ef2ec42c3a644899f69aa72b5bef
-  languageName: node
-  linkType: hard
-
 "ansi-align@npm:^3.0.0":
   version: 3.0.1
   resolution: "ansi-align@npm:3.0.1"
@@ -5545,7 +5552,8 @@ __metadata:
     "@xylabs/sdk-js": ^2.4.5
     "@xylabs/ts-scripts": ^1.0.53
     "@xylabs/tsconfig": ^1.0.13
-    "@xyo-network/sdk-xyo-client-js": ^2.18.4
+    "@xyo-network/api": ^2.18.4
+    "@xyo-network/core": ^2.18.4
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.7
     axios: ^0.26.1
     babel-jest: ^27.5.1
@@ -5735,6 +5743,16 @@ __metadata:
   dependencies:
     follow-redirects: ^1.14.8
   checksum: d9eb58ff4bc0b36a04783fc9ff760e9245c829a5a1052ee7ca6013410d427036b1d10d04e7380c02f3508c5eaf3485b1ae67bd2adbfec3683704745c8d7a6e1a
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.27.2":
+  version: 0.27.2
+  resolution: "axios@npm:0.27.2"
+  dependencies:
+    follow-redirects: ^1.14.9
+    form-data: ^4.0.0
+  checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
   languageName: node
   linkType: hard
 
@@ -8163,6 +8181,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.14.9":
+  version: 1.15.0
+  resolution: "follow-redirects@npm:1.15.0"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: eaec81c3e0ae57aae2422e38ad3539d0e7279b3a63f9681eeea319bb683dea67502c4e097136b8ce9721542b4e236e092b6b49e34e326cdd7733c274f0a3f378
+  languageName: node
+  linkType: hard
+
 "form-data@npm:^3.0.0":
   version: 3.0.1
   resolution: "form-data@npm:3.0.1"
@@ -10016,13 +10044,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-schema-traverse@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "json-schema-traverse@npm:1.0.0"
-  checksum: 02f2f466cdb0362558b2f1fd5e15cce82ef55d60cd7f8fa828cf35ba74330f8d767fcae5c5c2adb7851fa811766c694b9405810879bc4e1ddd78a7c0e03658ad
-  languageName: node
-  linkType: hard
-
 "json-stable-stringify-without-jsonify@npm:^1.0.1":
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
@@ -10342,7 +10363,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.3.1, lru-cache@npm:^7.4.0, lru-cache@npm:^7.5.1, lru-cache@npm:^7.8.1":
+"lru-cache@npm:^7.3.1, lru-cache@npm:^7.4.0, lru-cache@npm:^7.5.1":
   version: 7.8.1
   resolution: "lru-cache@npm:7.8.1"
   checksum: 31ea67388c9774300331d70f4affd5a433869bcf0fae5405f967d19d7b447930b713b0566a2e95362c9082034a8b496f3671ccf8f0c061d8e8048412663f9432
@@ -11171,36 +11192,6 @@ __metadata:
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
-  languageName: node
-  linkType: hard
-
-"neo4j-driver-bolt-connection@npm:^4.4.5":
-  version: 4.4.5
-  resolution: "neo4j-driver-bolt-connection@npm:4.4.5"
-  dependencies:
-    buffer: ^6.0.3
-    neo4j-driver-core: ^4.4.5
-    string_decoder: ^1.3.0
-  checksum: 35accd3c76ac34c9814bcf5415376649506799e78f9d415c2ef8e118acc09f3dbc6bf7347ac189b30d4051ad79da4cf2bebe0340b513a780c590d99297be4b3c
-  languageName: node
-  linkType: hard
-
-"neo4j-driver-core@npm:^4.4.5":
-  version: 4.4.5
-  resolution: "neo4j-driver-core@npm:4.4.5"
-  checksum: 4c1f8caf95442986f6554f8c437428bfbb774a84c8550b3e8879c65287bb31c9b2bc8207ec353c7b268968448f896a65673c0794f1a4f9c1f186b74ae3e477ea
-  languageName: node
-  linkType: hard
-
-"neo4j-driver@npm:^4.4.5":
-  version: 4.4.5
-  resolution: "neo4j-driver@npm:4.4.5"
-  dependencies:
-    "@babel/runtime": ^7.5.5
-    neo4j-driver-bolt-connection: ^4.4.5
-    neo4j-driver-core: ^4.4.5
-    rxjs: ^6.6.3
-  checksum: 9162ac5fca3d33f84399ad2b98e98ed616189400a0f919d121a81501e4b7644ae29418303f2f8d005c5e0c176004a63f6c7a4061adc2eecc7f041e3b755f7647
   languageName: node
   linkType: hard
 
@@ -12315,15 +12306,6 @@ __metadata:
   version: 2.0.0
   resolution: "quickselect@npm:2.0.0"
   checksum: ed2e78431050d223fb75da20ee98011aef1a03f7cb04e1a32ee893402e640be3cfb76d72e9dbe01edf3bb457ff6a62e5c2d85748424d1aa531f6ba50daef098c
-  languageName: node
-  linkType: hard
-
-"randombytes@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "randombytes@npm:2.1.0"
-  dependencies:
-    safe-buffer: ^5.1.0
-  checksum: d779499376bd4cbb435ef3ab9a957006c8682f343f14089ed5f27764e4645114196e75b7f6abf1cbd84fd247c0cb0651698444df8c9bf30e62120fbbc52269d6
   languageName: node
   linkType: hard
 
@@ -14215,7 +14197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.6.0, rxjs@npm:^6.6.3":
+"rxjs@npm:^6.6.0":
   version: 6.6.7
   resolution: "rxjs@npm:6.6.7"
   dependencies:
@@ -14233,7 +14215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:~5.2.0":
+"safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
@@ -14781,7 +14763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string_decoder@npm:^1.1.1, string_decoder@npm:^1.3.0":
+"string_decoder@npm:^1.1.1":
   version: 1.3.0
   resolution: "string_decoder@npm:1.3.0"
   dependencies:
@@ -14988,16 +14970,6 @@ __metadata:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 6e8fc7e1486b8b54bea91199d9535bb72f10842e40c79e882fc94fb7b14b89866adf2fd79efa5ebb5b658bc07fb459ccce5ac0e99ef3d72f474e74aaf284029d
-  languageName: node
-  linkType: hard
-
-"systeminformation@npm:^5.11.12":
-  version: 5.11.13
-  resolution: "systeminformation@npm:5.11.13"
-  bin:
-    systeminformation: lib/cli.js
-  checksum: 7db572e2faf14ff05f427d9a5a84e8f64537d0fbdfd6994a6d4093d01e1cec1534b614dee43975bfe9cb4458ac7f73b44b9e17fd0000408f887737e3263da909
-  conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
 

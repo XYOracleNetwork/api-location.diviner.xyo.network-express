@@ -1,4 +1,4 @@
-import { LocationTimeRangePointProperties, LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+import { LocationTimeRangePointProperties, LocationWitnessPayload } from '@xyo-network/api'
 import { Feature, Point } from 'geojson'
 
 import { ConvertLocationDataToGeoJsonGeometry } from './ConvertLocationDataToGeoJsonGeometry'

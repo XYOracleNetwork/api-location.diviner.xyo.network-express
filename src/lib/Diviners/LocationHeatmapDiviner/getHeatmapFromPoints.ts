@@ -1,5 +1,5 @@
 import { featureCollection, pointsWithinPolygon, squareGrid, Units } from '@turf/turf'
-import { LocationHeatmapPointProperties } from '@xyo-network/sdk-xyo-client-js'
+import { LocationHeatmapPointProperties } from '@xyo-network/api'
 import { BBox, Feature, FeatureCollection, Point, Polygon } from 'geojson'
 
 import { WithHashProperties } from '../../../model'

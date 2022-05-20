@@ -1,4 +1,4 @@
-import { LocationWitnessPayload } from '@xyo-network/sdk-xyo-client-js'
+import { LocationWitnessPayload } from '@xyo-network/api'
 import { Feature, Point } from 'geojson'
 
 import { WithHashProperties } from '../../model'

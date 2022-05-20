@@ -1,4 +1,4 @@
-import { XyoArchivistArchiveApi } from '@xyo-network/sdk-xyo-client-js'
+import { XyoArchivistArchiveApi } from '@xyo-network/api'
 import { Feature, GeoJsonProperties, Geometry } from 'geojson'
 
 export type FeaturesInRange<G extends Geometry | null = Geometry, P = GeoJsonProperties> = (
