@@ -1,4 +1,4 @@
-import { LocationWitnessPayload } from '@xyo-network/core'
+import { LocationWitnessPayload } from '@xyo-network/api'
 
 import { locationWitnessSample } from '../../test'
 import { convertLocationWitnessForRange } from './convertLocationWitnessForRange'

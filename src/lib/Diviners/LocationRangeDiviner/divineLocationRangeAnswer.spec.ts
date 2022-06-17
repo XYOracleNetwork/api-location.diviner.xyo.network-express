@@ -1,4 +1,4 @@
-import { LocationQueryCreationRequest, locationTimeRangeAnswerSchema, LocationTimeRangePointProperties, XyoArchivistApi } from '@xyo-network/core'
+import { LocationQueryCreationRequest, locationTimeRangeAnswerSchema, LocationTimeRangePointProperties, XyoArchivistApi } from '@xyo-network/api'
 import { FeatureCollection, Point } from 'geojson'
 
 import { getArchiveWithLocationsWitnessed, getArchivist, getValidLocationRangeRequest, validateQueryAnswer } from '../../../test'

@@ -1,4 +1,4 @@
-import { locationHeatmapAnswerSchema, LocationHeatmapPointProperties, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/core'
+import { locationHeatmapAnswerSchema, LocationHeatmapPointProperties, LocationQueryCreationRequest, XyoArchivistApi } from '@xyo-network/api'
 import { FeatureCollection, Point } from 'geojson'
 
 import { getArchiveWithLocationsWitnessed, getArchivist, getValidLocationHeatmapRequest, validateQueryAnswer } from '../../../test'

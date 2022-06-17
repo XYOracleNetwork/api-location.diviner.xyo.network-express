@@ -1,5 +1,5 @@
 import { points, randomPoint } from '@turf/turf'
-import { LocationHeatmapPointProperties } from '@xyo-network/core'
+import { LocationHeatmapPointProperties } from '@xyo-network/api'
 import { FeatureCollection, Polygon } from 'geojson'
 
 import { WithHashProperties } from '../../../model'
