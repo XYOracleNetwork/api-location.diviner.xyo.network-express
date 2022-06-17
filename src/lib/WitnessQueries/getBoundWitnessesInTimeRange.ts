@@ -1,4 +1,4 @@
-import { XyoArchivistArchiveApi } from '@xyo-network/api'
+import { XyoArchivistArchiveApi, XyoPayloadFindFilter } from '@xyo-network/api'
 import { XyoBoundWitness } from '@xyo-network/core'
 
 import { WithTimestamp } from '../../model'
@@ -12,7 +12,12 @@ export const boundWitnessWithinTimeRange = (x: XyoBoundWitness, t1: number, t2: 
 
 export type BoundWitnessWithTimestamp = XyoBoundWitness & WithTimestamp
 
-export const getBoundWitnessesInTimeRange = async (api: XyoArchivistArchiveApi, lowestTime: number, fromTimestamp: number, limit = 100): Promise<BoundWitnessWithTimestamp[]> => {
-  const boundWitnesses = (await api.block.findBefore(fromTimestamp, limit)) ?? []
-  return boundWitnesses.filter<BoundWitnessWithTimestamp>((x): x is BoundWitnessWithTimestamp => isWithinTimeRange(x, lowestTime, fromTimestamp))
+export const getBoundWitnessesInTimeRange = async (api: XyoArchivistArchiveApi, lowestTime: number, timestamp: number, limit = 100): Promise<BoundWitnessWithTimestamp[]> => {
+  const filter: XyoPayloadFindFilter = {
+    limit,
+    order: 'desc',
+    timestamp,
+  }
+  const boundWitnesses = (await api.block.find(filter)) ?? []
+  return boundWitnesses.filter<BoundWitnessWithTimestamp>((x): x is BoundWitnessWithTimestamp => isWithinTimeRange(x, lowestTime, timestamp))
 }

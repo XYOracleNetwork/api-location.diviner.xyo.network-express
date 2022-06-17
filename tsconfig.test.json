@@ -1,4 +1,7 @@
 {
-  "extends": "./tsconfig.build.json",
-  "include": ["**/*.spec.ts"]
+  "extends": "./tsconfig.build.esm.json",
+  "include": ["**/*.spec.ts"],
+  "typeRoots": [
+    "./node_modules/@types"
+  ]
 }
