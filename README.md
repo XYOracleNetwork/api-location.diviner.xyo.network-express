@@ -9,11 +9,11 @@
 [![codeclimate-badge][]][codeclimate-link]
 
 ## Table of Contents
-- [Description](#description)
-- [Deploy](#deploy)
-- [Maintainers](#maintainers)
-- [License](#license)
-- [Credits](#credits)
+-   [Description](#description)
+-   [Deploy](#deploy)
+-   [Maintainers](#maintainers)
+-   [License](#license)
+-   [Credits](#credits)
 
 ## Description
 
@@ -27,7 +27,7 @@ Pushing to the `beta` branch deploys to Beta
 
 ## Maintainers
 
-- [Arie Trouw](https://github.com/arietrouw) [arietrouw.com](https://arietrouw.com)
+-   [Arie Trouw](https://github.com/arietrouw) [arietrouw.com](https://arietrouw.com)
 
 ## License
 

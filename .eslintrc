@@ -8,7 +8,6 @@
     "bin",
     "package.json",
     "*.d.ts",
-    "rollup.config.js",
     "swagger.json"
   ],
   "rules": {
