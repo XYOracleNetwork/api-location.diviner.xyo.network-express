@@ -1,15 +1,15 @@
 import { XyoArchivistArchiveApi } from '@xyo-network/api'
-import { XyoBoundWitness } from '@xyo-network/core'
+import { XyoBoundWitnessWithMeta, XyoPayloadWithMeta } from '@xyo-network/core'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas, WithTimestamp } from '../../model'
 import { isSchemaType } from './isSchemaType'
 
 export const getPayloadsForBoundWitnesses = async <T extends SupportedLocationWitnessPayloads>(
   api: XyoArchivistArchiveApi,
-  boundWitnesses: XyoBoundWitness[],
+  boundWitnesses: XyoBoundWitnessWithMeta[],
   schema: SupportedLocationWitnessPayloadSchemas
 ) => {
-  const allPayloads: Array<T & WithTimestamp> = []
+  const allPayloads: Array<XyoPayloadWithMeta<T>> = []
   const promises = boundWitnesses.map(async (boundWitness) => {
     const hash = boundWitness._hash
     if (!hash) throw new Error('No hash for bound witness')

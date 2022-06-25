@@ -1,4 +1,5 @@
 import { XyoArchivistArchiveApi } from '@xyo-network/api'
+import { XyoBoundWitnessWithMeta } from '@xyo-network/core'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas } from '../../model'
 import { getBoundWitnessesInTimeRange } from './getBoundWitnessesInTimeRange'
@@ -28,7 +29,7 @@ export const queryGenericLocationsInRange = async <T extends SupportedLocationWi
     // Filter by only those BW that have desired schema before getting payloads
     const boundWitnessesWithLocations = boundWitnesses.filter((bw) => bw.payload_schemas.find((s) => s === schema))
     // All location witness payloads
-    const payloads = await getPayloadsForBoundWitnesses<T>(api, boundWitnessesWithLocations, schema)
+    const payloads = await getPayloadsForBoundWitnesses<T>(api, boundWitnessesWithLocations as XyoBoundWitnessWithMeta[], schema)
     // Within the range specified
     const locations = payloads.filter((payload) => isWithinTimeRange(payload, lowestTime, fromTimestamp))
     // TODO: Only take the last N elements if we're past the max

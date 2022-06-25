@@ -13,7 +13,7 @@ import {
   XyoArchive,
   XyoArchivistApi,
 } from '@xyo-network/api'
-import { XyoAccount, XyoBoundWitness, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/core'
+import { WithAdditional, XyoAccount, XyoBoundWitness, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/core'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
@@ -146,7 +146,7 @@ export const getNewLocation = (): LocationWitnessPayloadBody => {
     schema: locationWitnessPayloadSchema,
   }
   const payload = new XyoPayloadBuilder({ schema: locationWitnessPayloadSchema }).fields(body).build()
-  return payload as LocationWitnessPayloadBody
+  return payload as unknown as LocationWitnessPayloadBody
 }
 
 export const getNewLocationWitness = (): XyoBoundWitness => {
@@ -225,7 +225,7 @@ export const validateQueryAnswer = async <T>(
     .block.payloads(queryAnswerResponse.answerHash || '')
     .get()
   validateQueryAnswerPayloads(answerPayloads)
-  const payload = answerPayloads?.[0]?.[0]
+  const payload = answerPayloads?.[0]?.[0] as WithAdditional<XyoPayload> | undefined
   expect(payload).toBeTruthy()
   expect(payload?.schema).toBe(expectedSchema)
   expect(payload?.result).toBeTruthy()

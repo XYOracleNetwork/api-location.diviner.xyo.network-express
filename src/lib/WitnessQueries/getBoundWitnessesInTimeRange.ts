@@ -1,10 +1,10 @@
 import { XyoArchivistArchiveApi, XyoPayloadFindFilter } from '@xyo-network/api'
-import { XyoBoundWitness } from '@xyo-network/core'
+import { XyoBoundWitness, XyoBoundWitnessWithMeta } from '@xyo-network/core'
 
 import { WithTimestamp } from '../../model'
 import { isWithinTimeRange } from './isWithinTimeRange'
 
-export const boundWitnessWithinTimeRange = (x: XyoBoundWitness, t1: number, t2: number): boolean => {
+export const boundWitnessWithinTimeRange = (x: XyoBoundWitnessWithMeta, t1: number, t2: number): boolean => {
   const highestTime = Math.max(t1, t2)
   const lowestTime = Math.min(t1, t2)
   return x?._timestamp && x?._timestamp <= highestTime && x?._timestamp >= lowestTime ? true : false
