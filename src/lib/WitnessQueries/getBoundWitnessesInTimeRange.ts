@@ -1,5 +1,5 @@
 import { XyoArchivistArchiveApi, XyoPayloadFindFilter } from '@xyo-network/api'
-import { XyoBoundWitness, XyoBoundWitnessWithMeta } from '@xyo-network/core'
+import { XyoBoundWitness, XyoBoundWitnessWithMeta } from '@xyo-network/boundwitness'
 
 import { WithTimestamp } from '../../model'
 import { isWithinTimeRange } from './isWithinTimeRange'

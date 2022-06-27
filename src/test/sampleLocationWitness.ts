@@ -1,5 +1,5 @@
 import { CurrentLocationWitnessPayloadBody, LocationWitnessPayload } from '@xyo-network/api'
-import { XyoPayloadWithMeta } from '@xyo-network/core'
+import { XyoPayloadWithMeta } from '@xyo-network/payload'
 
 export const locationWitnessSample: LocationWitnessPayload = {
   _archive: 'temp',

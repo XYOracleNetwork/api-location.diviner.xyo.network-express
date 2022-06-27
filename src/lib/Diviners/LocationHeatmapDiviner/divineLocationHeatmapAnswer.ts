@@ -1,3 +1,4 @@
+import { XyoAccount } from '@xyo-network/account'
 import {
   locationHeatmapAnswerSchema,
   LocationHeatmapPointProperties,
@@ -6,7 +7,6 @@ import {
   XyoArchivistApi,
   XyoArchivistArchiveApi,
 } from '@xyo-network/api'
-import { XyoAccount } from '@xyo-network/core'
 import { FeatureCollection, Point, Polygon } from 'geojson'
 
 import { FeaturesInRange, SupportedLocationWitnessPayloadSchemas, WithHashProperties } from '../../../model'

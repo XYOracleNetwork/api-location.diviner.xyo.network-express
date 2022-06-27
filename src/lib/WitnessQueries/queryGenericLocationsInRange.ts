@@ -1,5 +1,5 @@
 import { XyoArchivistArchiveApi } from '@xyo-network/api'
-import { XyoBoundWitnessWithMeta } from '@xyo-network/core'
+import { XyoBoundWitnessWithMeta } from '@xyo-network/boundwitness'
 
 import { SupportedLocationWitnessPayloads, SupportedLocationWitnessPayloadSchemas } from '../../model'
 import { getBoundWitnessesInTimeRange } from './getBoundWitnessesInTimeRange'

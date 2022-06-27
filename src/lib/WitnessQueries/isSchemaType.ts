@@ -1,4 +1,5 @@
-import { XyoBoundWitness, XyoPayload } from '@xyo-network/core'
+import { XyoBoundWitness } from '@xyo-network/boundwitness'
+import { XyoPayload } from '@xyo-network/payload'
 
 import { SupportedLocationWitnessPayloadSchemas } from '../../model'
 

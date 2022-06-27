@@ -5329,31 +5329,72 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/api@npm:^2.21.10":
-  version: 2.21.10
-  resolution: "@xyo-network/api@npm:2.21.10"
+"@xyo-network/account@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/account@npm:2.21.12"
   dependencies:
-    "@xylabs/sdk-js": ^2.5.9
-    "@xyo-network/core": ^2.21.10
-    axios: ^0.27.2
-    pako: ^2.0.4
-    uuid: ^8.3.2
-  checksum: 1212a5ca4cad24c4bab0a7a6040828dd24fe9e713d713904c6e74185710450a95b68758389ecc9014dd2be4d841466ed4bbf5459e4f7b35808987192f2c22b2f
+    "@xyo-network/core": ^2.21.12
+    elliptic: ^6.5.4
+    sha.js: ^2.4.11
+  checksum: dec89e8681cf9daaf9875ee5caf3c036646e4358b666323cee9a475ff4104a27dc023a3e4b3b2fd290f18d4173ee33c8dbbf1ea932341f0448fdf12447856f79
   languageName: node
   linkType: hard
 
-"@xyo-network/core@npm:^2.21.10":
-  version: 2.21.10
-  resolution: "@xyo-network/core@npm:2.21.10"
+"@xyo-network/api@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/api@npm:2.21.12"
   dependencies:
     "@xylabs/sdk-js": ^2.5.9
+    "@xyo-network/account": ^2.21.12
+    "@xyo-network/boundwitness": ^2.21.12
+    "@xyo-network/core": ^2.21.12
+    "@xyo-network/payload": ^2.21.12
+    "@xyo-network/typeof": ^2.21.12
     axios: ^0.27.2
-    elliptic: ^6.5.4
+    pako: ^2.0.4
+    uuid: ^8.3.2
+  checksum: b123db5feecfe8f0e137e3b968a82c267b407031f8111ec17c2eac41e7e63077200cdc06d74885903d39559390dcd725b3a9254882b2145a26931de2d5810b1a
+  languageName: node
+  linkType: hard
+
+"@xyo-network/boundwitness@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/boundwitness@npm:2.21.12"
+  dependencies:
+    "@xylabs/sdk-js": ^2.5.9
+    "@xyo-network/account": ^2.21.12
+    "@xyo-network/core": ^2.21.12
+    "@xyo-network/payload": ^2.21.12
+    "@xyo-network/typeof": ^2.21.12
+    lodash: ^4.17.21
+    ua-parser-js: ^1.0.2
+  checksum: 27bfa1dbb64befb6d010702d6cd6650d667c12678fd73c6c88d1f10e9e5428449c766f825d23fb509f99737e5b4bed3152482b524817bcc6955ac53c24c640c2
+  languageName: node
+  linkType: hard
+
+"@xyo-network/core@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/core@npm:2.21.12"
+  dependencies:
+    "@xylabs/sdk-js": ^2.5.9
+    "@xyo-network/typeof": ^2.21.12
+    axios: ^0.27.2
     keccak256: ^1.0.6
     lodash: ^4.17.21
     sha.js: ^2.4.11
-    ua-parser-js: ^1.0.2
-  checksum: 554815cba2633870d7871b57d956a73d860a65e5d1197b6bbd082d8a0757e01e104fda76751904342cc288ef7d377b882852836e71aa8b974a5e5e8c5ba0610b
+  checksum: 3e3d330446da10a0355846055070a66903f6594a763cbb24d732e1763e6245a429b1179a2b87b1e38c65ad4c4d53039957c2a584fce07f235c21af307137a697
+  languageName: node
+  linkType: hard
+
+"@xyo-network/payload@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/payload@npm:2.21.12"
+  dependencies:
+    "@xylabs/sdk-js": ^2.5.9
+    "@xyo-network/account": ^2.21.12
+    "@xyo-network/core": ^2.21.12
+    axios: ^0.27.2
+  checksum: 4706f575820d163cc695a5eaef785488e4bfe78c1d5167cab1d2af7fbd243ea5fa98621dea718b1f633fb54439da1fc6632e40f92ed855906158fadff436c1dc
   languageName: node
   linkType: hard
 
@@ -5365,6 +5406,13 @@ __metadata:
     async-mutex: ^0.3.2
     mongodb: ^4.7.0
   checksum: 7acb546530934b3d969ae359c7698a20eef67611d3591718089335b8fc8c33000172a87992f47cd0f05c93489862b028aaed46e158a56cdc69d75333c88e993d
+  languageName: node
+  linkType: hard
+
+"@xyo-network/typeof@npm:^2.21.12":
+  version: 2.21.12
+  resolution: "@xyo-network/typeof@npm:2.21.12"
+  checksum: 3e1e78184fac89211d3aeb225ec99abe9d1bfca4855471278c4b8a70d465fdb15cc99ca26d195ff6b125115d96dbd80f033bab37c5fecc03ce26e6dfdeb37c6a
   languageName: node
   linkType: hard
 
@@ -5566,8 +5614,11 @@ __metadata:
     "@xylabs/sdk-js": ^2.5.9
     "@xylabs/ts-scripts": ^1.0.66
     "@xylabs/tsconfig": ^1.0.14
-    "@xyo-network/api": ^2.21.10
-    "@xyo-network/core": ^2.21.10
+    "@xyo-network/account": ^2.21.12
+    "@xyo-network/api": ^2.21.12
+    "@xyo-network/boundwitness": ^2.21.12
+    "@xyo-network/core": ^2.21.12
+    "@xyo-network/payload": ^2.21.12
     "@xyo-network/sdk-xyo-mongo-js": ^2.2.8
     axios: ^0.27.2
     babel-jest: ^28.1.1

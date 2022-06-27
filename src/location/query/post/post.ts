@@ -1,6 +1,6 @@
 import { asyncHandler, NoReqParams } from '@xylabs/sdk-api-express-ecs'
+import { XyoAccount } from '@xyo-network/account'
 import { isSupportedLocationQuerySchema, LocationQueryCreationResponse, SupportedLocationQueryCreationRequest } from '@xyo-network/api'
-import { XyoAccount } from '@xyo-network/core'
 import { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 

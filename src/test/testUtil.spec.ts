@@ -1,3 +1,4 @@
+import { XyoAccount } from '@xyo-network/account'
 import {
   locationHeatmapQuerySchema,
   LocationQuadkeyHeatmapQuerySchema,
@@ -13,7 +14,9 @@ import {
   XyoArchive,
   XyoArchivistApi,
 } from '@xyo-network/api'
-import { WithAdditional, XyoAccount, XyoBoundWitness, XyoBoundWitnessBuilder, XyoPayload, XyoPayloadBuilder } from '@xyo-network/core'
+import { XyoBoundWitness, XyoBoundWitnessBuilder } from '@xyo-network/boundwitness'
+import { WithAdditional } from '@xyo-network/core'
+import { XyoPayload, XyoPayloadBuilder } from '@xyo-network/payload'
 import { Wallet } from 'ethers'
 import { StatusCodes } from 'http-status-codes'
 import supertest, { SuperTest, Test } from 'supertest'
