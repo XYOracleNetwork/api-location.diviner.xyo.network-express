@@ -3,6 +3,9 @@ import { XyoPayload } from '@xyo-network/payload'
 
 import { SupportedLocationWitnessPayloadSchemas } from '../../model'
 
-export const isSchemaType = <T extends XyoBoundWitness | XyoPayload>(block: XyoBoundWitness | XyoPayload, schema: SupportedLocationWitnessPayloadSchemas): block is T => {
+export const isSchemaType = <T extends XyoBoundWitness | XyoPayload>(
+  block: XyoBoundWitness | XyoPayload,
+  schema: SupportedLocationWitnessPayloadSchemas
+): block is T => {
   return block.schema === schema
 }

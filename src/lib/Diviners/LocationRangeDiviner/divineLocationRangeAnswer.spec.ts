@@ -10,7 +10,10 @@ const validateQueryResult = (queryResult: FeatureCollection<Point, LocationTimeR
   expect(Array.isArray(queryResult?.features)).toBeTruthy()
 }
 
-const getQueryAnswer = async (api: XyoArchivistApi, queryCreationRequest: LocationQueryCreationRequest): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
+const getQueryAnswer = async (
+  api: XyoArchivistApi,
+  queryCreationRequest: LocationQueryCreationRequest
+): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
   const answer = await validateQueryAnswer<FeatureCollection<Point, LocationTimeRangePointProperties>>(api, queryCreationRequest, locationTimeRangeAnswerSchema)
   validateQueryResult(answer)
   return answer

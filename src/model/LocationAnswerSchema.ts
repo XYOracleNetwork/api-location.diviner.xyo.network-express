@@ -3,4 +3,8 @@ import { LocationHeatmapAnswerSchema, LocationQuadkeyHeatmapAnswerSchema, Locati
 import { LocationGeoJsonHeatmapAnswerSchema } from './LocationGeoJsonHeatmapQuerySchema'
 
 // TODO: Move to SDK
-export type LocationAnswerSchema = LocationTimeRangeAnswerSchema | LocationHeatmapAnswerSchema | LocationQuadkeyHeatmapAnswerSchema | LocationGeoJsonHeatmapAnswerSchema
+export type LocationAnswerSchema =
+  | LocationTimeRangeAnswerSchema
+  | LocationHeatmapAnswerSchema
+  | LocationQuadkeyHeatmapAnswerSchema
+  | LocationGeoJsonHeatmapAnswerSchema

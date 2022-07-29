@@ -92,7 +92,11 @@ export const claimArchive = (token: string, archive: string = v4()): Promise<Xyo
   return getArchivist(token).archive(archive).put()
 }
 
-export const getValidLocationRangeRequest = (archive = testArchive, startTime = new Date(0).toISOString(), stopTime = new Date().toISOString()): LocationQueryCreationRequest => {
+export const getValidLocationRangeRequest = (
+  archive = testArchive,
+  startTime = new Date(0).toISOString(),
+  stopTime = new Date().toISOString()
+): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: archive,
@@ -102,7 +106,11 @@ export const getValidLocationRangeRequest = (archive = testArchive, startTime = 
     sourceArchivist: { apiDomain },
   }
 }
-export const getValidLocationHeatmapRequest = (archive = testArchive, startTime = new Date(0).toISOString(), stopTime = new Date().toISOString()): LocationQueryCreationRequest => {
+export const getValidLocationHeatmapRequest = (
+  archive = testArchive,
+  startTime = new Date(0).toISOString(),
+  stopTime = new Date().toISOString()
+): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
     resultArchive: archive,

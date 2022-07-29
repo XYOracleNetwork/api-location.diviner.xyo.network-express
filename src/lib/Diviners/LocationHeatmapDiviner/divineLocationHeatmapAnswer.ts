@@ -18,7 +18,9 @@ import { storeAnswer, storeError } from '../storePayload'
 import { getHeatmapFromPoints } from './getHeatmapFromPoints'
 
 const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {
-  return (await queryCurrentLocationsInRange(api, startTime, stopTime)).filter(isValidCurrentLocationWitnessPayload).map(convertCurrentLocationWitnessForHeatmap)
+  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
+    .filter(isValidCurrentLocationWitnessPayload)
+    .map(convertCurrentLocationWitnessForHeatmap)
 }
 
 const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {

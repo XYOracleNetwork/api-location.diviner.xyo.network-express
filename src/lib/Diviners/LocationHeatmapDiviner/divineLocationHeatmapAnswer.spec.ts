@@ -10,7 +10,10 @@ const validateQueryResult = (queryResult: FeatureCollection<Point, LocationHeatm
   expect(Array.isArray(queryResult?.features)).toBeTruthy()
 }
 
-const getQueryAnswer = async (api: XyoArchivistApi, queryCreationRequest: LocationQueryCreationRequest): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
+const getQueryAnswer = async (
+  api: XyoArchivistApi,
+  queryCreationRequest: LocationQueryCreationRequest
+): Promise<FeatureCollection<Point, LocationHeatmapPointProperties>> => {
   const answer = await validateQueryAnswer<FeatureCollection<Point, LocationHeatmapPointProperties>>(api, queryCreationRequest, locationHeatmapAnswerSchema)
   validateQueryResult(answer)
   return answer

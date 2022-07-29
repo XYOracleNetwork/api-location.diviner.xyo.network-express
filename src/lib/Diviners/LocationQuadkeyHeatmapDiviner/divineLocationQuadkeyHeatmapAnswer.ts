@@ -1,5 +1,11 @@
 import { XyoAccount } from '@xyo-network/account'
-import { LocationHeatmapQueryCreationRequest, locationQuadkeyHeatmapAnswerSchema, LocationQueryCreationResponse, XyoArchivistApi, XyoArchivistArchiveApi } from '@xyo-network/api'
+import {
+  LocationHeatmapQueryCreationRequest,
+  locationQuadkeyHeatmapAnswerSchema,
+  LocationQueryCreationResponse,
+  XyoArchivistApi,
+  XyoArchivistArchiveApi,
+} from '@xyo-network/api'
 // import { readFile, writeFile } from 'fs/promises'
 import { Point } from 'geojson'
 
@@ -12,7 +18,9 @@ import { storeAnswer, storeError } from '../storePayload'
 import { getQuadkeyHeatmapFromPoints } from './getQuadkeyHeatmapFromPoints'
 
 const getCurrentLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {
-  return (await queryCurrentLocationsInRange(api, startTime, stopTime)).filter(isValidCurrentLocationWitnessPayload).map(convertCurrentLocationWitnessForHeatmap)
+  return (await queryCurrentLocationsInRange(api, startTime, stopTime))
+    .filter(isValidCurrentLocationWitnessPayload)
+    .map(convertCurrentLocationWitnessForHeatmap)
 }
 
 const getLocationWitnesses: FeaturesInRange<Point, WithHashProperties> = async (api: XyoArchivistArchiveApi, startTime: number, stopTime: number) => {
