@@ -17,7 +17,7 @@ export const getBoundWitnessesInTimeRange = async (
   api: XyoArchivistArchiveApi,
   lowestTime: number,
   timestamp: number,
-  limit = 100
+  limit = 100,
 ): Promise<BoundWitnessWithTimestamp[]> => {
   const filter: XyoPayloadFindFilter = {
     limit,

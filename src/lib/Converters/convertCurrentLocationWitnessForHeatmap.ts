@@ -4,9 +4,11 @@ import { Feature, Point } from 'geojson'
 import { WithHashProperties } from '../../model'
 import { ConvertLocationDataToGeoJsonGeometry } from './ConvertLocationDataToGeoJsonGeometry'
 
-export const convertCurrentLocationWitnessForHeatmap: ConvertLocationDataToGeoJsonGeometry<CurrentLocationWitnessPayload, Point, WithHashProperties> = (
-  payload
-) => {
+export const convertCurrentLocationWitnessForHeatmap: ConvertLocationDataToGeoJsonGeometry<
+  CurrentLocationWitnessPayload,
+  Point,
+  WithHashProperties
+> = (payload) => {
   const hash = payload._hash
   const properties: WithHashProperties = hash ? { hash } : null
   // https://www.rfc-editor.org/rfc/rfc7946#section-3.1.1

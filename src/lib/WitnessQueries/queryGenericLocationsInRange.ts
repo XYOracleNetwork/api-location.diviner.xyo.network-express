@@ -13,7 +13,7 @@ export const queryGenericLocationsInRange = async <T extends SupportedLocationWi
   schema: SupportedLocationWitnessPayloadSchemas,
   startTime = 0,
   stopTime = Date.now(),
-  maxSupportedLocations = 1000
+  maxSupportedLocations = 1000,
 ) => {
   const allLocations: T[] = []
   const highestTime = Math.max(startTime, stopTime)

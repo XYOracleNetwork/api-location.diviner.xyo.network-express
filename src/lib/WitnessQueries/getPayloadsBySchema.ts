@@ -8,7 +8,7 @@ import { isSchemaType } from './isSchemaType'
 export const getPayloadsForBoundWitnesses = async <T extends SupportedLocationWitnessPayloads>(
   api: XyoArchivistArchiveApi,
   boundWitnesses: XyoBoundWitnessWithMeta[],
-  schema: SupportedLocationWitnessPayloadSchemas
+  schema: SupportedLocationWitnessPayloadSchemas,
 ) => {
   const allPayloads: Array<XyoPayloadWithMeta<T>> = []
   const promises = boundWitnesses.map(async (boundWitness) => {
