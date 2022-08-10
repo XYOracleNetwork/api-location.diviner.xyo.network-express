@@ -95,7 +95,7 @@ export const claimArchive = (token: string, archive: string = v4()): Promise<Xyo
 export const getValidLocationRangeRequest = (
   archive = testArchive,
   startTime = new Date(0).toISOString(),
-  stopTime = new Date().toISOString()
+  stopTime = new Date().toISOString(),
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
@@ -109,7 +109,7 @@ export const getValidLocationRangeRequest = (
 export const getValidLocationHeatmapRequest = (
   archive = testArchive,
   startTime = new Date(0).toISOString(),
-  stopTime = new Date().toISOString()
+  stopTime = new Date().toISOString(),
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
@@ -126,7 +126,7 @@ export const getValidLocationRequest = (
   startTime = new Date(0).toISOString(),
   stopTime = new Date().toISOString(),
   // TODO: Remove when types in SDK
-  schema: LocationQuerySchema | LocationGeoJsonHeatmapQuerySchema | LocationQuadkeyHeatmapQuerySchema = locationQuadkeyHeatmapQuerySchema
+  schema: LocationQuerySchema | LocationGeoJsonHeatmapQuerySchema | LocationQuadkeyHeatmapQuerySchema = locationQuadkeyHeatmapQuerySchema,
 ): LocationQueryCreationRequest => {
   return {
     query: { schema: locationWitnessPayloadSchema, startTime, stopTime },
@@ -172,7 +172,7 @@ export const witnessNewLocation = async (api: XyoArchivistApi, archive = 'temp')
 
 export const createQuery = async (
   data: LocationQueryCreationRequest = getValidLocationRangeRequest(),
-  expectedStatus: StatusCodes = StatusCodes.OK
+  expectedStatus: StatusCodes = StatusCodes.OK,
 ): Promise<LocationQueryCreationResponse> => {
   const response = await getDiviner().post('/location/query').send(data).expect(expectedStatus)
   return response.body.data
@@ -224,7 +224,7 @@ export const validateQueryAnswerResponse = (queryAnswerResponse: GetLocationQuer
 export const validateQueryAnswer = async <T>(
   api: XyoArchivistApi,
   queryCreationRequest: LocationQueryCreationRequest,
-  expectedSchema: string // TODO: Strongly type response schema in SDK
+  expectedSchema: string, // TODO: Strongly type response schema in SDK
 ): Promise<T> => {
   const queryCreationResponse = await createQuery(queryCreationRequest)
   validateQueryCreationResponse(queryCreationResponse)

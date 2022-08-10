@@ -7,7 +7,7 @@ export const queryLocationsInRange: QueryLocationDataInRange<LocationWitnessPayl
   api: XyoArchivistArchiveApi,
   startTime = 0,
   stopTime = Date.now(),
-  maxSupportedLocations = 1000
+  maxSupportedLocations = 1000,
 ) => {
   return queryGenericLocationsInRange(api, locationWitnessPayloadSchema, startTime, stopTime, maxSupportedLocations)
 }

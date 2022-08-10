@@ -12,9 +12,13 @@ const validateQueryResult = (queryResult: FeatureCollection<Point, LocationTimeR
 
 const getQueryAnswer = async (
   api: XyoArchivistApi,
-  queryCreationRequest: LocationQueryCreationRequest
+  queryCreationRequest: LocationQueryCreationRequest,
 ): Promise<FeatureCollection<Point, LocationTimeRangePointProperties>> => {
-  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationTimeRangePointProperties>>(api, queryCreationRequest, locationTimeRangeAnswerSchema)
+  const answer = await validateQueryAnswer<FeatureCollection<Point, LocationTimeRangePointProperties>>(
+    api,
+    queryCreationRequest,
+    locationTimeRangeAnswerSchema,
+  )
   validateQueryResult(answer)
   return answer
 }
